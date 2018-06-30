@@ -75,7 +75,7 @@ class ListTest(unittest.TestCase):
         s_list1 = l.create_list(1, 2, 3, 4, 5, 6, 7, 8)
         s_list2 = l.create_list(10, 20, 30, 40, 50, 60, 70, 80)
 
-        self.assertEqual(len(s_list1), len(s_list2))
+        self.assertTrue(l.sum_lists(s_list1, s_list2))
 
         sum_lists1 = [11, 22, 33, 44, 55, 66, 77, 88]
         sum_lists2 = l.sum_lists(s_list1, s_list2)

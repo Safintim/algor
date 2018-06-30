@@ -150,7 +150,7 @@ class LinkedList:
 
 def sum_lists(l1, l2):
     if len(l1) != len(l2):
-        return 'Не равны размеры'
+        return False
 
     result_list = []
     l1_node = l1.head
