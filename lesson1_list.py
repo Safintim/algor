@@ -1,9 +1,19 @@
 # print('Связной список')
 
+
 class Node:
     def __init__(self, v):
-        self.value = v
-        self.next = None
+        self.__value = v
+        self.__next = None
+
+    def get_value(self):
+        return self.__value
+
+    def get_next(self):
+        return self.__next
+
+    def set_next(self, n):
+        self.__next = n
 
 
 class LinkedList:
@@ -18,7 +28,7 @@ class LinkedList:
         if self.head is None:
             self.head = item
         else:
-            self.tail.next = item
+            self.tail.set_next(item)
         self.tail = item
 
     def print_all_nodes(self):
@@ -28,8 +38,8 @@ class LinkedList:
         node = self.head
 
         while node is not None:
-            print(node.value)
-            node = node.next
+            print(node.get_value())
+            node = node.get_next()
 
     def find(self, v):
         """
@@ -38,9 +48,9 @@ class LinkedList:
         node = self.head
 
         while node is not None:
-            if node.value == v:
+            if node.get_value() == v:
                 return node
-            node = node.next
+            node = node.get_next()
         return None
 
     def del_node(self, v):
@@ -51,20 +61,16 @@ class LinkedList:
         prev = node
 
         while node is not None:
-            if self.head.value == v:
-                self.head = self.head.next
+            if self.head.get_value() == v:
+                self.head = self.head.get_next()
                 break
 
-            elif node.value == v:
-                prev.next = node.next
-
-                # кажется эти строчки не обязательны. питон сам очистит память
-                node.value = None
-                node.next = None
+            elif node.get_value() == v:
+                prev.set_next(node.get_next())
                 break
 
             prev = node
-            node = node.next
+            node = node.get_next()
 
         return None
 
@@ -76,14 +82,14 @@ class LinkedList:
         prev = node
 
         while node is not None:
-            if self.head.value == v:
-                self.head = self.head.next
+            if self.head.get_value() == v:
+                self.head = self.head.get_next()
 
-            elif node.value == v:
-                prev.next = node.next
+            elif node.get_value() == v:
+                prev.set_next(node.get_next())
                 node = prev
             prev = node
-            node = node.next
+            node = node.get_next()
 
         return None
 
@@ -105,9 +111,9 @@ class LinkedList:
         result_list = []
 
         while node is not None:
-            if node.value == v:
+            if node.get_value() == v:
                 result_list.append(node)
-            node = node.next
+            node = node.get_next()
 
         return result_list
 
@@ -120,7 +126,7 @@ class LinkedList:
 
         while node is not None:
             length += 1
-            node = node.next
+            node = node.get_next()
         return length
 
     def insert(self, prev, current):
@@ -131,9 +137,9 @@ class LinkedList:
 
         while node is not None:
             if node == prev:
-                current.next = node.next
-                node.next = current
-            node = node.next
+                current.set_next(node.get_next())
+                node.set_next(current)
+            node = node.get_next()
 
         return None
 
@@ -143,7 +149,7 @@ class LinkedList:
 
         while node is not None:
             arr.append(node)
-            node = node.next
+            node = node.get_next()
 
         return arr
 
@@ -157,9 +163,9 @@ def sum_lists(l1, l2):
     l2_node = l2.head
 
     while l1_node is not None:
-        result_list.append(l1_node.value + l2_node.value)
-        l1_node = l1_node.next
-        l2_node = l2_node.next
+        result_list.append(l1_node.get_value() + l2_node.get_value())
+        l1_node = l1_node.get_next()
+        l2_node = l2_node.get_next()
     return result_list
 
 
