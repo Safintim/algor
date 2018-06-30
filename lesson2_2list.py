@@ -1,5 +1,5 @@
 # print('Двунаправленный Связанный список')
-import time
+# import time
 
 
 class Node2:

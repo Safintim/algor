@@ -1,4 +1,5 @@
 # print('Связной список')
+# import time
 
 
 class Node:
@@ -139,6 +140,7 @@ class LinkedList:
             if node == prev:
                 current.set_next(node.get_next())
                 node.set_next(current)
+                break
             node = node.get_next()
 
         return None
@@ -176,3 +178,13 @@ def create_list(*args):
 
     return s_list
 
+
+# arr = []
+# s = create_list([i for i in range(1000000)])
+# for i in range(10000):
+#     start_time = time.time()
+#     s.del_node(100000)
+#     arr.append(time.time()-start_time)
+#
+# result = sum(arr)/len(arr)
+# print(result)
