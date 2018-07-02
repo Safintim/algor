@@ -64,6 +64,33 @@ class LinkedList2:
             node = node.get_next()
         return None
 
+    def find_all(self, v):
+        """
+        1.4 Находит все узлы по заданному конкретному значению
+        На выходе массив узлов
+        """
+        node = self.head
+        result_list = []
+
+        while node is not None:
+            if node.get_value() == v:
+                result_list.append(node)
+            node = node.get_next()
+
+        return result_list
+
+    def __len__(self):
+        """
+        1.5 Возвращает число узлов списка
+        """
+        node = self.head
+        length = 0
+
+        while node is not None:
+            length += 1
+            node = node.get_next()
+        return length
+
     def clear_list(self):
         """
         1.3 Удаляет все узлы списка
@@ -77,30 +104,38 @@ class LinkedList2:
         """
         2.1 Удаляет узел по заданному значению
         """
-        node_start = self.head
-        node_end = self.tail
 
-        while node_start != node_end:
+        if self.head.get_value() == v:
+            self.head = self.head.get_next()
+            self.head.set_prev(None)
+        elif self.tail.get_value() == v:
+            self.tail = self.tail.get_prev()
+            self.tail.set_next(None)
+        else:
+            if node is not None:
+                node.get_prev().set_next(node.get_next())
+                node.get_next().set_prev(node.get_prev())
+            else:
+                return None
+        return None
+
+    def del_nodes(self, v):
+        """
+        1.2 Удаляет все узлы по заданному конкретному значению
+        """
+
+        node = self.head
+        while node is not None:
             if self.head.get_value() == v:
                 self.head = self.head.get_next()
                 self.head.set_prev(None)
-                break
             elif self.tail.get_value() == v:
                 self.tail = self.tail.get_prev()
                 self.tail.set_next(None)
-                break
-            else:
-                if node_start.get_value() == v:
-                    node_start.get_prev().set_next(node_start.get_next())
-                    node_start.get_next().set_prev(node_start.get_prev())
-                    break
-                elif node_end.get_value() == v:
-                    node_end.get_next().set_prev(node_end.get_prev())
-                    node_end.get_prev().set_next(node_end.get_next())
-                    break
-
-            node_start = node_start.get_next()
-            node_end = node_end.get_prev()
+            elif node.get_value() == v:
+                node.get_prev().set_next(node.get_next())
+                node.get_next().set_prev(node.get_prev())
+            node = node.get_next()
 
         return None
 
@@ -109,20 +144,15 @@ class LinkedList2:
         2.2 Вставка узла после заданного узла
         """
         node_start = self.head
-        node_end = self.tail
-        while node_start != node_end:
+
+        while node_start is not None:
             if node_start == prev:
                 current.set_next(node_start.get_next())
                 current.set_prev(node_start)
                 node_start.set_next(current)
                 node_start.get_next().set_prev(current)
-            elif node_end == prev:
-                current.set_next(node_end.get_next())
-                current.set_prev(node_end)
-                node_end.set_prev(current)
-                node_end.get_prev().set_next(current)
+
             node_start = node_start.get_next()
-            node_end = node_start.get_prev()
 
         return None
 
@@ -158,8 +188,11 @@ def create_list(*args):
     return s_list
 
 
+s_list = create_list(1, 3, 2, 3, 4, 5, 3, 6)
 
-
+# s_list.print_all_nodes()
+s_list.del_nodes(1)
+s_list.print_all_nodes()
 # проверка скорости функции del_node
 # arr = []
 # s = create_list([i for i in range(100000)])
