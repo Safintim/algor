@@ -40,16 +40,9 @@ class DynArray:
             if self.count == self.capacity:
                 self.resize(2 * self.capacity)
 
-            for k in range(i + 1):
-                new_array.append(self.array[k])
-
-            new_array[i] = item
-
-            for k in range(i, self.count):
-                new_array.append(self.array[k])
-
-            self.array = new_array
+            self.array = self.array[:i] + [item] + self.array[i:self.count]
             self.count += 1
+
         except IndexError:
             print('Index is out of bounds')
 
