@@ -104,7 +104,7 @@ class LinkedList2:
         """
         2.1 Удаляет узел по заданному значению
         """
-
+        node = self.find(v)
         if self.head.get_value() == v:
             self.head = self.head.get_next()
             self.head.set_prev(None)
@@ -190,9 +190,6 @@ def create_list(*args):
 
 s_list = create_list(1, 3, 2, 3, 4, 5, 3, 6)
 
-# s_list.print_all_nodes()
-s_list.del_nodes(1)
-s_list.print_all_nodes()
 # проверка скорости функции del_node
 # arr = []
 # s = create_list([i for i in range(100000)])
