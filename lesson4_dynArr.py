@@ -56,7 +56,7 @@ class DynArray:
     def delete(self, i):
         try:
             self.__getitem__(i)
-            if self.count <= (self.capacity // 2):
+            if self.count <= int(self.capacity // 2):
                 if self.capacity // 1.5 > 16:
                     self.resize(int(self.capacity // 1.5))
                 else:
@@ -69,48 +69,17 @@ class DynArray:
         except IndexError:
             print('Index is out of bounds')
 
+    def convert_to_arr(self):
+        arr = []
+
+        for i in range(self.count):
+            arr.append(self.array[i])
+
+        return arr
+
 
 def create_da(n):
     da = DynArray()
     for i in range(n):
         da.append(i)
     return da
-
-
-da = DynArray()
-for i in range(32):
-    da.append(i)
-    print(da[i], end=' ')
-
-#delete
-# print()
-# print(da.count)
-# print(da.capacity)
-# print()
-# for i in range(17):
-#     da.delete(1)
-# # da.delete(14)
-# for i in range(da.count):
-#     print(da[i], end=' ')
-#
-# print()
-# print()
-# print(da.count)
-# print(da.capacity)
-# print()
-
-# insert
-# da.insert(4,300)
-# for i in range(da.count):
-#     print(da[i], end=' ')
-
-# da.insert(5,200)
-# da.insert(1,200)
-# print()
-# da.insert(15, 300)
-# print()
-# for i in range(da.count):
-#     print(da[i], end=' ')
-# print()
-# print(da.count)
-# print(da.capacity)
