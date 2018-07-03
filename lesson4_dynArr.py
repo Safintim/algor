@@ -50,7 +50,7 @@ class DynArray:
 
             self.array = new_array
             self.count += 1
-        except (ValueError, IndexError):
+        except IndexError:
             print('Index is out of bounds')
 
     def delete(self, i):
