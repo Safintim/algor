@@ -1,0 +1,217 @@
+class Node2:
+    def __init__(self, v):
+        self.__value = v
+        self.__next = None
+        self.__prev = None
+
+    def get_value(self):
+        return self.__value
+
+    def get_next(self):
+        return self.__next
+
+    def get_prev(self):
+        return self.__prev
+
+    def set_next(self, n):
+        self.__next = n
+
+    def set_prev(self, n):
+        self.__prev = n
+
+
+class OrderedList:
+    def __init__(self, inc):
+        self.head = None
+        self.tail = None
+        self.increase = inc
+
+    def print_all_nodes(self):
+        """
+        Печатает все элементы списка
+        """
+        node = self.head
+
+        while node is not None:
+            print(node.get_value())
+            node = node.get_next()
+
+    @staticmethod
+    def compare_value(left, right):
+        if left.get_value() >= right.get_value():
+            return True
+        else:
+            return False
+
+    def __add_head(self, item):
+
+        self.head.set_prev(item)
+        item.set_next(self.head)
+        self.head = item
+        self.head.set_prev(None)
+
+    def __add_tail(self, item):
+
+        item.set_prev(self.tail)
+        item.set_next(None)
+        self.tail.set_next(item)
+        self.tail = item
+
+    @staticmethod
+    def __add_inwards(node, item):
+        node.get_next().set_prev(item)
+        item.set_next(node.get_next())
+        item.set_prev(node)
+        node.set_next(item)
+
+    def add_node(self, item):
+
+        node = self.head
+
+        if self.head is None:
+            self.head = item
+            self.tail = item
+        else:
+
+            if self.increase:
+                if self.compare_value(self.head, item):
+                    self.__add_head(item)
+                elif self.compare_value(item, self.tail):
+                    self.__add_tail(item)
+                else:
+                    while node.get_next() is not None:
+                        if self.compare_value(item, node) and self.compare_value(node.get_next(), item):
+                            self.__add_inwards(node, item)
+                            break
+                        node = node.get_next()
+            else:
+                if self.compare_value(item, self.head):
+                    self.__add_head(item)
+                elif self.compare_value(self.tail, item):
+                    self.__add_tail(item)
+                else:
+                    while node.get_next() is not None:
+                        if self.compare_value(node, item) and self.compare_value(item, node.get_next()):
+                            self.__add_inwards(node, item)
+                            break
+                        node = node.get_next()
+        return None
+
+    def find(self, v):
+
+        node = self.head
+
+        if self.increase:
+            if self.head.get_value() > v:
+                print('Такого нет')
+                return None
+            elif v > self.tail.get_value():
+                print('Такого нет')
+                return None
+            else:
+                while node is not None:
+                    if node.get_value() > v:
+                        print('Такого нет')
+                        return None
+                    elif node.get_value() == v:
+                        return node
+                    node = node.get_next()
+        else:
+            if v > self.head.get_value():
+                print('Такого нет')
+                return None
+            elif self.tail.get_value() > v:
+                print('Такого нет')
+                return None
+            else:
+                while node is not None:
+                    if node.get_value() < v:
+                        print('Такого нет')
+                        return None
+                    elif node.get_value() == v:
+                        return node
+                    node = node.get_next()
+
+                return None
+
+    def del_node(self, v):
+
+        node = self.find(v)
+        if self.head.get_value() == v:
+            self.head = self.head.get_next()
+            self.head.set_prev(None)
+        elif self.tail.get_value() == v:
+            self.tail = self.tail.get_prev()
+            self.tail.set_next(None)
+        else:
+            if node is not None:
+                node.get_prev().set_next(node.get_next())
+                node.get_next().set_prev(node.get_prev())
+            else:
+                return None
+        return None
+
+    def convert_list_to_array(self):
+        arr = []
+        node = self.head
+
+        while node is not None:
+            arr.append(node)
+            node = node.get_next()
+
+        return arr
+
+
+a = Node2(5)
+b = Node2(8)
+c = Node2(7)
+d = Node2(1)
+e = Node2(700)
+f = Node2(3)
+g = Node2(-1)
+z = Node2(-1)
+
+l = OrderedList(True)
+l.add_node(a)
+l.add_node(b)
+l.add_node(c)
+l.add_node(d)
+l.add_node(e)
+l.add_node(f)
+l.add_node(g)
+l.add_node(z)
+
+l.print_all_nodes()
+print()
+# l.del_node(l.find(7).get_value())
+# l.print_all_nodes()
+
+class OrderedListStr(OrderedList):
+
+    @staticmethod
+    def compare_value(left, right):
+        if left.get_value().strip() >= right.get_value().strip():
+            return True
+        else:
+            return False
+
+
+# a = Node2('a')
+# b = Node2('b')
+# c = Node2('c')
+# d = Node2('d')
+# e = Node2('z')
+# f = Node2('g')
+# g = Node2('x')
+# z = Node2('j')
+# print()
+# l = OrderedListStr(True)
+# l.add_node(a)
+# l.add_node(b)
+# l.add_node(c)
+# l.add_node(d)
+# l.add_node(e)
+# l.add_node(f)
+# l.add_node(g)
+# l.add_node(z)
+# l.print_all_nodes()
