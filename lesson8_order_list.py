@@ -72,19 +72,24 @@ class OrderedList:
             self.head = item
             self.tail = item
         else:
-
+            # Если по возрастанию
             if self.increase:
+                # Так как в цикле идет проверка текущего и следующего,
+                # нужно позаботиться о том, чтобы создать этот следующий
                 if self.compare_value(self.head, item):
                     self.__add_head(item)
                 elif self.compare_value(item, self.tail):
                     self.__add_tail(item)
                 else:
                     while node.get_next() is not None:
+                        # можно выполнить проверку типа item.value > node.item
                         if self.compare_value(item, node) and self.compare_value(node.get_next(), item):
                             self.__add_inwards(node, item)
                             break
                         node = node.get_next()
+            # Если по убыванию
             else:
+
                 if self.compare_value(item, self.head):
                     self.__add_head(item)
                 elif self.compare_value(self.tail, item):
@@ -102,6 +107,7 @@ class OrderedList:
         node = self.head
 
         if self.increase:
+            # первый 2 условия не обязательны, но кажется это совсем капельку оптимизирует поиск:)
             if self.head.get_value() > v:
                 print('Такого нет')
                 return None
@@ -183,8 +189,8 @@ l.add_node(z)
 
 l.print_all_nodes()
 print()
-# l.del_node(l.find(7).get_value())
-# l.print_all_nodes()
+print(l.find(3).get_value())
+
 
 class OrderedListStr(OrderedList):
 
@@ -196,22 +202,25 @@ class OrderedListStr(OrderedList):
             return False
 
 
-# a = Node2('a')
-# b = Node2('b')
-# c = Node2('c')
-# d = Node2('d')
-# e = Node2('z')
-# f = Node2('g')
-# g = Node2('x')
-# z = Node2('j')
-# print()
-# l = OrderedListStr(True)
-# l.add_node(a)
-# l.add_node(b)
-# l.add_node(c)
-# l.add_node(d)
-# l.add_node(e)
-# l.add_node(f)
-# l.add_node(g)
-# l.add_node(z)
-# l.print_all_nodes()
+a = Node2('a')
+b = Node2('b')
+c = Node2('c')
+d = Node2('d')
+e = Node2('z')
+f = Node2('g')
+g = Node2('x')
+z = Node2('j')
+print()
+print()
+l = OrderedListStr(True)
+l.add_node(a)
+l.add_node(b)
+l.add_node(c)
+l.add_node(d)
+l.add_node(e)
+l.add_node(f)
+l.add_node(g)
+l.add_node(z)
+l.print_all_nodes()
+print()
+print(l.find('a').get_value())
