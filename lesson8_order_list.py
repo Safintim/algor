@@ -67,78 +67,52 @@ class OrderedList:
     def add_node(self, item):
 
         node = self.head
-
         if self.head is None:
             self.head = item
             self.tail = item
         else:
-            # Если по возрастанию
-            if self.increase:
-                # Так как в цикле идет проверка текущего и следующего,
-                # нужно позаботиться о том, чтобы создать этот следующий
-                if self.compare_value(self.head, item):
-                    self.__add_head(item)
-                elif self.compare_value(item, self.tail):
-                    self.__add_tail(item)
-                else:
-                    while node.get_next() is not None:
-                        # можно выполнить проверку типа item.value > node.item
-                        if self.compare_value(item, node) and self.compare_value(node.get_next(), item):
-                            self.__add_inwards(node, item)
-                            break
-                        node = node.get_next()
-            # Если по убыванию
-            else:
 
-                if self.compare_value(item, self.head):
-                    self.__add_head(item)
-                elif self.compare_value(self.tail, item):
-                    self.__add_tail(item)
-                else:
-                    while node.get_next() is not None:
-                        if self.compare_value(node, item) and self.compare_value(item, node.get_next()):
-                            self.__add_inwards(node, item)
-                            break
-                        node = node.get_next()
+            # Так как в цикле идет проверка текущего и следующего,
+            # нужно позаботиться о том, чтобы создать этот следующий
+            if self.compare_value(self.head, item) and self.increase:
+                self.__add_head(item)
+            elif self.compare_value(item, self.tail) and self.increase:
+                self.__add_tail(item)
+            elif self.compare_value(item, self.head) and self.increase is False:
+                self.__add_head(item)
+            elif self.compare_value(self.tail, item) and self.increase is False:
+                self.__add_tail(item)
+            else:
+                while node.get_next() is not None:
+                    # можно выполнить проверку типа item.value > node.item
+                    # Если по возрастанию
+                    if self.compare_value(item, node) and self.compare_value(node.get_next(), item)\
+                            and self.increase:
+                        self.__add_inwards(node, item)
+                        break
+                    # Если по убыванию
+                    elif self.compare_value(node, item) and self.compare_value(item, node.get_next())\
+                            and self.increase is False:
+                        self.__add_inwards(node, item)
+                        break
+                    node = node.get_next()
         return None
 
     def find(self, v):
 
         node = self.head
+        while node is not None:
+            if node.get_value() > v and self.increase:
+                print('Такого нет')
+                return None
+            elif node.get_value() == v:
+                return node
+            elif node.get_value() < v and self.increase is False:
+                print('Такого нет')
+                return None
+            node = node.get_next()
 
-        if self.increase:
-            # первый 2 условия не обязательны, но кажется это совсем капельку оптимизирует поиск:)
-            if self.head.get_value() > v:
-                print('Такого нет')
-                return None
-            elif v > self.tail.get_value():
-                print('Такого нет')
-                return None
-            else:
-                while node is not None:
-                    if node.get_value() > v:
-                        print('Такого нет')
-                        return None
-                    elif node.get_value() == v:
-                        return node
-                    node = node.get_next()
-        else:
-            if v > self.head.get_value():
-                print('Такого нет')
-                return None
-            elif self.tail.get_value() > v:
-                print('Такого нет')
-                return None
-            else:
-                while node is not None:
-                    if node.get_value() < v:
-                        print('Такого нет')
-                        return None
-                    elif node.get_value() == v:
-                        return node
-                    node = node.get_next()
-
-                return None
+        return None
 
     def del_node(self, v):
 
@@ -223,4 +197,4 @@ l.add_node(g)
 l.add_node(z)
 l.print_all_nodes()
 print()
-print(l.find('a').get_value())
+print(l.find('o'))
