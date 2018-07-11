@@ -1,5 +1,4 @@
 """"Хэш-таблица"""
-from random import randint
 
 
 class HashTable:
@@ -41,7 +40,11 @@ class HashTable:
 
     def put(self, value):
         index = self.seek_slot(value)
-        self.slots[index] = value
+        if index is not None:
+            self.slots[index] = value
+        else:
+            print('Нет мест')
+            return None
 
     def find(self, value):
         old_index = self.hash_fun(value)
@@ -57,7 +60,7 @@ class HashTable:
                     temp = k
                     if self.slots[k] == value:
                         return self.slots[new_index]
-                    if old_index == new_index:
+                    elif old_index == new_index:
                         stop = True
                 new_index = self.rotate(temp, 2)
 
@@ -70,14 +73,8 @@ result_list = [3, 48, 15, 25, 73, 83, 93, 40, 45, 18, 88, 29, 8, 0, 60, 28, 32]
 hash_list = []
 
 for i in test_list:
-    hash_list.append(h.hash_fun(i))
-for i in test_list:
     h.put(i)
-
 
 print(h.slots == result_list)
 print(h.slots)
-# print(result_list)
-# print(test_list)
 print(h.find(5))
-
