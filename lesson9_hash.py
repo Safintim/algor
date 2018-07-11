@@ -52,12 +52,10 @@ class HashTable:
             return self.slots[old_index]
         else:
             new_index = old_index
-            while not stop:
+            while old_index != new_index:
                 for k in range(new_index, self.size, self.step):
                     if self.slots[k] == value:
                         return self.slots[new_index]
-                    elif old_index == new_index:
-                        stop = True
                 new_index = self.rotate(k, 2)
 
         return None
@@ -74,4 +72,4 @@ for i in test_list:
 print(h.slots == result_list)
 print(h.slots)
 h.put(100)
-print(h.find(5))
+print(h.find(3))
