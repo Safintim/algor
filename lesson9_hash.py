@@ -24,32 +24,29 @@ class HashTable:
 
     def seek_slot(self, value):
         index = self.hash_fun(value)
-        temp = 0
 
         if self.slots[index] is None:
             return index
         elif None not in self.slots:
             return None
         else:
-            while 1:
+            while True:
                 for k in range(index, self.size, self.step):
-                    temp = k
                     if self.slots[k] is None:
                         return k
-                index = self.rotate(temp, self.step)
+                index = self.rotate(k, self.step)
 
     def put(self, value):
         index = self.seek_slot(value)
         if index is not None:
             self.slots[index] = value
         else:
-            print('Нет мест')
+            print('Нет мест, размер таблицы: {}'.format(self.size))
             return None
 
     def find(self, value):
         old_index = self.hash_fun(value)
         stop = False
-        temp = 0
 
         if self.slots[old_index] == value:
             return self.slots[old_index]
@@ -57,12 +54,11 @@ class HashTable:
             new_index = old_index
             while not stop:
                 for k in range(new_index, self.size, self.step):
-                    temp = k
                     if self.slots[k] == value:
                         return self.slots[new_index]
                     elif old_index == new_index:
                         stop = True
-                new_index = self.rotate(temp, 2)
+                new_index = self.rotate(k, 2)
 
         return None
 
@@ -77,4 +73,5 @@ for i in test_list:
 
 print(h.slots == result_list)
 print(h.slots)
+h.put(100)
 print(h.find(5))
