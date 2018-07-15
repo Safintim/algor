@@ -24,16 +24,18 @@ class HashTable:
 
     def seek_slot(self, value):
         index = self.hash_fun(value)
+        temp = 0
 
         if self.slots[index] is None:
             return index
-        elif None not in self.slots:
-            return None
+        # elif None not in self.slots:
+        #     return None
         else:
-            while True:
+            while temp < 5:
                 for k in range(index, self.size, self.step):
                     if self.slots[k] is None:
                         return k
+                temp += 1
                 index = self.rotate(k, self.step)
 
     def put(self, value):
