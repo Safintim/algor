@@ -69,7 +69,10 @@ class HashTable:
         return self.put(key, value)
 
     def is_key(self, key):
-        return self.find(key)
+        if self.find(key) is None:
+            return None
+        else:
+            return True
 
     def find(self, value):
         old_index = self.hash_fun(value)
@@ -97,5 +100,5 @@ for i in h.slots:
 h['aaa'] = 123  # Нет мест, размер таблицы: 17
 print(h.slots)
 print(h.values)
-
+print(h.is_key('f'))  # True
 print(h.is_key('aa'))  # None
