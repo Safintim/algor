@@ -17,10 +17,12 @@ class HashTable:
         return summ % self.size
 
     def rotate(self, k, step):
-        if k == self.size:
-            return 0
-        elif k < self.size:
-            return step - (self.size - k)
+        return (k + self.step) % self.size
+        # ниже костыль
+        # if k == self.size:
+        #     return 0
+        # elif k < self.size:
+        #     return step - (self.size - k)
 
     def seek_slot(self, value):
         index = self.hash_fun(value)
@@ -28,15 +30,18 @@ class HashTable:
 
         if self.slots[index] is None:
             return index
-        # elif None not in self.slots:
-        #     return None
         else:
-            while temp < 5:
+            while temp < 2 * (self.size // self.step):
                 for k in range(index, self.size, self.step):
                     if self.slots[k] is None:
                         return k
                 temp += 1
                 index = self.rotate(k, self.step)
+            else:
+                # когда уже несколько раз прошлись по слотам
+                # и не нашли место
+                if None not in self.slots:
+                    return None
 
     def put(self, value):
         index = self.seek_slot(value)
@@ -48,7 +53,6 @@ class HashTable:
 
     def find(self, value):
         old_index = self.hash_fun(value)
-        stop = False
 
         if self.slots[old_index] == value:
             return self.slots[old_index]
