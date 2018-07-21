@@ -1,9 +1,10 @@
+#!/usr/bin/python3
 """"Хэш-таблица"""
 
 
 class HashTable:
 
-    def __init__(self, sz, stp):
+    def __init__(self, sz=17, stp=3):
         self.size = sz
         self.step = stp
         self.slots = [None] * self.size
@@ -52,30 +53,39 @@ class HashTable:
             return None
 
     def find(self, value):
-        old_index = self.hash_fun(value)
-
-        if self.slots[old_index] == value:
-            return self.slots[old_index]
+        index = self.hash_fun(value)
+        temp = 0
+        if self.slots[index] == value:
+            return index
         else:
-            new_index = old_index
-            while old_index != new_index:
-                for k in range(new_index, self.size, self.step):
+            while temp < 2 * (self.size // self.step):
+                for k in range(index, self.size, self.step):
                     if self.slots[k] == value:
-                        return self.slots[new_index]
-                new_index = self.rotate(k, 2)
+                        return k
+                temp += 1
+                index = self.rotate(k, 2)
 
         return None
 
 
-h = HashTable(17, 3)
-test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
-result_list = [3, 48, 15, 25, 73, 83, 93, 40, 45, 18, 88, 29, 8, 0, 60, 28, 32]
-hash_list = []
+if __name__ == '__main__':
 
-for i in test_list:
-    h.put(i)
+    h = HashTable(17, 3)
+    h2 = HashTable(17, 3)
+    test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
+    result_list = [3, 48, 15, 25, 73, 83, 93, 40, 45, 18, 88, 29, 8, 0, 60, 28, 32]
+    hash_list = []
 
-print(h.slots == result_list)
-print(h.slots)
-h.put(100)
-print(h.find(3))
+    for i in test_list:
+        h.put(i)
+
+    for i in test_list[::-1]:
+        h2.put(i)
+
+
+    # print(h.slots)
+    print(h2.slots)
+    print(h2.find(73))
+    # print(h.find(32))
+    # for i in result_list:
+    #     print(h2.find(i))
