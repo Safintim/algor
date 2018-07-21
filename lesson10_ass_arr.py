@@ -88,30 +88,3 @@ class HashTable:
                 index = self.rotate(k, 2)
 
         return None
-
-
-h = HashTable(17, 3)
-h2 = HashTable(17, 3)
-test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
-k = 0
-for i in range(97, 114):
-    h[chr(i)] = test_list[k]
-    k += 1
-print('ключи первого\n', h.slots)
-print('значения первого\n', h.values)
-k = 0
-for i in range(97, 114):
-    h2[i] = test_list[k]
-    k += 1
-print('ключи второго\n', h2.slots, )
-print('значения второго\n', h2.values)
-
-
-h['aaa'] = 123  # Нет мест, размер таблицы: 17
-h2['aaa'] = 123  # Нет мест, размер таблицы: 17
-
-print(h.is_key('f'))  # True
-print(h2.is_key(110))  # True
-
-print(h.is_key(97))  # None
-print(h2.is_key('f'))  # None
