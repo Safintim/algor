@@ -66,26 +66,3 @@ class HashTable:
                 index = self.rotate(k, 2)
 
         return None
-
-
-if __name__ == '__main__':
-
-    h = HashTable(17, 3)
-    h2 = HashTable(17, 3)
-    test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
-    result_list = [3, 48, 15, 25, 73, 83, 93, 40, 45, 18, 88, 29, 8, 0, 60, 28, 32]
-    hash_list = []
-
-    for i in test_list:
-        h.put(i)
-
-    for i in test_list[::-1]:
-        h2.put(i)
-
-
-    # print(h.slots)
-    print(h2.slots)
-    print(h2.find(73))
-    # print(h.find(32))
-    # for i in result_list:
-    #     print(h2.find(i))
