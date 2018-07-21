@@ -75,30 +75,43 @@ class HashTable:
             return True
 
     def find(self, value):
-        old_index = self.hash_fun(value)
-
-        if self.slots[old_index] == value:
-            return old_index
+        index = self.hash_fun(value)
+        temp = 0
+        if self.slots[index] == value:
+            return index
         else:
-            new_index = old_index
-            while old_index != new_index:
-                for k in range(new_index, self.size, self.step):
+            while temp < 2 * (self.size // self.step):
+                for k in range(index, self.size, self.step):
                     if self.slots[k] == value:
-                        return new_index
-                new_index = self.rotate(k, 2)
+                        return k
+                temp += 1
+                index = self.rotate(k, 2)
 
         return None
 
 
 h = HashTable(17, 3)
+h2 = HashTable(17, 3)
+test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
+k = 0
 for i in range(97, 114):
-    h[chr(i)] = randint(1, 20)
+    h[chr(i)] = test_list[k]
+    k += 1
+print('ключи первого\n', h.slots)
+print('значения первого\n', h.values)
+k = 0
+for i in range(97, 114):
+    h2[i] = test_list[k]
+    k += 1
+print('ключи второго\n', h2.slots, )
+print('значения второго\n', h2.values)
 
-h['a'] = 123412
-for i in h.slots:
-    print(h[i])
+
 h['aaa'] = 123  # Нет мест, размер таблицы: 17
-print(h.slots)
-print(h.values)
+h2['aaa'] = 123  # Нет мест, размер таблицы: 17
+
 print(h.is_key('f'))  # True
-print(h.is_key('aa'))  # None
+print(h2.is_key(110))  # True
+
+print(h.is_key(97))  # None
+print(h2.is_key('f'))  # None
