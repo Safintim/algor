@@ -142,30 +142,6 @@ class OrderedList:
         return arr
 
 
-a = Node2(5)
-b = Node2(8)
-c = Node2(7)
-d = Node2(1)
-e = Node2(700)
-f = Node2(3)
-g = Node2(-1)
-z = Node2(-1)
-
-l = OrderedList(True)
-l.add_node(a)
-l.add_node(b)
-l.add_node(c)
-l.add_node(d)
-l.add_node(e)
-l.add_node(f)
-l.add_node(g)
-l.add_node(z)
-
-l.print_all_nodes()
-print()
-print(l.find(3).get_value())
-
-
 class OrderedListStr(OrderedList):
 
     @staticmethod
@@ -176,25 +152,9 @@ class OrderedListStr(OrderedList):
             return False
 
 
-a = Node2('a')
-b = Node2('b')
-c = Node2('c')
-d = Node2('d')
-e = Node2('z')
-f = Node2('g')
-g = Node2('x')
-z = Node2('j')
-print()
-print()
-l = OrderedListStr(True)
-l.add_node(a)
-l.add_node(b)
-l.add_node(c)
-l.add_node(d)
-l.add_node(e)
-l.add_node(f)
-l.add_node(g)
-l.add_node(z)
-l.print_all_nodes()
-print()
-print(l.find('o'))
+def create_list(*args):
+    s_list = OrderedList(args[0])
+    for i in range(1, len(args)):
+        s_list.add_node(Node2(args[i]))
+
+    return s_list
