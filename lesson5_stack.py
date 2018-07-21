@@ -56,9 +56,6 @@ def postfix(exp):
     return stack2
 
 
-print(postfix('8 2 + 5 * 9 + ='))
-
-
 def balance_brackets(string):
     stack = Stack()
     open_br = '('
@@ -79,10 +76,3 @@ def balance_brackets(string):
         return True
     else:
         return False
-
-
-stack = Stack()
-print(balance_brackets('(()((())()))'))
-print(balance_brackets('((()))'))
-print(balance_brackets('(()()(()'))
-print(balance_brackets(')'))
