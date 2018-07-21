@@ -38,9 +38,3 @@ def palindrom(string):
             return False
 
     return True
-
-
-test_list = ['довод', 'заказ', 'радар', 'banan', 'apple', 'lsdkjfskf']
-
-for i in test_list:
-    print(palindrom(i))
