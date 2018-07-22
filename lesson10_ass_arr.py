@@ -41,10 +41,11 @@ class HashTable:
                     return None
 
     def put(self, key, value):
-        index = self.hash_fun(key)
-        if self.slots[index] == key:
-            self.values[index] = value
-            return True
+        index = self.find(key)
+        if index is not None:
+            if self.slots[index] == key:
+                self.values[index] = value
+                return True
 
         index = self.seek_slot(key)
         if index is not None:
