@@ -60,38 +60,3 @@ class PowerSet(HashTable):
             if powset.find(item) is None:
                 return False
         return True
-
-
-h = PowerSet(17, 3)
-test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
-h2 = PowerSet(10, 3)
-
-
-for i in test_list:
-    h.put(i)
-for i in range(93, 103):
-    h2.put(i)
-print(h.slots)
-print(h2.slots)
-# intersection
-h3 = h.intersection(h2)
-print(h3.slots)
-
-# union
-h3 = h.union(h2)
-print(h3.slots)
-
-# difference
-h3 = h.difference(h2)
-print(h3.slots)
-
-test_issubset1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-test_issubset2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-h = PowerSet(sz=len(test_issubset1))
-h2 = PowerSet(sz=len(test_issubset2))
-# issubset
-for i in test_issubset1:
-    h.put(i)
-for i in test_issubset2:
-    h2.put(i)
-print(h.issubset(h2))
