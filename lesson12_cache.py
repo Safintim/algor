@@ -14,19 +14,18 @@ class Cache(HashTable):
                 self.count_call[index] += 1
                 return True
 
-        stop = False
-        while not stop:
-            index = self.seek_slot(key)
-            if index is not None:
-                self.slots[index] = key
-                self.values[index] = value
-                self.count_call[index] += 1
-                return True
-            else:
-                old = self.count_call.index(min(self.count_call))
-                self.slots[old] = None
-                self.values[old] = None
-                self.count_call[old] = 0
+        index = self.seek_slot(key)
+        if index is None:
+            old = self.count_call.index(min(self.count_call))
+            self.slots[old] = key
+            self.values[old] = value
+            self.count_call[old] = 1
+            return True
+        else:
+            self.slots[index] = key
+            self.values[index] = value
+            self.count_call[index] += 1
+            return True
 
     def get(self, key):
         key = self.find(key)
