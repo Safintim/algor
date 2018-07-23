@@ -20,12 +20,11 @@ class Cache(HashTable):
             self.slots[old] = key
             self.values[old] = value
             self.count_call[old] = 1
-            return True
         else:
             self.slots[index] = key
             self.values[index] = value
             self.count_call[index] += 1
-            return True
+        return True
 
     def get(self, key):
         key = self.find(key)
