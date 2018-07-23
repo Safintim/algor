@@ -82,6 +82,12 @@ class ListTest(unittest.TestCase):
 
         self.assertListEqual(sum_lists1, sum_lists2)
 
+    def test_iter(self):
+        s_list1 = l.create_list(1, 2, 3, 4, 5, 6, 7, 8)
+        result = [1, 2, 3, 4, 5, 6, 7, 8]
+
+        self.assertListEqual(result, list((i.get_value() for i in s_list1)))
+
 
 if __name__ == '__main__':
     unittest.main()
