@@ -21,6 +21,21 @@ class LinkedList:
     def __init__(self):
         self.head = None
         self.tail = None
+        self.current = None
+
+    def first(self):
+        self.current = self.head
+
+    def __next__(self):
+        if self.current is None:
+            raise StopIteration
+        temp = self.current
+        self.current = self.current.get_next()
+        return temp
+
+    def __iter__(self):
+        self.first()
+        return self
 
     def add_in_tail(self, item):
         """
@@ -28,6 +43,7 @@ class LinkedList:
         """
         if self.head is None:
             self.head = item
+            self.current = self.head
         else:
             self.tail.set_next(item)
         self.tail = item
@@ -188,3 +204,25 @@ def create_list(*args):
 #
 # result = sum(arr)/len(arr)
 # print(result)
+s_list1 = create_list(1, 2, 3, 4, 5, 6, 7, 8)
+itr = s_list1
+while True:
+    try:
+        a = next(itr)
+    except StopIteration:
+        break
+    print(itr.current)
+
+
+while True:
+    try:
+        a = next(itr)
+    except StopIteration:
+        break
+    print(itr.current)
+
+# for i in s_list1:
+#     print(i.get_value())
+#
+# for i in s_list1:
+#     print(i.get_value())
