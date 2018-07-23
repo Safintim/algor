@@ -12,3 +12,4 @@
 * lesson9_hash.py - Хэш-таблица.
 * lesson10_ass_arr.py - Словарь.
 * lesson11_set.py - Множества.
+* lesson12_cache.py - Кэш, на основе словаря.
