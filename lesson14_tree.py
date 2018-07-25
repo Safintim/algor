@@ -6,27 +6,36 @@ class TreeNode:
         self.value = value
         self.level = -1
 
-    def add_child(self, node):
-        self.child.append(node)
-
 
 class SimpleTree:
 
     def __init__(self, root):
         self.root = root
-        self.current = self.root
+        # self.current = self.root
 
     def add_node(self, node):
-        # текущему узлу добавить новый узел в качестве дочернего
-        self.current.add_child(node)
+        """текущему узлу добавить новый узел в качестве дочернего"""
+
+        # рекурсивно прходит по дереву и добавляет node в зависимости от родителя
+        if node.parent is None:
+            return False
+        for n in self.traverse_tree(self.root):
+            if node.parent == n:
+                node.parent.child.append(node)
         return True
 
     def remove_child(self, node):
+        """
+        удаляет узел (не корневой)
+        """
+
         if node != self.root:
             parent = node.parent
-            for i, n in enumerate(parent.child, 0):
+            for index, n in enumerate(parent.child, 0):
+                # рекурсивно находится нода
                 if n == node:
-                    parent.child.pop(i)
+                    # удаляется узел из списка детей родителя
+                    parent.child.pop(index)
                     return True
         else:
             return False
@@ -40,8 +49,7 @@ class SimpleTree:
         return self
 
     def find_childs(self, value):
-        # находит все узлы по заданому значению
-        # с помощью генератора
+        """ находит все узлы по заданому значению с помощью генератора"""
         result = []
         for node in self.traverse_tree(self.root):
             if node.value == value:
@@ -49,16 +57,23 @@ class SimpleTree:
         return result
 
     def move_child(self, start, end):
-        # - переместить некорневой узел дочерним узлом в другое
-        # место дерева
+        """- переместить некорневой узел дочерним узлом в другое место дерева """
 
-        return
+        if start != self.root:
+            # удаляет из старой позиции
+            self.remove_child(start)
+            start.parent = end
+            # добавляет дочерним элементом в указанную позицию
+            self.add_node(start)
+            return True
+        return False
 
     def count_node(self):
-        # считает количество узлов и листьев
+        """считает количество узлов и листьев"""
         count_node = 0
         count_leaf = 0
         for node in self.traverse_tree(self.root):
+            # если детей не имеет, то листок
             if not node.child:
                 count_leaf += 1
             else:
@@ -66,35 +81,9 @@ class SimpleTree:
         return count_node, count_leaf
 
     def set_level(self):
-        # каджому узлу устанавливает уровень вложенности
+        for n in self.traverse_tree(self.root):
+            if n == self.root:
+                n.level = 1
+            else:
+                n.level = n.parent.level + 1
         return
-
-
-root = TreeNode(None, 9)
-tree = SimpleTree(root)
-
-child1 = TreeNode(root, 4)
-child2 = TreeNode(root, 17)
-
-child3 = TreeNode(child1, 3)
-child4 = TreeNode(child1, 6)
-child5 = TreeNode(child2, 22)
-
-
-tree.add_node(child1)
-tree.add_node(child2)
-
-child1.add_child(child3)
-child1.add_child(child4)
-child2.add_child(child5)
-
-# print(tree.remove_child(child5))
-
-tree.find_childs(3)
-# tree.set_level()
-for i in tree.traverse_tree(root):
-    print(i.value, i.level)
-
-# print(tree.find_childs(3)[0].value)
-
-print(tree.count_node())
