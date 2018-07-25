@@ -32,17 +32,17 @@ class TreeTest(unittest.TestCase):
         child9 = l.TreeNode(child8, 1)
         child10 = l.TreeNode(child8, 2)
 
-        tree.add_node(child1)
-        tree.add_node(child2)
-        tree.add_node(child3)
-        tree.add_node(child4)
-        tree.add_node(child5)
-        tree.add_node(child6)
-        tree.add_node(child7)
-        tree.add_node(child8)
-        tree.add_node(child9)
-        tree.add_node(child10)
-        tree.add_node(child11)
+        tree.add_node(root, child1)
+        tree.add_node(root, child2)
+        tree.add_node(child1, child3)
+        tree.add_node(child1, child4)
+        tree.add_node(child1, child5)
+        tree.add_node(child4, child11)
+        tree.add_node(child2, child6)
+        tree.add_node(child6, child7)
+        tree.add_node(child5, child8)
+        tree.add_node(child8, child9)
+        tree.add_node(child8, child10)
         return tree
 
     def test_add_child(self):
@@ -50,7 +50,7 @@ class TreeTest(unittest.TestCase):
         result1 = [3, 6, 90]
         result2 = [1, 2]
         temp = tree.root.child[0]
-        self.assertListEqual(list(i.value for i in temp.child[2].child[0].child),result2)
+        self.assertListEqual(list(i.value for i in temp.child[2].child[0].child), result2)
         self.assertListEqual(list(i.value for i in temp.child), result1)
 
     def test_remove_child(self):
@@ -96,6 +96,7 @@ class TreeTest(unittest.TestCase):
         result = 5
 
         self.assertEqual(tree.find_childs(1)[0].level, result)
+
 
 if __name__ == '__main__':
     unittest.main()

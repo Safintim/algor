@@ -13,22 +13,19 @@ class SimpleTree:
         self.root = root
         # self.current = self.root
 
-    def add_node(self, node):
+    def add_node(self, parent, node):
         """текущему узлу добавить новый узел в качестве дочернего"""
 
-        # рекурсивно прходит по дереву и добавляет node в зависимости от родителя
         if node.parent is None:
             return False
-        for n in self.traverse_tree(self.root):
-            if node.parent == n:
-                node.parent.child.append(node)
+        parent.child.append(node)
+        node.parent = parent
         return True
 
     def remove_child(self, node):
         """
         удаляет узел (не корневой)
         """
-
         if node != self.root:
             parent = node.parent
             for index, n in enumerate(parent.child, 0):
@@ -60,11 +57,9 @@ class SimpleTree:
         """- переместить некорневой узел дочерним узлом в другое место дерева """
 
         if start != self.root:
-            # удаляет из старой позиции
+            # удаляет из старой позиции и добавляет дочерним элементом в end
             self.remove_child(start)
-            start.parent = end
-            # добавляет дочерним элементом в указанную позицию
-            self.add_node(start)
+            self.add_node(end, start)
             return True
         return False
 
