@@ -11,15 +11,14 @@ class SimpleTree:
 
     def __init__(self, root):
         self.root = root
-        # self.current = self.root
 
-    def add_node(self, parent, node):
+    @staticmethod
+    def add_node(parent, node):
         """текущему узлу добавить новый узел в качестве дочернего"""
 
-        if node.parent is None:
-            return False
         parent.child.append(node)
         node.parent = parent
+        # node.level = parent.level + 1
         return True
 
     def remove_child(self, node):
