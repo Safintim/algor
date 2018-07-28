@@ -4,7 +4,6 @@
 class Tree2:
 
     def __init__(self, sz):
-
         self.tree = [None] * sz
 
     def find(self, node, i=0):
@@ -17,14 +16,11 @@ class Tree2:
                 return index
             elif self.tree[index] > node:
                 index = 2 * index + 1
-                if self.tree[index] is None:
-                    return -index
-                return self.find(node, index)
             else:
                 index = 2 * index + 2
-                if self.tree[index] is None:
-                    return -index
-                return self.find(node, index)
+            if self.tree[index] is None:
+                return -index
+            return self.find(node, index)
 
     def add(self, node):
         index = self.find(node)
