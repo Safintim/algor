@@ -53,6 +53,34 @@ class GraphTest(unittest.TestCase):
         self.assertEqual(len(g.m_adjacency), 4)
         self.assertEqual(len(g.m_adjacency[0]), 4)
 
+    def test_dfs(self):
+
+        A = l.Vertex('A')
+        B = l.Vertex('B')
+        C = l.Vertex('C')
+        D = l.Vertex('D')
+        E = l.Vertex('E')
+
+        g = l.SimpleGraph(5)
+
+        g.add_vertex(A)
+        g.add_vertex(B)
+        g.add_vertex(C)
+        g.add_vertex(D)
+        g.add_vertex(E)
+
+        g.m_adjacency = [
+            [0, 1, 1, 1, 0],  # A
+            [1, 0, 0, 1, 1],  # B
+            [1, 0, 0, 1, 0],  # C
+            [1, 1, 1, 1, 1],  # D
+            [0, 1, 0, 1, 0],  # E
+        ]
+        # self.assertEqual(g.dfs(A, B), 'A->B')
+        # self.assertEqual(g.dfs(D, D), 'D->D')
+        # self.assertEqual(g.dfs(C, E), 'C->A->B->E')
+        self.assertEqual(g.dfs(C, E), None)  # для этой проверки нужно занулить все ребра от Е и к E
+
 
 if __name__ == '__main__':
     unittest.main()
