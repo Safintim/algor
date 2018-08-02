@@ -51,19 +51,25 @@ class SimpleGraph:
         stack = Stack()
         for v in self.vertex:
             v.hit = False
+
         ep_i = self.vertex.index(end_path)  # индекс конечного пути
         flag = False
+
         while True:
+
             # если непосещенных больше нет, то пропустить след операции
             if not flag:
                 # 2-3 - фиксируем как посещенную и добавл в стек
                 current.hit = True
                 stack.push(current)
+
             c_i = self.vertex.index(current)  # индекс текущей вершины
+
             # 4 - среди смежных ищем целевую вершину
             if self.m_adjacency[c_i][ep_i] == 1:
                 stack.push(end_path)
                 return '->'.join(str(i.name) for i in stack.stack[::-1])
+
             # если нет, то выбираем такую смежную, которая еще не была посещена
             for i, value in enumerate(self.m_adjacency[c_i]):
                 if value == 1 and not self.vertex[i].hit:
@@ -72,6 +78,7 @@ class SimpleGraph:
                     break  # нужно перейти к 2-3
                 elif value == 1:
                     flag = True
+
             # 5 - если непосещенных больше нет
             if flag:
                 stack.pop()  # удаляем верхний элемент стека

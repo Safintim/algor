@@ -76,10 +76,10 @@ class GraphTest(unittest.TestCase):
             [1, 1, 1, 1, 1],  # D
             [0, 1, 0, 1, 0],  # E
         ]
-        # self.assertEqual(g.dfs(A, B), 'A->B')
-        # self.assertEqual(g.dfs(D, D), 'D->D')
-        # self.assertEqual(g.dfs(C, E), 'C->A->B->E')
-        self.assertEqual(g.dfs(C, E), None)  # для этой проверки нужно занулить все ребра от Е и к E
+        self.assertEqual(g.dfs(A, B), 'A->B')
+        self.assertEqual(g.dfs(D, D), 'D->D')
+        self.assertEqual(g.dfs(C, E), 'C->A->B->E')
+        # self.assertEqual(g.dfs(C, E), None)  # для этой проверки нужно занулить все ребра от Е и к E
 
 
 if __name__ == '__main__':
