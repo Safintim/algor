@@ -1,5 +1,5 @@
 from lesson5_stack import Stack
-
+from lesson6_queue import Queue
 
 class SimpleGraph:
 
@@ -87,6 +87,54 @@ class SimpleGraph:
                     return None
                 else:
                     current = stack.stack[0]  # текущий становится верхний элемент стека
+
+    def print_path(self, p, start, end):
+        '''Функция идет с конца пути к началу. Потом реверс строки'''
+        temp = ''
+        for i in range(len(p)):
+            if end == start:
+                temp += self.vertex[end].name
+                return temp[::-1]
+            temp += self.vertex[end].name + '-'
+            end = p[end]
+
+    def bfs(self, current, end_path):
+        # 0 - исходное состояние
+        queue = Queue()
+        for v in self.vertex:
+            v.hit = False
+
+        parents = [0] * self.max_vertex  # массив предков. p[i] = c_i -> c_i предок i
+        start_i = self.vertex.index(current)  # индекс начало пути
+        ep_i = self.vertex.index(end_path)  # индекс конца пути
+
+        parents[start_i] = start_i
+        flag = False
+
+        # 1 - фиксируем текущую как посещенную
+        current.hit = True
+
+        while True:
+            c_i = self.vertex.index(current)  # индекс текущей вершины
+
+            # 2 - из всех смежных вершин выбираем любую непосещенную
+            for i, value in enumerate(self.m_adjacency[c_i]):
+                if value == 1 and not self.vertex[i].hit:
+                    parents[i] = c_i  # добавляем предка
+                    flag = False
+                    self.vertex[i].hit = True
+                    queue.enqueue(self.vertex[i])
+                    break
+                elif value == 1:
+                    flag = True
+
+            # 2 - если нет непосещенных вершин
+            if flag:
+                # если массив пуст, то значит изучили весь граф и пора печатать путь
+                if queue.size() == 0:
+                    return self.print_path(parents, start_i, ep_i)
+                else:
+                    current = queue.dequeue()
 
 
 class Vertex:
