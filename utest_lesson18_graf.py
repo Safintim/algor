@@ -104,10 +104,10 @@ class GraphTest(unittest.TestCase):
             [1, 1, 1, 1, 1],  # D
             [0, 1, 0, 1, 0],  # E
         ]
-        self.assertEqual(g.bfs(C, E), 'C-D-E')
-        self.assertEqual(g.bfs(E, C), 'E-D-C')
+        self.assertEqual(g.bfs(C, E), 'CDE')
+        self.assertEqual(g.bfs(E, C), 'EDC')
         self.assertEqual(g.bfs(D, D), 'D')
-        self.assertEqual(g.bfs(B, C), 'B-A-C')
+        self.assertEqual(g.bfs(B, C), 'BAC')
 
 
 if __name__ == '__main__':
