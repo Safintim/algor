@@ -22,4 +22,4 @@ def sort_fast(m):
         elif m[i1] > n > m[i2]:
             m[i1], m[i2] = m[i2], m[i1]
 
-    return m
+    return m, i1, i2
