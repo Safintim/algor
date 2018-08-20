@@ -20,5 +20,3 @@ def ksort(n, d):
             for j in i:
                 result.append(j)
     return result
-
-
