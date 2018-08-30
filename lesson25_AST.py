@@ -47,7 +47,7 @@ def add_brackets(operator, s):
                     i += 1
 
             else:  # если сюда попали, значит, это конец строки и в конце нет скобки
-                result.insert(i + 3, ')')
+                result.insert(i + 2, ')')
 
                 if result[i - 1] != ')':
                     result.insert(i - 1, '(')
