@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+
 def find_start_end(flag, result, i):
     """
     Находит начало и конец аргументов
@@ -60,11 +64,48 @@ def add_brackets(operator, s):
     return ' '. join(result)
 
 
-i1 = add_brackets('/', '7 + 3 / 25 * ( 5 - 2 ) ')
-print(i1)
-i2 = add_brackets('*', i1)
-print(i2)
-i3 = add_brackets('-', i2)
-print(i3)
-i4 = add_brackets('+', i3)
-print(i4)
+# i1 = add_brackets('/', '7 + 3 / 25 * ( 5 - 2 ) ')
+# print(i1)
+# i2 = add_brackets('*', i1)
+# print(i2)
+# i3 = add_brackets('-', i2)
+# print(i3)
+# i4 = add_brackets('+', i3)
+# print(i4)
+
+class ANode:
+    def __init__(self, token_type, token_value):
+        self.token_type = token_type
+        self.token_value = token_value
+
+
+def parse_exp(exp):
+        operators = ['/', '*', '-', '+']
+        brackets = ['(', ')']
+        token_list = []
+
+        for op in operators:
+            exp = add_brackets(op, exp)
+
+        exp = exp.split()
+
+        for elem in exp:
+            if elem in operators:
+                token_list.append(ANode('операция', elem))
+            elif elem in brackets:
+                token_list.append(ANode('скобка', elem))
+            elif elem != ' ':
+                token_list.append(ANode('число', elem))
+
+        return token_list
+
+
+s = [(i.token_type, i.token_value) for i in parse_exp('3 + 5 - 5 + 3')]
+print(s)
+'''
+результат
+[('скобка', '('), ('скобка', '('), ('число', '3'), ('операция', '+'),
+('скобка', '('), ('число', '5'), ('операция', '-'), ('число', '5'),
+('скобка', ')'), ('скобка', ')'), ('операция', '+'), ('число', '3'), 
+('скобка', ')')]
+'''

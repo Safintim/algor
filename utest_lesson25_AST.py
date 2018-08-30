@@ -22,6 +22,17 @@ class ASTTest(unittest.TestCase):
         self.assertEqual(test_str2, result2)
         self.assertEqual(test_str3, result3)
 
+    def test_parse_exp(self):
+        test_str1 = '3 + 5 - 5 + 3'
+
+        result1 = [('скобка', '('), ('скобка', '('), ('число', '3'),
+                   ('операция', '+'), ('скобка', '('), ('число', '5'),
+                   ('операция', '-'), ('число', '5'), ('скобка', ')'),
+                   ('скобка', ')'), ('операция', '+'), ('число', '3'),
+                   ('скобка', ')')]
+
+        self.assertListEqual(result1, list((i.token_type, i.token_value) for i in l.parse_exp(test_str1)))
+
 
 if __name__ == '__main__':
     unittest.main()
