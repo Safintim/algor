@@ -2,7 +2,6 @@ def find_start_end(flag, result, i):
     """
     Находит начало и конец аргументов
     """
-
     brackets = 1
     if flag:
         j = i + 2
@@ -42,6 +41,7 @@ def add_brackets(operator, s):
                 if result[i+1] == '(':  # если после стоит откр скобка, то нужно найти конец аргумента
                     j = find_start_end(True, result, i)
                     result.insert(j, ')')
+                    i += 1
                 elif result[i+2] != ')':  # если нет, то поставить
                     result.insert(i+2, ')')
                     i += 1
