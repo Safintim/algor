@@ -8,6 +8,8 @@ class ANode:
     def __init__(self, token_type, token_value):
         self.token_type = token_type
         self.token_value = token_value
+        self.result = None
+        self.translate = self.token_value
 
 
 # Парсер выражения
@@ -122,10 +124,58 @@ class AST:
                 token_list.pop(0)
                 self.node = self.node.parent
             elif token_list[0].token_type == parser.NUMBER:
-                self.node.value = token_list.pop(0).token_value
+                self.node.value = token_list.pop(0)
                 self.node = self.node.parent
             elif token_list[0].token_type == parser.OPERATOR:
-                self.node.value = token_list.pop(0).token_value
+                self.node.value = token_list.pop(0)
                 self.tree.add_node(self.node, TreeNode(self.node, None))
                 self.node = self.node.child[1]
         return self.tree
+
+
+class Interpreter:
+    def __init__(self, tree):
+        self.tree = tree
+        self.node = self.tree.root
+
+    def execution(self, node):
+        # current = self.node
+        if self.node == self.tree.root and self.node.value.token_type == 200:
+            return self.node.value.token_value, self.node.value.translate
+        elif self.node and self.node.child:
+            l_c = self.node.child[0]
+            r_c = self.node.child[1]
+            if l_c.value.token_type == 200 and r_c.value.token_type == 200:
+                if '/' == self.node.value.token_value:
+                    self.node.value.token_value = int(l_c.value.token_value) // int(r_c.value.token_value)
+                    self.node.value.translate = '(' + l_c.value.translate\
+                                                + self.node.value.translate + r_c.value.translate + ')'
+                elif '*' == self.node.value.token_value:
+                    self.node.value.token_value = int(l_c.value.token_value) * int(r_c.value.token_value)
+                    self.node.value.translate = '(' + l_c.value.translate\
+                                                + self.node.value.translate + r_c.value.translate + ')'
+                elif '-' == self.node.value.token_value:
+                    self.node.value.token_value = int(l_c.value.token_value) - int(r_c.value.token_value)
+                    self.node.value.translate = '(' + l_c.value.translate\
+                                                + self.node.value.translate + r_c.value.translate + ')'
+                else:
+                    self.node.value.token_value = int(l_c.value.token_value) + int(r_c.value.token_value)
+                    self.node.value.translate = '(' + l_c.value.translate\
+                                                + self.node.value.translate + r_c.value.translate + ')'
+
+                self.node.value.token_type = 200
+                self.node.child.pop()
+                self.node.child.pop()
+
+                if self.node.parent:
+                    self.node = self.node.parent
+
+                return self.execution(self.node)
+
+            elif l_c.value.token_type == 300 or r_c.value.token_type == 300:
+                if l_c.value.token_type == 300:
+                    self.node = l_c
+                else:
+                    self.node = r_c
+
+                return self.execution(self.node)
