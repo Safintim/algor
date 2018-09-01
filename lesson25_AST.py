@@ -112,7 +112,6 @@ class AST:
     def create(self, exp):
         parser = ParseExpression()
         token_list = parser.parse_exp(exp)
-        index = 0
 
         while len(token_list) > 0:
             if token_list[0].token_type == parser.OPEN_BRACKET:
