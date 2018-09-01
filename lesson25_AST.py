@@ -141,7 +141,8 @@ class Interpreter:
     def execution(self, node):
         # current = self.node
         if self.node == self.tree.root and self.node.value.token_type == 200:
-            return self.node.value.token_value, self.node.value.translate
+            return self.node.value.token_value, self.node.value.translate, \
+                   self.node.value.token_value == eval(self.node.value.translate)
         elif self.node and self.node.child:
             l_c = self.node.child[0]
             r_c = self.node.child[1]
@@ -149,7 +150,7 @@ class Interpreter:
                 if '/' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) // int(r_c.value.token_value)
                     self.node.value.translate = '(' + l_c.value.translate\
-                                                + self.node.value.translate + r_c.value.translate + ')'
+                                                + self.node.value.translate + '/'+ r_c.value.translate + ')'
                 elif '*' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) * int(r_c.value.token_value)
                     self.node.value.translate = '(' + l_c.value.translate\

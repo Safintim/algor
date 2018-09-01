@@ -53,12 +53,12 @@ class ASTTest(unittest.TestCase):
         test_str1 = '3 + 5 - 5 + 3'
         ast1 = l.AST().create(test_str1)
         inter1 = l.Interpreter(ast1)
-        result1 = (6, '((3+(5-5))+3)')
+        result1 = (6, '((3+(5-5))+3)', True)
 
         test_str2 = '7 + 3 / 25 * ( 5 - 2 )'
         ast2 = l.AST().create(test_str2)
         inter2 = l.Interpreter(ast2)
-        result2 = (7, '(7+((3/25)*(5-2)))')
+        result2 = (7, '(7+((3//25)*(5-2)))', True)
         self.assertEqual(result1, inter1.execution(ast1.root))
         self.assertEqual(result2, inter2.execution(ast2.root))
 
