@@ -149,21 +149,19 @@ class Interpreter:
             if l_c.value.token_type == 200 and r_c.value.token_type == 200:
                 if '/' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) // int(r_c.value.token_value)
-                    self.node.value.translate = '(' + l_c.value.translate\
-                                                + self.node.value.translate + '/'+ r_c.value.translate + ')'
                 elif '*' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) * int(r_c.value.token_value)
-                    self.node.value.translate = '(' + l_c.value.translate\
-                                                + self.node.value.translate + r_c.value.translate + ')'
                 elif '-' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) - int(r_c.value.token_value)
-                    self.node.value.translate = '(' + l_c.value.translate\
-                                                + self.node.value.translate + r_c.value.translate + ')'
                 else:
                     self.node.value.token_value = int(l_c.value.token_value) + int(r_c.value.token_value)
-                    self.node.value.translate = '(' + l_c.value.translate\
-                                                + self.node.value.translate + r_c.value.translate + ')'
 
+                if self.node.value.translate == '/':
+                    self.node.value.translate = '(' + l_c.value.translate \
+                                                + self.node.value.translate + '/' + r_c.value.translate + ')'
+                else:
+                    self.node.value.translate = '(' + l_c.value.translate \
+                                            + self.node.value.translate + r_c.value.translate + ')'
                 self.node.value.token_type = 200
                 self.node.child.pop()
                 self.node.child.pop()
