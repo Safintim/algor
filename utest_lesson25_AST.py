@@ -60,7 +60,7 @@ class ASTTest(unittest.TestCase):
         inter2 = l.Interpreter(ast2)
         result2 = (7, '(7+((3//25)*(5-2)))', True)
         self.assertEqual(result1, inter1.execution(ast1.root))
-        self.assertEqual(result2, inter2.execution(ast2.root))
+        self.assertEqual(result2, inter2.execution(ast2.root))  # (7, '(7+((3//25)*(5-2)))', True)
 
 
 if __name__ == '__main__':
