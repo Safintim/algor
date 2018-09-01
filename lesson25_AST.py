@@ -146,7 +146,7 @@ class Interpreter:
         elif self.node and self.node.child:
             l_c = self.node.child[0]
             r_c = self.node.child[1]
-            if l_c.value.token_type == 200 and r_c.value.token_type == 200:
+            if l_c.value.token_type == ParseExpression().NUMBER and r_c.value.token_type == ParseExpression().NUMBER:
                 if '/' == self.node.value.token_value:
                     self.node.value.token_value = int(l_c.value.token_value) // int(r_c.value.token_value)
                 elif '*' == self.node.value.token_value:
@@ -162,7 +162,7 @@ class Interpreter:
                 else:
                     self.node.value.translate = '(' + l_c.value.translate \
                                             + self.node.value.translate + r_c.value.translate + ')'
-                self.node.value.token_type = 200
+                self.node.value.token_type = ParseExpression().NUMBER
                 self.node.child.pop()
                 self.node.child.pop()
 
@@ -171,8 +171,8 @@ class Interpreter:
 
                 return self.execution(self.node)
 
-            elif l_c.value.token_type == 300 or r_c.value.token_type == 300:
-                if l_c.value.token_type == 300:
+            elif l_c.value.token_type == ParseExpression().OPERATOR or r_c.value.token_type == ParseExpression().OPERATOR:
+                if l_c.value.token_type == ParseExpression().OPERATOR:
                     self.node = l_c
                 else:
                     self.node = r_c
