@@ -1,5 +1,6 @@
 import unittest
 import lesson26_blockchain as l
+import timeit
 
 
 class BlockChainTest(unittest.TestCase):
@@ -51,6 +52,17 @@ class BlockChainTest(unittest.TestCase):
         # bl_ch.chain_block[len(bl_ch.chain_block)-1].own_hash += '1'
         self.assertTrue(bl_ch.correction_block())
 
+    @staticmethod
+    def test_time():
+        list_time = []
+        for i in range(1, 7):
+            print(i)
+            start_time = timeit.default_timer()
+            bl_ch = l.BlockChain('0' * i)
+            bl_ch.chain_block[0].data = 'Hi'
+            bl_ch.add('Bye')
+            list_time.append((timeit.default_timer() - start_time, i))
+        print(list_time)
 
 if __name__ == '__main__':
     unittest.main()
