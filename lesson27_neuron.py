@@ -47,22 +47,28 @@ class Neuron:
 
         # пока не распознал все файлы
         while done != len(list_dir) or count == 10**6:
-            print(count)
+            done = 0
             for i in list_dir:
+                char = i[0]
+                indicator = int(i[2])
                 # читаем файл и преобразуем в удобный вид для вычислений
                 list_line = self.read_file(dir_name + '/' + i)
                 # распознавание
                 temp = self.activation(list_line)
 
+                # если все как и ожидалось
+                if ('A' == char) or ('A' != char):
+                    if temp == indicator:
+                        done += 1
+                        continue
+
                 # если это буква отличная от А, но распоз как А
-                if temp == int(i[2]) and 'A' != i[0]:
-                    self.correct_wt(self.synapses, list_line, True)
-                # если это А, но неправильно распоз
-                elif temp != int(i[2]) and 'A' == i[0]:
+                if 'A' != char and temp == 1:
                     self.correct_wt(self.synapses, list_line, False)
-                # если все четко
-                elif temp == int(i[2]) and 'A' == i[0]:
-                    done += 1
+                # если это А, но не распоз как А
+                elif 'A' == char and temp == 0:
+                    self.correct_wt(self.synapses, list_line, True)
+
             count += 1
 
         return done, count

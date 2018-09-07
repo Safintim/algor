@@ -34,7 +34,9 @@ class MyTestCase(unittest.TestCase):
 
     def test_learning(self):
         n = l.Neuron(10, 10)
-        print(n.learning('lesson27/'))
+        result = n.learning('lesson27/')
+        self.assertEqual(result[0], 10)
+        print(result)
 
 
 
