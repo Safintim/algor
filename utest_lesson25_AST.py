@@ -30,12 +30,20 @@ class ASTTest(unittest.TestCase):
         CLOSE_BRACKET = 101
         test_str1 = '3 + 5 - 5 + 3'
         p_e = l.ParseExpression()
-        result1 = [(OPEN_BRACKET, '('), (OPEN_BRACKET, '('), (NUMBER, '3'),
-                   (OPERATOR, '+'), (OPEN_BRACKET, '('), (NUMBER, '5'),
-                   (OPERATOR, '-'), (NUMBER, '5'), (CLOSE_BRACKET, ')'),
-                   (CLOSE_BRACKET, ')'), (OPERATOR, '+'), (NUMBER, '3'),
-                   (CLOSE_BRACKET, ')')]
-        self.assertListEqual(result1, list((i.token_type, i.token_value) for i in p_e.parse_exp(test_str1)))
+        result1 = [
+            (OPEN_BRACKET, '('), (OPEN_BRACKET, '('), (NUMBER, '3'),
+            (OPERATOR, '+'), (OPEN_BRACKET, '('), (NUMBER, '5'),
+            (OPERATOR, '-'), (NUMBER, '5'), (CLOSE_BRACKET, ')'),
+            (CLOSE_BRACKET, ')'), (OPERATOR, '+'), (NUMBER, '3'),
+            (CLOSE_BRACKET, ')')
+        ]
+
+        self.assertListEqual(
+            result1,
+            list(
+                (i.token_type, i.token_value) for i in p_e.parse_exp(test_str1)
+            )
+        )
 
     def test_create(self):
         test_str1 = '3 + 5 - 5 + 3'
@@ -46,8 +54,14 @@ class ASTTest(unittest.TestCase):
         ast2 = l.AST().create(test_str2)
         result2 = ['+', '7', '*', '/', '3', '25', '-', '5', '2']
 
-        self.assertListEqual(result1, [i.value.token_value for i in ast1.traverse_tree(ast1.root)])
-        self.assertListEqual(result2, [i.value.token_value for i in ast2.traverse_tree(ast2.root)])
+        self.assertListEqual(
+            result1,
+            [i.value.token_value for i in ast1.traverse_tree(ast1.root)]
+        )
+        self.assertListEqual(
+            result2,
+            [i.value.token_value for i in ast2.traverse_tree(ast2.root)]
+        )
 
     def test_execution(self):
         test_str1 = '3 + 5 - 5 + 3'
@@ -60,7 +74,8 @@ class ASTTest(unittest.TestCase):
         inter2 = l.Interpreter(ast2)
         result2 = (7, '(7+((3//25)*(5-2)))', True)
         self.assertEqual(result1, inter1.execution(ast1.root))
-        self.assertEqual(result2, inter2.execution(ast2.root))  # (7, '(7+((3//25)*(5-2)))', True)
+        # (7, '(7+((3//25)*(5-2)))', True)
+        self.assertEqual(result2, inter2.execution(ast2.root))
 
 
 if __name__ == '__main__':

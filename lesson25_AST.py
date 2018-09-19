@@ -24,7 +24,7 @@ class ParseExpression:
     @staticmethod
     def find_start_end(flag, result, i):
         """
-        Находит начало и конец аргументов
+        Находит начало и конец аргументов.
         """
         brackets = 1
         if flag:
@@ -52,24 +52,28 @@ class ParseExpression:
         while i <= len(result) - 1:
             if result[i] == operator:
                 if i + 2 <= len(result) - 1:  # чтобы избежать IndexError
-
-                    if result[i - 1] == ')':  # если перед стоит закр скобка, то нужно найти начало аргумента
+                    # Если перед стоит закр скобка,
+                    # то нужно найти начало аргумента.
+                    if result[i - 1] == ')':
                         j = self.find_start_end(False, result, i)
                         result.insert(j + 1, '(')
                         i += 1
-                    elif result[i - 2] != '(':  # если нет скобочек, то поставить скобочку
+                    # Если нет скобочек, то поставить скобочку.
+                    elif result[i - 2] != '(':
                         result.insert(i - 1, '(')
                         i += 1
-
-                    if result[i+1] == '(':  # если после стоит откр скобка, то нужно найти конец аргумента
+                    # Если после стоит откр скобка,
+                    # то нужно найти конец аргумента.
+                    if result[i+1] == '(':
                         j = self.find_start_end(True, result, i)
                         result.insert(j, ')')
                         i += 1
-                    elif result[i+2] != ')':  # если нет, то поставить
+                    elif result[i+2] != ')':  # Если нет, то поставить ).
                         result.insert(i+2, ')')
                         i += 1
-
-                else:  # если сюда попали, значит, это конец строки и в конце нет скобки
+                # Если сюда попали, значит, это конец строки
+                # и в конце нет скобки.
+                else:
                     result.insert(i + 2, ')')
 
                     if result[i - 1] != ')':
@@ -141,27 +145,39 @@ class Interpreter:
     def execution(self, node):
         # current = self.node
         if self.node == self.tree.root and self.node.value.token_type == 200:
-            return self.node.value.token_value, self.node.value.translate, \
-                   self.node.value.token_value == eval(self.node.value.translate)
+            return (self.node.value.token_value, self.node.value.translate,
+                    self.node.value.token_value ==
+                    eval(self.node.value.translate))
         elif self.node and self.node.child:
             l_c = self.node.child[0]
             r_c = self.node.child[1]
-            if l_c.value.token_type == ParseExpression().NUMBER and r_c.value.token_type == ParseExpression().NUMBER:
+            if (l_c.value.token_type == ParseExpression().NUMBER and
+                    r_c.value.token_type == ParseExpression().NUMBER):
                 if '/' == self.node.value.token_value:
-                    self.node.value.token_value = int(l_c.value.token_value) // int(r_c.value.token_value)
+                    self.node.value.token_value = (int(l_c.value.token_value)
+                                                   // int(r_c.value.token_value))
                 elif '*' == self.node.value.token_value:
-                    self.node.value.token_value = int(l_c.value.token_value) * int(r_c.value.token_value)
+                    self.node.value.token_value = (int(l_c.value.token_value)
+                                                   * int(r_c.value.token_value))
                 elif '-' == self.node.value.token_value:
-                    self.node.value.token_value = int(l_c.value.token_value) - int(r_c.value.token_value)
+                    self.node.value.token_value = (int(l_c.value.token_value)
+                                                   - int(r_c.value.token_value))
                 else:
-                    self.node.value.token_value = int(l_c.value.token_value) + int(r_c.value.token_value)
+                    self.node.value.token_value = (int(l_c.value.token_value)
+                                                   + int(r_c.value.token_value))
 
                 if self.node.value.translate == '/':
-                    self.node.value.translate = '(' + l_c.value.translate \
-                                                + self.node.value.translate + '/' + r_c.value.translate + ')'
+                    self.node.value.translate = '({}{}/{})'.format(
+                        l_c.value.translate,
+                        self.node.value.translate,
+                        r_c.value.translate
+                    )
                 else:
-                    self.node.value.translate = '(' + l_c.value.translate \
-                                            + self.node.value.translate + r_c.value.translate + ')'
+                    self.node.value.translate = '({}{}{})'.format(
+                        l_c.value.translate,
+                        self.node.value.translate,
+                        r_c.value.translate
+                    )
                 self.node.value.token_type = ParseExpression().NUMBER
                 self.node.child.pop()
                 self.node.child.pop()
@@ -171,7 +187,8 @@ class Interpreter:
 
                 return self.execution(self.node)
 
-            elif l_c.value.token_type == ParseExpression().OPERATOR or r_c.value.token_type == ParseExpression().OPERATOR:
+            elif (l_c.value.token_type == ParseExpression().OPERATOR or
+                  r_c.value.token_type == ParseExpression().OPERATOR):
                 if l_c.value.token_type == ParseExpression().OPERATOR:
                     self.node = l_c
                 else:
