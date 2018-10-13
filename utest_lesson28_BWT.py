@@ -96,12 +96,32 @@ class MyTestCase(unittest.TestCase):
                     str(tree[i].left_child_color) + 'l--r' + str(tree[i].right_child_color))
         return s
 
+    @staticmethod
+    def format_relation(relation):
+        print('TOP Tree')
+        for i in range(len(relation)):
+
+            print('Node {}: parent_color {}, left_color {},'
+             'right_color {}; left_child p-l-r {}, right_child p-l-r {}'.format(
+                i,
+                relation[i].parent_color,
+                relation[i].left_child_color,
+                relation[i].right_child_color,
+                (relation[i].left_child.parent_color,
+                 relation[i].left_child.left_child_color,
+                 relation[i].left_child.right_child_color),
+                (relation[i].right_child.parent_color,
+                 relation[i].right_child.left_child_color,
+                 relation[i].right_child.right_child_color),))
+
+
+
     def test_print(self):
         # a = l.BWT.COLORS
         bwt = l.BWT()
         bwt.top_tree = bwt.coloring_random_tree(bwt.top_tree)
         bwt.bottom_tree = bwt.coloring_random_tree(bwt.bottom_tree)
-        part_top, part_bottom = bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
+        bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
 
         tree1 = self.format_tree(bwt.top_tree.tree) + ';'
         tree2 = self.format_tree(bwt.bottom_tree.tree) + ';'
@@ -111,6 +131,9 @@ class MyTestCase(unittest.TestCase):
 
         print(t1.get_ascii(attributes=["name", ]))
         print()
+
+        self.format_relation(bwt.relationship_trees[:4])
+
         print(t2.get_ascii(attributes=["name", ]))
 
 
