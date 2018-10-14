@@ -91,9 +91,24 @@ class BWT:
 
         return tree
 
+    @staticmethod
+    def copy(tree1):
+        tree2 = []
+        for index, node in enumerate(tree1.tree):
+            if index * 2 + 1 >= len(tree1.tree):
+                tree2.append(Node([None, None], flag=True))
+                tree2[index].parent_color = node.parent_color
+                continue
+
+            colors = [node.left_child_color, node.right_child_color]
+            tree2.append(Node(colors))
+            tree2[index].parent_color = node.parent_color
+
+        return tree2
+
     def coloring_mirror_tree(self, tree1, tree2):
         tree1 = self.coloring_random_tree(tree1)
-        tree2.tree = tree1.tree.copy()
+        tree2.tree = self.copy(tree1)
         return tree1, tree2
 
     def create_tree(self, tree):
@@ -135,8 +150,6 @@ class BWT:
                             break
 
         self.relationship_trees = tree1.tree[last_level:] + tree2.tree[last_level:]
-        # return tree1.tree[-2 ** (self.depth - 1):],
-        #  tree2.tree[-2 ** (self.depth - 1):]
         return self.relationship_trees
 
 

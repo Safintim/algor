@@ -21,6 +21,13 @@ class MyTestCase(unittest.TestCase):
 
         self.assertNotEqual(bwt.top_tree.tree, bwt.bottom_tree.tree)
 
+    def test_copy(self):
+        bwt = l.BWT()
+        bwt.top_tree = bwt.coloring_random_tree(bwt.top_tree)
+        bwt.bottom_tree.tree = bwt.copy(bwt.top_tree)
+
+        self.assertNotEqual(bwt.top_tree.tree, bwt.bottom_tree.tree)
+
     def test_create_mirror_tree(self):
         bwt = l.BWT()
         temp = bwt.coloring_mirror_tree(bwt.top_tree, bwt.bottom_tree)
@@ -30,10 +37,14 @@ class MyTestCase(unittest.TestCase):
         bwt = l.BWT()
         top = bwt.create_tree(bwt.top_tree)
         for i in top.tree:
-            print('parent {}, left {}, right {}'.format(i.parent_color, i.left_child_color, i.right_child_color))
+            print('parent {}, left {}, right {}'.format(
+                i.parent_color,
+                i.left_child_color,
+                i.right_child_color))
         self.assertEqual(len(top.tree), 7)
 
-    def test_bind_trees(self):
+    @staticmethod
+    def test_bind_trees():
         bwt = l.BWT()
         bwt.top_tree = bwt.coloring_random_tree(bwt.top_tree)
         bwt.bottom_tree = bwt.coloring_random_tree(bwt.bottom_tree)
@@ -49,25 +60,26 @@ class MyTestCase(unittest.TestCase):
                                                         i.left_child_color,
                                                         i.right_child_color,))
         print()
-        # part_top, part_bottom = bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
         bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
         part_top = bwt.relationship_trees[-2 ** (bwt.depth - 1):]
         part_bottom = bwt.relationship_trees[:-2 ** (bwt.depth - 1):]
         print('TOP')
         for i in part_top:
-            print('parent {}, left {}, right {}, l_child {}, r_child {}'.format(i.parent_color,
-                                                        i.left_child_color,
-                                                        i.right_child_color,
-                                                        i.left_child,
-                                                        i.right_child))
+            print('parent {}, left {}, right {}, l_child {}, r_child {}'.format(
+                i.parent_color,
+                i.left_child_color,
+                i.right_child_color,
+                i.left_child,
+                i.right_child))
         print()
         print('BOTTOM')
         for i in part_bottom:
-            print('parent {}, left {}, right {}, l_child {}, r_child {}'.format(i.parent_color,
-                                                        i.left_child_color,
-                                                        i.right_child_color,
-                                                        i.left_child,
-                                                        i.right_child))
+            print('parent {}, left {}, right {}, l_child {}, r_child {}'.format(
+                i.parent_color,
+                i.left_child_color,
+                i.right_child_color,
+                i.left_child,
+                i.right_child))
 
         print()
 
@@ -79,48 +91,50 @@ class MyTestCase(unittest.TestCase):
             l_c = i * 2 + 1
             r_c = i * 2 + 2
             if len(tree) > i * 2 + 2:
-                # print('({},{}){}'.format(
-                #         str(tree[l_c].left_child_color) + 'l-r' + str(tree[l_c].right_child_color),
-                #         str(tree[r_c].left_child_color) + 'l-r' + str(tree[r_c].right_child_color),
-                #         str(tree[i].left_child_color) + 'l-r' + str(tree[i].right_child_color)))
                 if str(tree[i]) in s:
                     s = s.replace(str(tree[i]), '({},{}){}'.format(
-                        str(tree[r_c].left_child_color) + 'l--r' + str(tree[r_c].right_child_color),
-                        str(tree[l_c].left_child_color) + 'l--r' + str(tree[l_c].right_child_color),
-
-                        str(tree[i].left_child_color) + 'l--r' + str(tree[i].right_child_color)))
+                        str(tree[r_c].left_child_color)
+                        + 'l--r'
+                        + str(tree[r_c].right_child_color),
+                        str(tree[l_c].left_child_color)
+                        + 'l--r'
+                        + str(tree[l_c].right_child_color),
+                        str(tree[i].left_child_color)
+                        + 'l--r'
+                        + str(tree[i].right_child_color)))
                     continue
                 s = '({},{}){}'.format(
                     tree[i * 2 + 2],
                     tree[i * 2 + 1],
-                    str(tree[i].left_child_color) + 'l--r' + str(tree[i].right_child_color))
+                    str(tree[i].left_child_color)
+                    + 'l--r'
+                    + str(tree[i].right_child_color))
         return s
 
     @staticmethod
     def format_relation(relation):
-        print('TOP Tree')
+        print('relationship_trees')
         for i in range(len(relation)):
 
-            print('Node {}: parent_color {}, left_color {},'
-             'right_color {}; left_child p-l-r {}, right_child p-l-r {}'.format(
-                i,
-                relation[i].parent_color,
-                relation[i].left_child_color,
-                relation[i].right_child_color,
-                (relation[i].left_child.parent_color,
-                 relation[i].left_child.left_child_color,
-                 relation[i].left_child.right_child_color),
-                (relation[i].right_child.parent_color,
-                 relation[i].right_child.left_child_color,
-                 relation[i].right_child.right_child_color),))
-
-
+            print('Node {}: parent_color {}, left_color {}, right_color {};'
+                  ' left_child p-l-r {}, right_child p-l-r {}'.format(
+                    i,
+                    relation[i].parent_color,
+                    relation[i].left_child_color,
+                    relation[i].right_child_color,
+                    (relation[i].left_child.parent_color,
+                     relation[i].left_child.left_child_color,
+                     relation[i].left_child.right_child_color),
+                    (relation[i].right_child.parent_color,
+                     relation[i].right_child.left_child_color,
+                     relation[i].right_child.right_child_color),))
 
     def test_print(self):
         # a = l.BWT.COLORS
         bwt = l.BWT()
         bwt.top_tree = bwt.coloring_random_tree(bwt.top_tree)
         bwt.bottom_tree = bwt.coloring_random_tree(bwt.bottom_tree)
+        # bwt.bottom_tree.tree = bwt.copy(bwt.top_tree)
         bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
 
         tree1 = self.format_tree(bwt.top_tree.tree) + ';'
@@ -129,11 +143,13 @@ class MyTestCase(unittest.TestCase):
         t1 = ete3.Tree(tree1, format=1)
         t2 = ete3.Tree(tree2, format=1)
 
+        print('TOP Tree')
         print(t1.get_ascii(attributes=["name", ]))
         print()
 
-        self.format_relation(bwt.relationship_trees[:4])
-
+        self.format_relation(bwt.relationship_trees)
+        print()
+        print('BOTTOM Tree')
         print(t2.get_ascii(attributes=["name", ]))
 
 
