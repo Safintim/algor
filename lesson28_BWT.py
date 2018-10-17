@@ -1,15 +1,11 @@
 from random import randint, shuffle
 
-"""
-Элемент дерева хранит список цветов = [left_child_color, right_child]
-"""
-
 
 class Node:
     def __init__(self, colors, flag=None):
         self.left_child_color, self.right_child_color = colors
         self.parent_color = None
-        self.colors = colors
+        self.id = 0
         if flag:
             self.left_child = None
             self.right_child = None
@@ -17,14 +13,14 @@ class Node:
 
 class Tree:
     def __init__(self, sz):
-        self.tree = [None] * sz
+        self.tree = [Node([None, None]) for _ in range(sz)]
 
     def add_is_valid(self, index_new_node, new_node):
         parent = (index_new_node - 1) // 2
         left_child = 2 * parent + 1
         right_child = 2 * parent + 2
 
-        if self.tree[0] is None:
+        if self.tree[0].left_child_color is None:
             return True, None
 
         elif left_child == index_new_node:
@@ -43,7 +39,9 @@ class Tree:
         add_is_valid = temp[0]
         if not add_is_valid:
             return False
-        self.tree[index] = Node(node)
+
+        self.tree[index].left_child_color = node[0]
+        self.tree[index].right_child_color = node[1]
         self.tree[index].parent_color = temp[1]
         return True
 
@@ -59,12 +57,13 @@ class BWT:
         4: 'purple'
     }
 
-    def __init__(self, depth=3, count_colors=4):
+    def __init__(self, depth=4, count_colors=4):
         self.top_tree = Tree(2 ** depth - 1)
         self.bottom_tree = Tree(2 ** depth - 1)
         self.relationship_trees = []
         self.depth = depth
         self.count_colors = count_colors
+        self.id = -1
 
     def generate_random_colors(self, exclude=[]):
         colors = set()
@@ -77,13 +76,16 @@ class BWT:
 
     def coloring_random_tree(self, tree):
         for index, node in enumerate(tree.tree):
+            self.id += 1
             # листьям не раскрашиваем, но запоминаем цвет родителя
             if index * 2 + 1 >= len(tree.tree):
                 tree.tree[index] = Node([None, None], flag=True)
                 parent = tree.add_is_valid(index, [None, None])[1]
                 tree.tree[index].parent_color = parent
+                tree.tree[index].id = self.id
                 continue
 
+            tree.tree[index].id = self.id
             is_valid = False
             while not is_valid:
                 new_node = self.generate_random_colors()
@@ -91,24 +93,25 @@ class BWT:
 
         return tree
 
-    @staticmethod
-    def copy(tree1):
-        tree2 = []
+    def copy_colors(self, tree1, tree2):
         for index, node in enumerate(tree1.tree):
+            self.id += 1
+            tree2.tree[index].id = index
             if index * 2 + 1 >= len(tree1.tree):
-                tree2.append(Node([None, None], flag=True))
-                tree2[index].parent_color = node.parent_color
+                tree2.tree[index] = (Node([None, None], flag=True))
+                tree2.tree[index].parent_color = node.parent_color
+                tree2.tree[index].id = self.id
                 continue
-
-            colors = [node.left_child_color, node.right_child_color]
-            tree2.append(Node(colors))
-            tree2[index].parent_color = node.parent_color
+            tree2.tree[index].id = self.id
+            tree2.tree[index].left_child_color = node.left_child_color
+            tree2.tree[index].right_child_color = node.right_child_color
+            tree2.tree[index].parent_color = node.parent_color
 
         return tree2
 
     def coloring_mirror_tree(self, tree1, tree2):
-        tree1 = self.coloring_random_tree(tree1)
-        tree2.tree = self.copy(tree1)
+        self.coloring_random_tree(tree1)
+        self.copy_colors(tree1, tree2)
         return tree1, tree2
 
     def create_tree(self, tree):
@@ -152,4 +155,77 @@ class BWT:
         self.relationship_trees = tree1.tree[last_level:] + tree2.tree[last_level:]
         return self.relationship_trees
 
+    def get_node(self, id):
+        for node in self.top_tree.tree:
+            if node.id == id:
+                return node
+        for node in self.bottom_tree.tree:
+            if node.id == id:
+                return node
+        return None
 
+    @staticmethod
+    def counting_color_in_path(path, color):
+        count = 0
+        for node in path:
+            if node.parent_color == color:
+                count += 1
+        return count
+
+    def counting_colors_all_paths(self, paths, color):
+        count_colors = {}
+        for key in paths.keys():
+            count_colors[key] = self.counting_color_in_path(paths[key], color)
+        return count_colors
+
+    def find_all_paths_tree(self, tree):
+        last_level = -2 ** (self.depth - 1)
+        paths = {}
+        for node in tree.tree[last_level:]:
+            path = [node]
+            i_node = tree.tree.index(node)
+            i_parent = (i_node - 1) // 2
+
+            while i_parent >= 0:
+                path.append(tree.tree[i_parent])
+                i_parent = (i_parent - 1) // 2
+            paths[node] = path[::-1]
+
+        return paths
+
+    def find_all_paths_bwt(self, color):
+        paths_top = self.find_all_paths_tree(self.top_tree)
+        paths_bottom = self.find_all_paths_tree(self.bottom_tree)
+
+        count_colors_top = self.counting_colors_all_paths(paths_top, color)
+        count_colors_bottom = self.counting_colors_all_paths(paths_bottom, color)
+
+        all_paths = []
+
+        for leaf in paths_top:
+            # по "левому пути"
+            path = paths_top[leaf] + paths_bottom.get(leaf.left_child)[::-1]
+            count_colors = count_colors_top.get(leaf) + count_colors_bottom.get(
+                leaf.left_child)
+            if leaf.left_child_color == color:
+                count_colors += 1
+            all_paths.append((path, count_colors))
+            # по "правому пути"
+            path = paths_top[leaf] + paths_bottom.get(leaf.right_child)[::-1]
+            count_colors = count_colors_top.get(leaf) + count_colors_bottom.get(
+                leaf.right_child)
+            if leaf.right_child_color == color:
+                count_colors += 1
+            all_paths.append((path, count_colors))
+
+        return all_paths
+
+    def optimal_way(self, color, mx=None, mn=None):
+        all_paths = self.find_all_paths_bwt(color)
+
+        if mx:
+            all_paths.sort(key=lambda x: x[1], reverse=True)
+        elif mn:
+            all_paths.sort(key=lambda x: x[1])
+
+        return all_paths[0]
