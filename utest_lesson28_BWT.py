@@ -220,6 +220,15 @@ class MyTestCase(unittest.TestCase):
                 node.left_child_color,
                 node.right_child_color) for node in path])
 
+    def test_random_walk(self):
+        bwt = self.create_bwt()
+        bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
+        result = []
+        for i in range(10000):
+            result.append(bwt.random_walk(29)[1])
+
+        print(sum(result) / len(result))
+
 
 if __name__ == '__main__':
     unittest.main()

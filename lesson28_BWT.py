@@ -229,3 +229,84 @@ class BWT:
             all_paths.sort(key=lambda x: x[1])
 
         return all_paths[0]
+
+    @staticmethod
+    def condition_for_step_leaf(tree, leaf, step):
+        # parent
+        if step == 1:
+            leaf = tree.tree[(leaf.id - 1) // 2]
+
+        # left
+        elif step == 2:
+            leaf = leaf.left_child
+
+        # right
+        else:
+            leaf = leaf.right_child
+        return leaf
+
+    def condition_for_step_node(self, tree, node, step):
+        left_child = node.id * 2 + 1
+        right_child = node.id * 2 + 2
+
+        # parent
+        if step == 1:
+            if node.parent_color is None:
+                return node
+            node = tree.tree[(node.id - 1) // 2]
+
+        # left
+        elif step == 2:
+            # если лист
+            if left_child > len(tree.tree) - 1:
+                return self.condition_for_step_leaf(tree, node, step)
+            node = tree.tree[left_child]
+
+        # right
+        else:
+            # если лист
+            if right_child > len(tree.tree) - 1:
+                return self.condition_for_step_leaf(tree, node, step)
+            node = tree.tree[right_child]
+        return node
+
+    def random_walk(self, id):
+        current_node = self.top_tree.tree[0]
+        count_steps = 0
+
+        while current_node.id != id:
+            random_step = randint(1, 3)
+            count_steps += 1
+
+            if current_node in self.top_tree:
+                current_tree = self.top_tree
+            else:
+                current_tree = self.bottom_tree
+
+            current_node = self.condition_for_step_node(
+                current_tree,
+                current_node,
+                random_step)
+
+        return current_node.id, count_steps
+
+    # def quantum_walk(self, id):
+    #     nodes = [self.top_tree.tree[0]]
+    #     count_steps = 0
+    #
+    #     while pass:
+    #         for node in nodes:
+    #             random_step = randint(1, 3)
+    #             count_steps += 1
+    #
+    #             if current_node in self.top_tree:
+    #                 current_tree = self.top_tree
+    #             else:
+    #                 current_tree = self.bottom_tree
+    #
+    #             current_node = self.condition_for_step_node(
+    #                 current_tree,
+    #                 current_node,
+    #                 random_step)
+    #
+    #     return current_node.id, count_steps
