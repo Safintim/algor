@@ -223,20 +223,27 @@ class MyTestCase(unittest.TestCase):
     def test_random_walk(self):
         bwt = self.create_bwt()
         bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
+
         result = []
         for i in range(10000):
-            result.append(bwt.random_walk(29)[1])
+            result.append(bwt.random_walk(bwt.bottom_tree.tree[0])[1])
 
         print(sum(result) / len(result))
 
     def test_quantum_walk(self):
         bwt = self.create_bwt()
         bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
-        result = []
-        print(bwt.quantum_walk(29))
+
+        # l, c = bwt.quantum_walk(bwt.bottom_tree.tree[0])
+        # print(l, c)
+        result1 = []
+        for i in range(10000):
+            result1.append(bwt.quantum_walk(bwt.bottom_tree.tree[0])[1])
+        print(sum(result1) / len(result1))
+
+        # result = []
         # for i in range(10000):
-        #     result.append(bwt.random_walk(29)[1])
-        #
+        #     result.append(bwt.quantum_walk(bwt.bottom_tree.tree[0])[0])
         # print(sum(result) / len(result))
 
 

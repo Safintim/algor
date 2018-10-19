@@ -231,7 +231,7 @@ class BWT:
         return all_paths[0]
 
     @staticmethod
-    def condition_for_step_leaf(tree, leaf, step):
+    def condition_for_step_leaf(leaf, step):
 
         # left
         if step == 2:
@@ -243,27 +243,28 @@ class BWT:
         return leaf
 
     def condition_for_step_node(self, tree, node, step):
-        left_child = node.id * 2 + 1
-        right_child = node.id * 2 + 2
+        index_node = tree.tree.index(node)
+        left_child = index_node * 2 + 1
+        right_child = index_node * 2 + 2
 
         # parent
         if step == 1:
             if node.parent_color is None:
                 return node
-            node = tree.tree[(node.id - 1) // 2]
+            node = tree.tree[(index_node - 1) // 2]
 
         # left
         elif step == 2:
             # если лист
             if left_child > len(tree.tree) - 1:
-                return self.condition_for_step_leaf(tree, node, step)
+                return self.condition_for_step_leaf(node, step)
             node = tree.tree[left_child]
 
         # right
         else:
             # если лист
             if right_child > len(tree.tree) - 1:
-                return self.condition_for_step_leaf(tree, node, step)
+                return self.condition_for_step_leaf(node, step)
             node = tree.tree[right_child]
         return node
 
@@ -275,35 +276,44 @@ class BWT:
 
         return self.condition_for_step_node(current_tree, node, step)
 
-    def random_walk(self, id):
+    def random_walk(self, node):
         current_node = self.top_tree.tree[0]
         count_steps = 0
 
-        while current_node.id != id:
+        while current_node != node:
             random_step = randint(1, 3)
             count_steps += 1
             current_node = self.take_step(current_node, random_step)
 
         return current_node.id, count_steps
 
-    def quantum_walk(self, id):
+    # @staticmethod
+    # def randint1(exclude=0):
+    #     number = randint(1, 3)
+    #     while number == exclude:
+    #         number = randint(1, 3)
+    #     return number
+
+    def quantum_walk(self, node):
         nodes = [self.top_tree.tree[0]]
         count_steps = 0
 
-        # while not any([node.id == 39 for node in nodes]):
-        while self.bottom_tree.tree[0] not in nodes:
+        while node not in nodes:
 
             for i in range(len(nodes)):
                 current_node = nodes[i]
                 random_step = randint(1, 3)
                 first_node = self.take_step(current_node, random_step)
-                nodes[i] = first_node
+                # nodes[i] = first_node
+                if first_node in nodes:
+                    nodes.pop(nodes.index(first_node))
+                nodes.append(first_node)
 
                 random_step = randint(1, 3)
                 second_node = self.take_step(current_node, random_step)
+                if second_node in nodes:
+                    nodes.pop(nodes.index(second_node))
                 nodes.append(second_node)
             count_steps += 1
-            print(count_steps)
-            print(len(nodes))
 
-        return nodes, count_steps
+        return len(nodes), count_steps
