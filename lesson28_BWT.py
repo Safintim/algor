@@ -232,12 +232,9 @@ class BWT:
 
     @staticmethod
     def condition_for_step_leaf(tree, leaf, step):
-        # parent
-        if step == 1:
-            leaf = tree.tree[(leaf.id - 1) // 2]
 
         # left
-        elif step == 2:
+        if step == 2:
             leaf = leaf.left_child
 
         # right
@@ -270,6 +267,14 @@ class BWT:
             node = tree.tree[right_child]
         return node
 
+    def take_step(self, node, step):
+        if node in self.top_tree:
+            current_tree = self.top_tree
+        else:
+            current_tree = self.bottom_tree
+
+        return self.condition_for_step_node(current_tree, node, step)
+
     def random_walk(self, id):
         current_node = self.top_tree.tree[0]
         count_steps = 0
@@ -277,36 +282,28 @@ class BWT:
         while current_node.id != id:
             random_step = randint(1, 3)
             count_steps += 1
-
-            if current_node in self.top_tree:
-                current_tree = self.top_tree
-            else:
-                current_tree = self.bottom_tree
-
-            current_node = self.condition_for_step_node(
-                current_tree,
-                current_node,
-                random_step)
+            current_node = self.take_step(current_node, random_step)
 
         return current_node.id, count_steps
 
-    # def quantum_walk(self, id):
-    #     nodes = [self.top_tree.tree[0]]
-    #     count_steps = 0
-    #
-    #     while pass:
-    #         for node in nodes:
-    #             random_step = randint(1, 3)
-    #             count_steps += 1
-    #
-    #             if current_node in self.top_tree:
-    #                 current_tree = self.top_tree
-    #             else:
-    #                 current_tree = self.bottom_tree
-    #
-    #             current_node = self.condition_for_step_node(
-    #                 current_tree,
-    #                 current_node,
-    #                 random_step)
-    #
-    #     return current_node.id, count_steps
+    def quantum_walk(self, id):
+        nodes = [self.top_tree.tree[0]]
+        count_steps = 0
+
+        # while not any([node.id == 39 for node in nodes]):
+        while self.bottom_tree.tree[0] not in nodes:
+
+            for i in range(len(nodes)):
+                current_node = nodes[i]
+                random_step = randint(1, 3)
+                first_node = self.take_step(current_node, random_step)
+                nodes[i] = first_node
+
+                random_step = randint(1, 3)
+                second_node = self.take_step(current_node, random_step)
+                nodes.append(second_node)
+            count_steps += 1
+            print(count_steps)
+            print(len(nodes))
+
+        return nodes, count_steps

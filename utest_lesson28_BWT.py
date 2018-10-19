@@ -229,6 +229,16 @@ class MyTestCase(unittest.TestCase):
 
         print(sum(result) / len(result))
 
+    def test_quantum_walk(self):
+        bwt = self.create_bwt()
+        bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
+        result = []
+        print(bwt.quantum_walk(29))
+        # for i in range(10000):
+        #     result.append(bwt.random_walk(29)[1])
+        #
+        # print(sum(result) / len(result))
+
 
 if __name__ == '__main__':
     unittest.main()
