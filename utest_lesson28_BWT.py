@@ -225,7 +225,7 @@ class MyTestCase(unittest.TestCase):
         bwt.bind_trees(bwt.top_tree, bwt.bottom_tree)
 
         result = []
-        for i in range(10000):
+        for i in range(100):
             result.append(bwt.random_walk(bwt.bottom_tree.tree[0])[1])
 
         print(sum(result) / len(result))
@@ -237,7 +237,7 @@ class MyTestCase(unittest.TestCase):
         # l, c = bwt.quantum_walk(bwt.bottom_tree.tree[0])
         # print(l, c)
         result1 = []
-        for i in range(10000):
+        for i in range(100):
             result1.append(bwt.quantum_walk(bwt.bottom_tree.tree[0])[1])
         print(sum(result1) / len(result1))
 

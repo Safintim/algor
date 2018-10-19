@@ -287,13 +287,6 @@ class BWT:
 
         return current_node.id, count_steps
 
-    # @staticmethod
-    # def randint1(exclude=0):
-    #     number = randint(1, 3)
-    #     while number == exclude:
-    #         number = randint(1, 3)
-    #     return number
-
     def quantum_walk(self, node):
         nodes = [self.top_tree.tree[0]]
         count_steps = 0
