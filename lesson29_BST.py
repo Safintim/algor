@@ -5,8 +5,8 @@ class BST:
     def __init__(self, h):
         self.tree = [None] * (pow(2, h+1) - 1)
 
-    def halve_arr(self, arr):
-        self.tree[0] = arr[len(arr)//2]
+    @staticmethod
+    def halve_arr(arr):
         halves_arr = [arr]
 
         for half in halves_arr:
