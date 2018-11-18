@@ -87,15 +87,15 @@ class MyTestCase(unittest.TestCase):
                 node_i = tree.index(node)
                 parent_i = (node_i - 1) // 2
                 if tree[parent_i] is not None:
-                    return 'Баланс'
+                    self.assertTrue(True)
         elif not any(right_subtree):
             for node in right_subtree:
                 node_i = tree.index(node)
                 parent_i = (node_i - 1) // 2
                 if tree[parent_i] is not None:
-                    return 'Баланс'
+                    self.assertTrue(True)
         else:
-            return 'ok'
+            return
 
 
 if __name__ == '__main__':
