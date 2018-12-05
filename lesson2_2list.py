@@ -1,27 +1,23 @@
-# print('Двунаправленный Связанный список')
-# import time
-
-
-class Node2:
+class Node:
     def __init__(self, v):
-        self.__value = v
-        self.__next = None
-        self.__prev = None
+        self.value = v
+        self.prev = None
+        self.next = None
 
     def get_value(self):
-        return self.__value
+        return self.value
 
     def get_next(self):
-        return self.__next
+        return self.next
 
     def get_prev(self):
-        return self.__prev
+        return self.prev
 
     def set_next(self, n):
-        self.__next = n
+        self.next = n
 
     def set_prev(self, n):
-        self.__prev = n
+        self.prev = n
 
 
 class LinkedList2:
@@ -30,32 +26,16 @@ class LinkedList2:
         self.tail = None
 
     def add_in_tail(self, item):
-        """
-        Добавляет новый узел в конец списка
-        """
         if self.head is None:
             self.head = item
-            item.set_next(None)
-            item.set_prev(None)
+            item.prev = None
+            item.next = None
         else:
-            self.tail.set_next(item)
-            item.set_prev(self.tail)
+            self.tail.next = item
+            item.prev = self.tail
         self.tail = item
 
-    def print_all_nodes(self):
-        """
-        Печатает все элементы списка
-        """
-        node = self.head
-
-        while node is not None:
-            print(node.get_value())
-            node = node.get_next()
-
     def find(self, v):
-        """
-        Находит узел по заданному значению. Поиск идет с головы
-        """
         node = self.head
 
         while node is not None:
@@ -64,25 +44,39 @@ class LinkedList2:
             node = node.get_next()
         return None
 
-    def find_all(self, v):
-        """
-        1.4 Находит все узлы по заданному конкретному значению
-        На выходе массив узлов
-        """
-        node = self.head
-        result_list = []
+    def is_empty(self):
+        return self.head is None
 
-        while node is not None:
-            if node.get_value() == v:
-                result_list.append(node)
-            node = node.get_next()
+    def node_is_tail(self, node):
+        return node == self.tail
 
-        return result_list
+    def delete(self, v):
+        node = self.find(v)
 
-    def __len__(self):
-        """
-        1.5 Возвращает число узлов списка
-        """
+        if node is None:
+            return None
+
+        if self.head.get_next() is None:
+            self.clean()
+        elif self.head == node:
+            self.head = self.head.get_next()
+            self.head.set_prev(None)
+        elif self.node_is_tail(node):
+            self.tail = node.get_prev()
+            self.tail.set_next(None)
+        else:
+            node.get_prev().set_next(node.get_next())
+            node.get_next().set_prev(node.get_prev())
+
+        return None
+
+    def clean(self):
+        self.head = None
+        self.tail = None
+
+        return None
+
+    def len(self):
         node = self.head
         length = 0
 
@@ -91,75 +85,32 @@ class LinkedList2:
             node = node.get_next()
         return length
 
-    def clear_list(self):
-        """
-        1.3 Удаляет все узлы списка
-        """
-        self.head = None
-        self.tail = None
-
-        return None
-
-    def del_node(self, v):
-        """
-        2.1 Удаляет узел по заданному значению
-        """
-        node = self.find(v)
-        if self.head.get_value() == v:
-            self.head = self.head.get_next()
-            self.head.set_prev(None)
-        elif self.tail.get_value() == v:
-            self.tail = self.tail.get_prev()
-            self.tail.set_next(None)
-        else:
-            if node is not None:
-                node.get_prev().set_next(node.get_next())
-                node.get_next().set_prev(node.get_prev())
-            else:
-                return None
-        return None
-
-    def del_nodes(self, v):
-        """
-        1.2 Удаляет все узлы по заданному конкретному значению
-        """
-
-        node = self.head
-        while node is not None:
-            if self.head.get_value() == v:
-                self.head = self.head.get_next()
-                self.head.set_prev(None)
-            elif self.tail.get_value() == v:
-                self.tail = self.tail.get_prev()
-                self.tail.set_next(None)
-            elif node.get_value() == v:
-                node.get_prev().set_next(node.get_next())
-                node.get_next().set_prev(node.get_prev())
-            node = node.get_next()
-
-        return None
-
     def insert(self, prev, current):
-        """
-        2.2 Вставка узла после заданного узла
-        """
         node_start = self.head
+
+        if self.head is None:
+            self.add_in_tail(current)
+            return True
+        elif self.node_is_tail(prev):
+            self.tail = current
+            self.tail.set_next(None)
+            self.tail.set_prev(prev)
+            prev.set_next(current)
+            return True
 
         while node_start is not None:
             if node_start == prev:
                 current.set_next(node_start.get_next())
                 current.set_prev(node_start)
-                node_start.set_next(current)
                 node_start.get_next().set_prev(current)
+                node_start.set_next(current)
+                return True
 
             node_start = node_start.get_next()
 
-        return None
+        return False
 
     def add_in_head(self, item):
-        """
-        Добавляет новый узел в начало списка
-        """
         if self.head is None:
             self.head = item
             self.tail = item
@@ -183,9 +134,10 @@ class LinkedList2:
 def create_list(*args):
     s_list = LinkedList2()
     for i in range(len(args)):
-        s_list.add_in_tail(Node2(args[i]))
+        s_list.add_in_tail(Node(args[i]))
 
     return s_list
+
 
 
 s_list = create_list(1, 3, 2, 3, 4, 5, 3, 6)

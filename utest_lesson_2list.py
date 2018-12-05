@@ -4,37 +4,45 @@ import lesson2_2list as l
 
 class List2Test(unittest.TestCase):
 
-    def test_del_node(self):
+    def test_delete(self):
         s_list = l.create_list(1, 3, 2, 3, 4, 5, 3, 6)
+        s_list2 = l.create_list(1)
+
+        s_list2.delete(1)
+        self.assertTrue(s_list2.tail is None)
+        self.assertTrue(s_list2.head is None)
+
         arr_list1 = s_list.convert_list_to_array()
-
-        s_list.del_node(1)
-
+        s_list.delete(6)
         arr_list2 = s_list.convert_list_to_array()
-
-        self.assertNotEqual(arr_list1, arr_list2)
-        # 1 идет первым значением в списке
-        self.assertNotEqual(arr_list1[0], arr_list2[0])
+        # self.assertNotEqual(arr_list1, arr_list2)
+        # если удалить двойку
+        # self.assertNotEqual(arr_list1[2], arr_list2[2])
+        # self.assertEqual(arr_list2[2].get_value(), 3)
+        # если удалить 4
+        # self.assertNotEqual(arr_list1[4], arr_list2[4])
+        # self.assertEqual(arr_list2[4].get_value(), 5)
+        # если удалить голову
+        # self.assertNotEqual(arr_list1[0], arr_list2[0])
+        # self.assertEqual(arr_list2[0].get_value(), 3)
+        # если удалить хвост
+        self.assertEqual(len(arr_list2), 7)
+        self.assertEqual(arr_list2[6].get_next(), None)
+        self.assertEqual(s_list.tail.get_value(), 3)
 
     def test_insert(self):
-        s_list = l.create_list(1, 3, 2, 3, 4, 5, 3, 6)
-        node = l.Node2(100)
+        s_list = l.create_list()
+        node = l.Node(100)
         r1 = s_list.convert_list_to_array()
-
-        s_list.insert(r1[len(r1) - 2], node)
-
-        r1.append(r1[len(r1) - 1])
-        r1[len(r1) - 2] = node
-
-        r2 = s_list.convert_list_to_array()
-
-        self.assertEqual(len(r2), 9)
-        self.assertListEqual(r1, r2)
+        # tail = r1[-1]
+        s_list.insert(None, node)
+        # print(s_list.tail.get_value())
+        self.assertEqual(s_list.tail, node)
 
     def test_add_in_head(self):
 
-        node1 = l.Node2(100)
-        node2 = l.Node2(200)
+        node1 = l.Node(100)
+        node2 = l.Node(200)
         r1 = [node1, node2]
 
         s_list = l.LinkedList2()
