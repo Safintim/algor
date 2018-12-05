@@ -11,6 +11,9 @@ class DynArray:
         self.capacity = 16
         self.array = self.make_array(self.capacity)
 
+    def __len__(self):
+        return self.count
+
     def make_array(self, new_capacity):
         return (new_capacity * ctypes.py_object)()
 
@@ -36,7 +39,7 @@ class DynArray:
     def insert(self, i, item):
         try:
             self.__getitem__(i)
-            new_array = []
+
             if self.count == self.capacity:
                 self.resize(2 * self.capacity)
 

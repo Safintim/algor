@@ -5,7 +5,7 @@ import lesson4_dynArr as Da
 class DaTest(unittest.TestCase):
 
     def test_insert(self):
-        result_arr =[300, 0, 1, 2, 3, 4, 200, 5, 6, 7, 8, 9, 10, 11, 12, 13, 400, 14]
+        result_arr = [300, 0, 1, 2, 3, 4, 200, 5, 6, 7, 8, 9, 10, 11, 12, 13, 400, 14]
         array = Da.create_da(15)
 
         array.insert(5, 200)
