@@ -1,41 +1,51 @@
 import unittest
-import lesson4_dynArr as Da
+import lesson4_dynArr as l
 
 
 class DaTest(unittest.TestCase):
 
     def test_insert(self):
-        result_arr = [300, 0, 1, 2, 3, 4, 200, 5, 6, 7, 8, 9, 10, 11, 12, 13, 400, 14]
-        array = Da.create_da(15)
+        array = l.DynArray()
+        array.insert(0, 100)
+        self.assertEqual(array[0], 100)
 
-        array.insert(5, 200)
-        array.insert(0, 300)
-        array.insert(16, 400)
-        print('Step 4. Check exception i={0}, item={1}:'.format(-16, 400), end=' ')
-        array.insert(-16, 400)
+        array = l.create_da(10)
+        self.assertEqual(array.count, 10)
+        self.assertEqual(array.capacity, 16)
+        array.insert(4, 100)
+        self.assertEqual(array.count, 11)
+        self.assertEqual(array.capacity, 16)
+        self.assertEqual(array[4], 100)
 
-        self.assertEqual(array.count, len(result_arr))
+        array = l.create_da(16)
+        array.insert(14, 100)
+        self.assertEqual(array.count, 17)
         self.assertEqual(array.capacity, 32)
-        self.assertListEqual(result_arr, array.convert_to_arr())
+
+        array = l.create_da(17)
+        array.insert(-1, 100)
+        array.insert(18, 100)
+        self.assertEqual(array.count, 17)
+        self.assertEqual(array.capacity, 32)
 
     def test_delete(self):
-        result_arr1 = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13]
-        array = Da.create_da(15)
-
+        array = l.create_da(14)
         array.delete(0)
-        array.delete(13)
-        array.delete(5)
+        self.assertEqual(array.count, 13)
+        self.assertEqual(array.capacity, 16)
+        self.assertEqual(array[0], 1)
 
-        self.assertListEqual(result_arr1, array.convert_to_arr())
-        self.assertEqual(array.count, len(result_arr1))
-
-        result_arr2 = [17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-        array = Da.create_da(32)
+        array = l.create_da(32)
         for i in range(17):
             array.delete(0)
-
-        self.assertEqual(result_arr2, array.convert_to_arr())
+        self.assertEqual(array.count, 15)
         self.assertEqual(array.capacity, 21)
+
+        array = l.create_da(32)
+        array.delete(-1)
+        array.delete(33)
+        self.assertEqual(array.count, 32)
+        self.assertEqual(array.capacity, 32)
 
 
 if __name__ == '__main__':

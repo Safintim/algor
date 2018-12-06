@@ -29,41 +29,55 @@ class DynArray:
         self.array = new_array
         self.capacity = new_capacity
 
+    def is_need_increase_buf(self):
+        return self.count == self.capacity
+
+    def is_need_reduce_buf(self):
+        return self.count <= int(self.capacity // 2)
+
+    def is_empty(self):
+        return self.count == 0
+
+    def is_min_capacity(self):
+        return self.capacity // 1.5 > 16
+
     def append(self, item):
-        if self.count == self.capacity:
+        if self.is_need_increase_buf():
             self.resize(2 * self.capacity)
 
         self.array[self.count] = item
         self.count += 1
 
     def insert(self, i, item):
-        try:
-            self.__getitem__(i)
 
-            if self.count == self.capacity:
-                self.resize(2 * self.capacity)
+        if i < 0 or i > self.count:
+            return False
 
-            self.array = self.array[:i] + [item] + self.array[i:self.count]
-            self.count += 1
+        if self.is_empty():
+            self.append(item)
 
-        except IndexError:
-            print('Index is out of bounds')
+        if self.is_need_increase_buf():
+            self.resize(2 * self.capacity)
+
+        self.array = self.array[:i] + [item] + self.array[i:self.count]
+        self.count += 1
+
+        return True
 
     def delete(self, i):
-        try:
-            self.__getitem__(i)
-            if self.count <= int(self.capacity // 2):
-                if self.capacity // 1.5 > 16:
-                    self.resize(int(self.capacity // 1.5))
-                else:
-                    self.capacity = 16
 
-            for k in range(i, self.count - 1):
-                self.array[k] = self.array[k + 1]
-            self.count -= 1
+        if i < 0 or i > self.count:
+            return False
 
-        except IndexError:
-            print('Index is out of bounds')
+        if self.is_need_reduce_buf():
+            if self.is_min_capacity():
+                self.resize(int(self.capacity // 1.5))
+            else:
+                self.capacity = 16
+
+        for k in range(i, self.count - 1):
+            self.array[k] = self.array[k + 1]
+        self.count -= 1
 
     def convert_to_arr(self):
         arr = []
