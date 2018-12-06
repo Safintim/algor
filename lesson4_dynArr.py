@@ -55,6 +55,7 @@ class DynArray:
 
         if self.is_empty():
             self.append(item)
+            return True
 
         if self.is_need_increase_buf():
             self.resize(2 * self.capacity)
