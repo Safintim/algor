@@ -29,8 +29,10 @@ class DaTest(unittest.TestCase):
         print(array.convert_to_arr())
 
         array = l.create_da(17)
-        array.insert(-1, 100)
-        array.insert(18, 100)
+        with self.assertRaises(IndexError):
+            array.insert(-1, 100)
+        with self.assertRaises(IndexError):
+            array.insert(18, 100)
         self.assertEqual(array.count, 17)
         self.assertEqual(array.capacity, 32)
         print(array.convert_to_arr())
@@ -51,8 +53,10 @@ class DaTest(unittest.TestCase):
         print(array.convert_to_arr())
 
         array = l.create_da(32)
-        array.delete(-1)
-        array.delete(33)
+        with self.assertRaises(IndexError):
+            array.delete(-1)
+        with self.assertRaises(IndexError):
+            array.delete(32)
         self.assertEqual(array.count, 32)
         self.assertEqual(array.capacity, 32)
         print(array.convert_to_arr())

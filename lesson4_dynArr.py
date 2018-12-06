@@ -50,12 +50,12 @@ class DynArray:
 
     def insert(self, i, item):
 
-        if i < 0 or i > self.count:
-            return False
-
         if self.is_empty():
             self.append(item)
             return True
+
+        if i < 0 or i > self.count:
+            raise IndexError('list assignment index out of range')
 
         if self.is_need_increase_buf():
             self.resize(2 * self.capacity)
@@ -67,8 +67,8 @@ class DynArray:
 
     def delete(self, i):
 
-        if i < 0 or i > self.count:
-            return False
+        if i < 0 or i >= self.count:
+            raise IndexError('list assignment index out of range')
 
         if self.is_need_reduce_buf():
             if self.is_min_capacity():
