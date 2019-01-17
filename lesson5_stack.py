@@ -16,7 +16,7 @@ class Stack:
     def push(self, value):
         self.stack.insert(0, value)
 
-    def peak(self):
+    def peek(self):
         if self.size() > 0:
             return self.stack[0]
         return None
@@ -35,7 +35,7 @@ def postfix(exp):
         stack1.push(i)
 
     while stack1.size() > 0:
-        if stack1.peak() in operands:
+        if stack1.peek() in operands:
             stack2.push(stack1.pop())
         else:
             oper = stack1.pop()
@@ -52,7 +52,7 @@ def postfix(exp):
                 t = int(stack2.pop()) / int(stack2.pop())
                 stack2.push(t)
             else:
-                return stack2.peak()
+                return stack2.peek()
     return stack2
 
 
