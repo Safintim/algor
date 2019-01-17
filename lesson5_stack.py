@@ -9,17 +9,17 @@ class Stack:
         self.stack = []
 
     def pop(self):
-        if len(self.stack) == 0:
-            return None
-        return self.stack.pop(0)
+        if self.size() > 0:
+            return self.stack.pop(0)
+        return None
 
     def push(self, value):
-        return self.stack.insert(0, value)
+        self.stack.insert(0, value)
 
     def peak(self):
-        if len(self.stack) == 0:
-            return None
-        return self.stack[0]
+        if self.size() > 0:
+            return self.stack[0]
+        return None
 
     def size(self):
         return len(self.stack)

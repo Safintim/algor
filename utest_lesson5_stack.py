@@ -15,5 +15,6 @@ class StackTest(unittest.TestCase):
         self.assertFalse(l.balance_brackets('(()()(()'))
         self.assertFalse(l.balance_brackets(')'))
 
+
 if __name__ == '__main__':
     unittest.main()
