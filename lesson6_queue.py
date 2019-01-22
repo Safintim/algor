@@ -1,7 +1,28 @@
-import lesson5_stack as Stack
+# import lesson5_stack as Stack
 """
 Очереди
 """
+
+class Stack:
+
+    def __init__(self):
+        self.stack = []
+
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop(0)
+        return None
+
+    def push(self, value):
+        self.stack.insert(0, value)
+
+    def peek(self):
+        if self.size() > 0:
+            return self.stack[0]
+        return None
+
+    def size(self):
+        return len(self.stack)
 
 
 class Queue:
@@ -38,8 +59,8 @@ def circle_queue(q, n):
 # 6.3
 class Queue2:
     def __init__(self):
-        self.stack1 = Stack.Stack()
-        self.stack2 = Stack.Stack()
+        self.stack1 = Stack()
+        self.stack2 = Stack()
 
     def enqueue(self, item):
         return self.stack1.push(item)
