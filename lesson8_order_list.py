@@ -137,6 +137,9 @@ class OrderedList:
 
         return arr
 
+    def len(self):
+        return len(self.get_all())
+
     def print_all_nodes(self):
         """
         Печатает все элементы списка
