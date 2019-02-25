@@ -7,15 +7,15 @@ class OrderListTest(unittest.TestCase):
     def test_add_node_True(self):
         ord_list = l.create_list(True, 7, 5, 8, -1)
         result = [-1, 5, 7, 8]
-        self.assertTrue(ord_list.head.get_value() == -1)
-        self.assertTrue(ord_list.tail.get_value() == 8)
+        self.assertTrue(ord_list.head.value == -1)
+        self.assertTrue(ord_list.tail.value == 8)
         self.assertListEqual(result, list(i.get_value() for i in ord_list.get_all()))
 
     def test_add_node_False(self):
         ord_list = l.create_list(False, 7, 5, 8, -1)
         result = [8, 7, 5, -1]
-        self.assertTrue(ord_list.head.get_value() == 8)
-        self.assertTrue(ord_list.tail.get_value() == -1)
+        self.assertTrue(ord_list.head.value == 8)
+        self.assertTrue(ord_list.tail.value == -1)
         self.assertListEqual(result, list(i.get_value() for i in ord_list.get_all()))
 
     def test_find(self):

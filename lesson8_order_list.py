@@ -58,28 +58,29 @@ class OrderedList:
     def add(self, item):
 
         node = self.head
+        new_node = Node(item)
         if self.head is None:
-            self.head = item
-            self.tail = item
+            self.head = new_node
+            self.tail = new_node
         else:
 
-            if self.compare(self.head, item) in (0, 1) and self.__ascending:
-                self.__add_head(item)
-            elif self.compare(item, self.tail) in (0, 1) and self.__ascending:
-                self.__add_tail(item)
-            elif self.compare(item, self.head) in (0, 1) and self.__ascending is False:
-                self.__add_head(item)
-            elif self.compare(self.tail, item) in (0, 1) and self.__ascending is False:
-                self.__add_tail(item)
+            if self.compare(self.head, new_node) in (0, 1) and self.__ascending:
+                self.__add_head(new_node)
+            elif self.compare(new_node, self.tail) in (0, 1) and self.__ascending:
+                self.__add_tail(new_node)
+            elif self.compare(new_node, self.head) in (0, 1) and self.__ascending is False:
+                self.__add_head(new_node)
+            elif self.compare(self.tail, new_node) in (0, 1) and self.__ascending is False:
+                self.__add_tail(new_node)
             else:
                 while node.get_next() is not None:
-                    if self.compare(item, node) in (0, 1) and self.compare(node.get_next(), item) in (0, 1) \
+                    if self.compare(new_node, node) in (0, 1) and self.compare(node.get_next(), new_node) in (0, 1) \
                             and self.__ascending:
-                        self.__add_inwards(node, item)
+                        self.__add_inwards(node, new_node)
                         break
-                    elif self.compare(node, item) in (0, 1) and self.compare(item, node.get_next()) in (0, 1) \
+                    elif self.compare(node, new_node) in (0, 1) and self.compare(new_node, node.get_next()) in (0, 1) \
                             and self.__ascending is False:
-                        self.__add_inwards(node, item)
+                        self.__add_inwards(node, new_node)
                         break
                     node = node.get_next()
 
@@ -162,6 +163,6 @@ class OrderedListStr(OrderedList):
 def create_list(*args):
     s_list = OrderedList(args[0])
     for i in range(1, len(args)):
-        s_list.add(Node(args[i]))
+        s_list.add(args[i])
 
     return s_list
