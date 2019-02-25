@@ -63,28 +63,25 @@ class OrderedList:
             self.tail = item
         else:
 
-            if self.__ascending:
-                if self.compare(self.head, item) in (0, 1):
-                    self.__add_head(item)
-                elif self.compare(item, self.tail) in (0, 1):
-                    self.__add_tail(item)
-                else:
-                    while node.get_next() is not None:
-                        if self.compare(item, node) in (0, 1) and self.compare(node.get_next(), item) in (0, 1):
-                            self.__add_inwards(node, item)
-                            break
-                        node = node.get_next()
+            if self.compare(self.head, item) in (0, 1) and self.__ascending:
+                self.__add_head(item)
+            elif self.compare(item, self.tail) in (0, 1) and self.__ascending:
+                self.__add_tail(item)
+            elif self.compare(item, self.head) in (0, 1) and self.__ascending is False:
+                self.__add_head(item)
+            elif self.compare(self.tail, item) in (0, 1) and self.__ascending is False:
+                self.__add_tail(item)
             else:
-                if self.compare(item, self.head) in (0, 1):
-                    self.__add_head(item)
-                elif self.compare(self.tail, item) in (0, 1):
-                    self.__add_tail(item)
-                else:
-                    while node.get_next() is not None:
-                        if self.compare(node, item) in (0, 1) and self.compare(item, node.get_next()) in (0, 1):
-                            self.__add_inwards(node, item)
-                            break
-                        node = node.get_next()
+                while node.get_next() is not None:
+                    if self.compare(item, node) in (0, 1) and self.compare(node.get_next(), item) in (0, 1) \
+                            and self.__ascending:
+                        self.__add_inwards(node, item)
+                        break
+                    elif self.compare(node, item) in (0, 1) and self.compare(item, node.get_next()) in (0, 1) \
+                            and self.__ascending is False:
+                        self.__add_inwards(node, item)
+                        break
+                    node = node.get_next()
 
         return None
 
