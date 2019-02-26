@@ -28,8 +28,9 @@ class OrderListTest(unittest.TestCase):
         result = [8, 7, 5, -1]
 
         ord_list.delete(-1)
-        # print(ord_list.print_all_nodes())
         ord_list.delete(-1)
+        # print(ord_list.print_all_nodes())
+        # ord_list.delete(-1)
 
         self.assertListEqual(result, list(i.get_value() for i in ord_list.get_all()))
 

@@ -103,29 +103,23 @@ class OrderedList:
 
         return None
 
-    def delete(self, v, all=False):
-        node = self.head
-        prev = node
+    def delete(self, v):
+        node = self.find(v)
 
-        while node is not None:
-            if self.head.get_value() == v:
-                self.head = self.head.get_next()
-                if self.head is None:
-                    self.tail = self.head
-                if not all:
-                    break
-            elif node.get_value() == v:
-                prev.set_next(node.get_next())
+        if node is None:
+            return None
 
-                if self.tail == node:
-                    self.tail = prev
-
-                if not all:
-                    break
-                node = prev
-
-            prev = node
-            node = node.get_next()
+        if self.head.get_next() is None:
+            self.clean(self.__ascending)
+        elif self.head == node:
+            self.head = self.head.get_next()
+            self.head.set_prev(None)
+        elif self.tail == node:
+            self.tail = node.get_prev()
+            self.tail.set_next(None)
+        else:
+            node.get_prev().set_next(node.get_next())
+            node.get_next().set_prev(node.get_prev())
 
         return None
 
