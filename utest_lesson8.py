@@ -26,8 +26,11 @@ class OrderListTest(unittest.TestCase):
     def test_delete(self):
         ord_list = l.create_list(False, 7, 5, 8, -1, -1, -1)
         result = [8, 7, 5, -1]
+
         ord_list.delete(-1)
+        # print(ord_list.print_all_nodes())
         ord_list.delete(-1)
+
         self.assertListEqual(result, list(i.get_value() for i in ord_list.get_all()))
 
 
