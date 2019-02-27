@@ -153,7 +153,7 @@ class OrderedList:
             node = node.get_next()
 
 
-class OrderedListStr(OrderedList):
+class OrderedStringList(OrderedList):
 
     def compare(self, v1, v2):
         if v1.get_value().strip() > v2.get_value().strip():
