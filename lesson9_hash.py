@@ -48,6 +48,7 @@ class HashTable:
         index = self.seek_slot(value)
         if index is not None:
             self.slots[index] = value
+            return index
         else:
             print('Нет мест, размер таблицы: {}'.format(self.size))
             return None
