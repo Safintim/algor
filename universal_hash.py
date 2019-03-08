@@ -3,14 +3,14 @@ from random import choice
 
 class HashTable:
 
-    def __init__(self, sz=17, stp=3):
+    def __init__(self, sz=170):
         self.size = sz
-        self.step = stp
         self.slots = [None] * self.size
         self.hash_f = choice([
-            lambda x: ((1 * x + 0) % 80) % self.size,
-            lambda x: ((1 * x + 0) % 60) % self.size,
-            lambda x: ((1 * x + 0) % 70) % self.size
+            lambda x: ((16 * x + 51) % 293) % self.size,
+            lambda x: ((7 * x + 93) % 313) % self.size,
+            lambda x: ((311 * x + 18) % 307) % self.size,
+            lambda x: ((347 * x - 84) % 311) % self.size,
         ])
 
     def hash_fun(self, value):
