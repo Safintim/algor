@@ -7,7 +7,7 @@ class DictTest(unittest.TestCase):
     @staticmethod
     def create_dict():
         test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
-        h = l.HashTable(17, 3)
+        h = l.NativeDictionary(17)
 
         for i in range(97, 114):
             h[chr(i)] = test_list[i - 97]

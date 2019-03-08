@@ -4,11 +4,11 @@ from random import randint
 """
 
 
-class HashTable:
+class NativeDictionary:
 
-    def __init__(self, sz, stp):
+    def __init__(self, sz):
         self.size = sz
-        self.step = stp
+        self.step = 3
         self.slots = [None] * self.size
         self.values = [None] * self.size
 
@@ -53,27 +53,27 @@ class HashTable:
             self.values[index] = value
             return True
         else:
-            print('Нет мест, размер таблицы: {}'.format(self.size))
+            # print('Нет мест, размер таблицы: {}'.format(self.size))
             return None
+
+    def is_key(self, key):
+        if self.find(key) is not None:
+            return True
+
+        return False
 
     def get(self, key):
         key = self.find(key)
-        if key is None:
-            return None
-        else:
+        if key is not None:
             return self.values[key]
+
+        return None
 
     def __getitem__(self, key):
         return self.get(key)
 
     def __setitem__(self, key, value):
         return self.put(key, value)
-
-    def is_key(self, key):
-        if self.find(key) is None:
-            return None
-        else:
-            return True
 
     def find(self, value):
         index = self.hash_fun(value)
