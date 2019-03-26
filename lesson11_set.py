@@ -6,6 +6,11 @@ from lesson9_hash import HashTable
 
 class PowerSet(HashTable):
 
+    def new_power_set(self, c, stp=3):
+        self.__init__(len(c), stp=stp)
+        for item in c:
+            self.put(item)
+
     def put(self, value):
         index = self.find(value)
         if index is not None:
@@ -23,37 +28,53 @@ class PowerSet(HashTable):
         index = self.find(value)
         if index is not None:
             self.slots[index] = None
-        else:
-            print('элемента во множестве нет')
-            return None
+            return True
+        return False
+
+    def get(self, key):
+        key = self.find(key)
+        if key is not None:
+            return True
+
+        return False
+
+    def size(self):
+        return self.size
 
     def intersection(self, powset):
         a = self
         b = powset
+        c = []
         if len(a.slots) > len(b.slots):
             a, b = b, a
-        c = PowerSet(sz=len(a.slots))
+
         for item in a.slots:
             if b.find(item) is not None:
-                c.put(item)
+                c.append(item)
 
-        return c
+        self.new_power_set(c)
+
+        return None
 
     def union(self, powset):
-        length = len(self.slots) + len(self.slots)
-        c = PowerSet(sz=length)
-        for item in self.slots:
-            c.put(item)
-        for item in powset.slots:
-            c.put(item)
-        return c
+        if powset.slots:
+            c = []
+            for item in self.slots:
+                c.append(item)
+            for item in powset.slots:
+                if item not in self.slots:
+                    c.append(item)
+            self.new_power_set(c, stp=5)
+
+        return None
 
     def difference(self, powset):
-        c = PowerSet(sz=len(self.slots))
+        c = []
         for item in self.slots:
             if powset.find(item) is None:
-                c.put(item)
-        return c
+                c.append(item)
+        self.new_power_set(c)
+        return None
 
     def issubset(self, powset):
         for item in self.slots:

@@ -6,8 +6,8 @@ class SetTest(unittest.TestCase):
 
     @staticmethod
     def create_set():
-        h = l.PowerSet(17, 3)
-        h2 = l.PowerSet(5, 3)
+        h = l.PowerSet(17)
+        h2 = l.PowerSet(5)
         test_list = [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15]
 
         for i in test_list:
@@ -38,29 +38,29 @@ class SetTest(unittest.TestCase):
         self.assertEqual(h.find(120), None)
 
     def test_intersection(self):
-        result = [None, None, None, None, 93]
+        result = [93]
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        h3 = h1.intersection(h2)
-
-        self.assertEqual(h3.slots, result)
+        h1.intersection(h2)
+        self.assertEqual(h1.slots, h1.size(), result)
 
     def test_union(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        result = [29, 96, None, 8, None, None, 94, None, None, 97, None, None, 40, None, 0, 32, None, 3, None, 15, 25, 73, 83, 93, None, 45, 60, 95, 48, 28, None, 18, 88, None]
-        h3 = h1.union(h2)
-        self.assertEqual(h3.slots, result)
+        # h2.slots = []
+        print(h1.slots)
+        h1.union(h2)
+        print(h1.slots, h1.size, len(h1.slots))
 
     def test_difference(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        h3 = h1.difference(h2)
+        h1.difference(h2)
 
-        self.assertEqual(h3.find(93), None)
+        self.assertEqual(h1.find(93), None)
 
     def test_issubset(self):
         test_issubset1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -71,11 +71,12 @@ class SetTest(unittest.TestCase):
             h.put(i)
         for i in test_issubset2:
             h2.put(i)
+
         r1 = h.issubset(h2)
         r2 = h2.issubset(h)
 
-        self.assertFalse(r2)
         self.assertTrue(r1)
+        self.assertFalse(r2)
 
 
 if __name__ == '__main__':
