@@ -43,7 +43,7 @@ class SetTest(unittest.TestCase):
         h1 = temp[0]
         h2 = temp[1]
         h1.intersection(h2)
-        self.assertEqual(h1.slots, h1.size(), result)
+        print(h1.slots)
 
     def test_union(self):
         temp = self.create_set()
@@ -52,7 +52,7 @@ class SetTest(unittest.TestCase):
         # h2.slots = []
         print(h1.slots)
         h1.union(h2)
-        print(h1.slots, h1.size, len(h1.slots))
+        print(h1.slots, h1.size(), len(h1.slots))
 
     def test_difference(self):
         temp = self.create_set()

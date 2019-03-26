@@ -39,7 +39,7 @@ class PowerSet(HashTable):
         return False
 
     def size(self):
-        return self.size
+        return self.sizez
 
     def intersection(self, powset):
         a = self
