@@ -5,9 +5,9 @@
 class HashTable:
 
     def __init__(self, sz=17, stp=3):
-        self.sizez = sz
+        self.size = sz
         self.step = stp
-        self.slots = [None] * self.sizez
+        self.slots = [None] * self.size
 
     def hash_fun(self, value):
         summ = 0
@@ -15,10 +15,10 @@ class HashTable:
         for ch in str(value):
             summ += ord(ch) * i
             i += 1
-        return summ % self.sizez
+        return summ % self.size
 
     def rotate(self, k, step):
-        return (k + self.step) % self.sizez
+        return (k + self.step) % self.size
         # ниже костыль
         # if k == self.size:
         #     return 0
@@ -32,8 +32,8 @@ class HashTable:
         if self.slots[index] is None:
             return index
         else:
-            while temp < 2 * (self.sizez // self.step):
-                for k in range(index, self.sizez, self.step):
+            while temp < 2 * (self.size // self.step):
+                for k in range(index, self.size, self.step):
                     if self.slots[k] is None:
                         return k
                 temp += 1
@@ -57,8 +57,8 @@ class HashTable:
         if self.slots[index] == value:
             return index
         else:
-            while temp < 2 * (self.sizez // self.step):
-                for k in range(index, self.sizez, self.step):
+            while temp < 2 * (self.size // self.step):
+                for k in range(index, self.size, self.step):
                     if self.slots[k] == value:
                         return k
                 temp += 1
