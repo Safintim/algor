@@ -42,25 +42,30 @@ class SetTest(unittest.TestCase):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
+        h2.slots = [100]
+        # h2.slots()
         h1.intersection(h2)
-        # print(h1.slots)
+
+        return h1
 
     def test_union(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        # h2.slots = []
+        # h2.slots = [100]
         # print(h1.slots)
         h1.union(h2)
         # print(h1.slots, h1.size(), len(h1.slots))
+
+        return h1
 
     def test_difference(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
         h1.difference(h2)
-
         self.assertEqual(h1.find(93), None)
+        return h1
 
     def test_issubset(self):
         test_issubset1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
@@ -77,6 +82,16 @@ class SetTest(unittest.TestCase):
 
         self.assertTrue(r1)
         self.assertFalse(r2)
+
+    def test_size(self):
+        h0 = l.PowerSet()
+        h1 = self.test_intersection()
+        h2 = self.test_union()
+        h3 = self.test_difference()
+        print(h0.size())
+        print(h1.size())
+        print(h2.size())
+        print(h3.size())
 
 
 if __name__ == '__main__':

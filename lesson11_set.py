@@ -102,7 +102,11 @@ class PowerSet(HashTable):
         return False
 
     def size(self):
-        return self.sizez
+        count = 0
+        for i in self.slots:
+            if i is not None:
+                count += 1
+        return count
 
     def intersection(self, powset):
         a = self
