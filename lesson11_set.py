@@ -35,9 +35,7 @@ class PowerSet:
             if item in self.set:
                 temp.put(item)
 
-        self.set = temp.set
-
-        return None
+        return temp
 
     def union(self, powset):
         if powset.set:
@@ -47,8 +45,8 @@ class PowerSet:
             for item in powset.set:
                 temp.put(item)
 
-            self.set = temp.set
-        return None
+            return temp
+        return self
 
     def difference(self, powset):
         temp = []
@@ -56,8 +54,8 @@ class PowerSet:
             if item not in powset.set:
                 temp.append(item)
 
-        self.set = temp
-        return None
+        # self.set = temp
+        return temp
 
     def issubset(self, powset):
         for item in self.set:
