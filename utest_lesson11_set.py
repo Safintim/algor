@@ -41,37 +41,82 @@ class SetTest(unittest.TestCase):
         self.assertEqual(h.find(120), None)
 
     def test_intersection(self):
-        result = [93]
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        h2.set = [100]
-        h1.set = [100]
-        # h2.slots()
         h1.intersection(h2)
-        print(h1.set)
+        self.assertEqual(h1.set, [93])
 
-        return h1
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = []
+        h2.set = []
+        h1.intersection(h2)
+        self.assertEqual(h1.set, [])
+
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = []
+        h2.set = [100, 500]
+        h1.intersection(h2)
+        self.assertEqual(h1.set, [])
+
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = [100, 500]
+        h2.set = []
+        h1.intersection(h2)
+        self.assertEqual(h1.set, [])
+
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = [300, 400]
+        h2.set = [100, 500]
+        h1.intersection(h2)
+        self.assertEqual(h1.set, [])
 
     def test_union(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        # h2.set = []
-        h1.set = []
-        # print(h1.slots)
         h1.union(h2)
-        print(h1.set)
+        self.assertEqual(h1.set, [3, 93, 60, 25, 73, 83, 45, 29, 18, 8, 28, 48, 40, 88, 0, 32, 15, 94, 95, 96, 97])
 
-        return h1
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = []
+        h2.set = []
+        h1.union(h2)
+        self.assertEqual(h1.set, [])
+
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = [150]
+        h2.set = []
+        h1.union(h2)
+        self.assertEqual(h1.set, [150])
+
+        h1 = l.PowerSet()
+        h2 = l.PowerSet()
+        h1.set = []
+        h2.set = [150]
+        h1.union(h2)
+        self.assertEqual(h1.set, [150])
 
     def test_difference(self):
         temp = self.create_set()
         h1 = temp[0]
         h2 = temp[1]
-        h2.difference(h1)
+        h1.difference(h2)
+        self.assertTrue(93 not in h1.set)
 
-        print(h2.set)
+        h2 = temp[1]
+        h1.difference(h2)
+        self.assertEqual(h1.set, h1.set)
+
+        h2 = temp[0]
+        h1.difference(h2)
+        self.assertEqual(h1.set, [])
 
     def test_issubset(self):
         test_issubset1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]

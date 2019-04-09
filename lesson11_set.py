@@ -37,6 +37,8 @@ class PowerSet:
 
         self.set = temp.set
 
+        return None
+
     def union(self, powset):
         if powset.set:
             temp = PowerSet()
