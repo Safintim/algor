@@ -123,11 +123,14 @@ class SetTest(unittest.TestCase):
         h.set = test_issubset1
         h2.set = test_issubset2
 
-        r1 = h.issubset(h2)
-        r2 = h2.issubset(h)
+        r1 = h2.issubset(h)
+        r2 = h.issubset(h2)
+        h2.set = [1, 2, 3, 4, 20, 15]
+        r3 = h.issubset(h2)
 
         self.assertTrue(r1)
         self.assertFalse(r2)
+        self.assertFalse(r3)
 
 
 if __name__ == '__main__':

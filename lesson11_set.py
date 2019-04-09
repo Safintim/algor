@@ -57,7 +57,7 @@ class PowerSet:
         return temp
 
     def issubset(self, powset):
-        for item in self.set:
-            if item not in powset.set:
+        for item in powset.set:
+            if item not in self.set:
                 return False
         return True
