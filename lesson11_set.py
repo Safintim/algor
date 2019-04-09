@@ -49,12 +49,11 @@ class PowerSet:
         return self
 
     def difference(self, powset):
-        temp = []
+        temp = PowerSet()
         for item in self.set:
             if item not in powset.set:
-                temp.append(item)
+                temp.put(item)
 
-        # self.set = temp
         return temp
 
     def issubset(self, powset):
