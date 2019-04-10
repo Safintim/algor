@@ -14,88 +14,88 @@ class TreeTest(unittest.TestCase):
     @staticmethod
     def create_tree():
 
-        root = l.TreeNode(None, 9)
+        root = l.SimpleTreeNode(None, 9)
         tree = l.SimpleTree(root)
 
-        child1 = l.TreeNode(root, 4)
-        child2 = l.TreeNode(root, 17)
+        child1 = l.SimpleTreeNode(root, 4)
+        child2 = l.SimpleTreeNode(root, 17)
 
-        child3 = l.TreeNode(child1, 3)
-        child4 = l.TreeNode(child1, 6)
-        child5 = l.TreeNode(child1, 90)
-        child6 = l.TreeNode(child2, 22)
+        child3 = l.SimpleTreeNode(child1, 3)
+        child4 = l.SimpleTreeNode(child1, 6)
+        child5 = l.SimpleTreeNode(child1, 90)
+        child6 = l.SimpleTreeNode(child2, 22)
 
-        child7 = l.TreeNode(child6, 20)
-        child8 = l.TreeNode(child5, 51)
-        child11 = l.TreeNode(child4, 105)
+        child7 = l.SimpleTreeNode(child6, 20)
+        child8 = l.SimpleTreeNode(child5, 51)
+        child11 = l.SimpleTreeNode(child4, 105)
 
-        child9 = l.TreeNode(child8, 1)
-        child10 = l.TreeNode(child8, 2)
+        child9 = l.SimpleTreeNode(child8, 1)
+        child10 = l.SimpleTreeNode(child8, 2)
+        child12 = l.SimpleTreeNode(child10, 90)
 
-        tree.add_node(root, child1)
-        tree.add_node(root, child2)
-        tree.add_node(child1, child3)
-        tree.add_node(child1, child4)
-        tree.add_node(child1, child5)
-        tree.add_node(child4, child11)
-        tree.add_node(child2, child6)
-        tree.add_node(child6, child7)
-        tree.add_node(child5, child8)
-        tree.add_node(child8, child9)
-        tree.add_node(child8, child10)
+        tree.AddChild(root, child1)
+        tree.AddChild(root, child2)
+        tree.AddChild(child1, child3)
+        tree.AddChild(child1, child4)
+        tree.AddChild(child1, child5)
+        tree.AddChild(child4, child11)
+        tree.AddChild(child2, child6)
+        tree.AddChild(child6, child7)
+        tree.AddChild(child5, child8)
+        tree.AddChild(child8, child9)
+        tree.AddChild(child8, child10)
+        tree.AddChild(child10, child12)
         return tree
 
     def test_add_child(self):
         tree = self.create_tree()
         result1 = [3, 6, 90]
         result2 = [1, 2]
-        temp = tree.root.child[0]
-        self.assertListEqual(list(i.value for i in temp.child[2].child[0].child), result2)
-        self.assertListEqual(list(i.value for i in temp.child), result1)
+        temp = tree.root.Children[0]
+        self.assertListEqual(list(i.NodeValue for i in temp.Children[2].Children[0].Children), result2)
+        self.assertListEqual(list(i.NodeValue for i in temp.Children), result1)
 
     def test_remove_child(self):
         tree = self.create_tree()
         result1 = [6, 90]
-        temp = tree.root.child
-        node1 = temp[0].child[0]
+        temp = tree.Root.Children
+        node1 = temp[0].Children[0]
         node2 = temp[1]
 
-        tree.remove_child(node1)
-        tree.remove_child(node2)
-        self.assertListEqual(list(i.value for i in temp[0].child), result1)
+        tree.DeleteNode(node1)
+        tree.DeleteNode(node2)
+        self.assertListEqual(list(i.NodeValue for i in temp[0].Children), result1)
         self.assertEqual(len(temp), 1)
+        self.assertEqual(list(i.NodeValue for i in temp), [4])
 
     def test_find_childs(self):
         tree = self.create_tree()
-        result = [90]
-        # result2 = [1, 1, 1]
-        # self.assertListEqual(list(i.value for i in tree.find_childs(1)), result2)
-        self.assertListEqual(list(i.value for i in tree.find_childs(90)), result)
+        self.assertListEqual(list(i.NodeValue for i in tree.FindNodesByValue(1)), [1])
+        self.assertListEqual(list(i.NodeValue for i in tree.FindNodesByValue(90)), [90, 90])
 
     def test_move_child(self):
         tree = self.create_tree()
-        temp = tree.root.child
-        result1 = [3, 6, 90, 17]
-        result2 = [22]
-        tree.move_child(temp[1], temp[0])
-        self.assertListEqual(list(i.value for i in temp[0].child), result1)
-        self.assertListEqual(list(i.value for i in temp[0].child[3].child), result2)
+        temp = tree.Root.Children
+        tree.MoveNode(temp[1], temp[0])
+        self.assertListEqual(list(i.NodeValue for i in temp[0].Children), [3, 6, 90, 17])
+        self.assertListEqual(list(i.NodeValue for i in temp[0].Children[3].Children), [22])
 
     def test_count_node(self):
         tree = self.create_tree()
         count_leaf = 5
-        count_node = 7
-        temp = tree.count_node()
+        count_node = 8
+        temp = tree.Count()
+        temp2 = tree.LeafCount()
 
-        self.assertEqual(temp[0], count_node)
-        self.assertEqual(temp[1], count_leaf)
+        self.assertEqual(temp, count_node)
+        self.assertEqual(temp2, count_leaf)
 
     def test_set_level(self):
         tree = self.create_tree()
         tree.set_level()
         result = 5
 
-        self.assertEqual(tree.find_childs(1)[0].level, result)
+        self.assertEqual(tree.FindNodesByValue(1)[0].level, result)
 
 
 if __name__ == '__main__':
