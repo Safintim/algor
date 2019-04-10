@@ -25,17 +25,20 @@ class SimpleTree:
                 if n == node:
                     parent.Children.pop(index)
 
-    def GetAllNodes(self, node):
+    def traverse(self, node):
         yield node
         for ch in node.Children:
-            yield from self.GetAllNodes(ch)
+            yield from self.traverse(ch)
+
+    def GetAllNodes(self):
+        return [i for i in self.traverse(self.Root)]
 
     def __iter__(self):
         return self
 
     def FindNodesByValue(self, value):
         result = []
-        for node in self.GetAllNodes(self.Root):
+        for node in self.GetAllNodes():
             if node.NodeValue == value:
                 result.append(node)
         return result
@@ -47,21 +50,21 @@ class SimpleTree:
 
     def Count(self):
         count_node = 0
-        for node in self.GetAllNodes(self.Root):
+        for node in self.GetAllNodes():
             if node.Children:
                 count_node += 1
         return count_node
 
     def LeafCount(self):
         count_leaf = 0
-        for node in self.GetAllNodes(self.Root):
+        for node in self.GetAllNodes():
             if not node.Children:
                 count_leaf += 1
 
         return count_leaf
 
     def set_level(self):
-        for n in self.GetAllNodes(self.Root):
+        for n in self.GetAllNodes():
             if n == self.Root:
                 n.level = 1
             else:
