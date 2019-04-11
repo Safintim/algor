@@ -12,8 +12,7 @@ class SimpleTree:
     def __init__(self, root):
         self.Root = root
 
-    @staticmethod
-    def AddChild(parent, node):
+    def AddChild(self, parent, node):
         parent.Children.append(node)
         node.parent = parent
         # node.level = parent.level + 1

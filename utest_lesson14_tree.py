@@ -116,10 +116,9 @@ class TreeTest(unittest.TestCase):
     def test_count_node(self):
         tree = self.create_tree()
         count_leaf = 5
-        count_node = 8
+        count_node = 13
         temp = tree.Count()
         temp2 = tree.LeafCount()
-
         self.assertEqual(temp, count_node)
         self.assertEqual(temp2, count_leaf)
 
