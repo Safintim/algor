@@ -73,6 +73,9 @@ class TreeTest(unittest.TestCase):
         tree = l.SimpleTree(root)
         tree.DeleteNode(root)
         self.assertEqual(tree.GetAllNodes(), [root])
+        child1 = l.SimpleTreeNode(4, root)
+        tree.DeleteNode(child1)
+        self.assertEqual(tree.GetAllNodes(), [root])
 
         child1 = l.SimpleTreeNode(4, root)
         child2 = l.SimpleTreeNode(17, root)
@@ -82,6 +85,11 @@ class TreeTest(unittest.TestCase):
         tree.DeleteNode(child1)
         tree.DeleteNode(other_node)
         self.assertEqual(tree.GetAllNodes(), [root, child2])
+
+        tree = self.create_tree()
+        tree.DeleteNode(tree.Root.Children[0])
+        tree.DeleteNode(tree.Root.Children[0])
+        self.assertEqual(tree.GetAllNodes(), [tree.Root])
 
     def test_find_childs(self):
         tree = self.create_tree()

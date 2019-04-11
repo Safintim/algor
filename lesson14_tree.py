@@ -17,13 +17,6 @@ class SimpleTree:
         node.parent = parent
         # node.level = parent.level + 1
 
-    def DeleteNode(self, nodetodelete):
-        if nodetodelete != self.Root:
-            for node in self.GetAllNodes():
-                if node == nodetodelete:
-                    node.Parent.Children.remove(node)
-                    break
-
     def traverse(self, node):
         yield node
         for ch in node.Children:
@@ -34,6 +27,11 @@ class SimpleTree:
 
     def __iter__(self):
         return self
+
+    def DeleteNode(self, nodetodelete):
+        if nodetodelete != self.Root:
+            if nodetodelete in self.GetAllNodes():
+                nodetodelete.Parent.Children.remove(nodetodelete)
 
     def FindNodesByValue(self, value):
         return [node for node in self.GetAllNodes() if node.NodeValue == value]
