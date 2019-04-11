@@ -18,12 +18,12 @@ class SimpleTree:
         node.parent = parent
         # node.level = parent.level + 1
 
-    def DeleteNode(self, node):
-        if node != self.Root:
-            parent = node.Parent
-            for index, n in enumerate(parent.Children, 0):
-                if n == node:
-                    parent.Children.pop(index)
+    def DeleteNode(self, nodetodelete):
+        if nodetodelete != self.Root:
+            for node in self.GetAllNodes():
+                if node == nodetodelete:
+                    node.Parent.Children.remove(node)
+                    break
 
     def traverse(self, node):
         yield node

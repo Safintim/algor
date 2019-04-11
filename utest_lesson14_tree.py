@@ -15,7 +15,7 @@ class TreeTest(unittest.TestCase):
     @staticmethod
     def create_tree():
 
-        root = l.SimpleTreeNode(None, 9)
+        root = l.SimpleTreeNode(9, None)
         tree = l.SimpleTree(root)
 
         child1 = l.SimpleTreeNode(4, root)
@@ -62,12 +62,26 @@ class TreeTest(unittest.TestCase):
         temp = tree.Root.Children
         node1 = temp[0].Children[0]
         node2 = temp[1]
-
         tree.DeleteNode(node1)
         tree.DeleteNode(node2)
+        # print([i.NodeValue for i in tree.GetAllNodes()])
+        self.assertEqual(len(tree.Root.Children), 1)
         self.assertListEqual(list(i.NodeValue for i in temp[0].Children), result1)
         self.assertEqual(len(temp), 1)
         self.assertEqual(list(i.NodeValue for i in temp), [4])
+        root = l.SimpleTreeNode(9, None)
+        tree = l.SimpleTree(root)
+        tree.DeleteNode(root)
+        self.assertEqual(tree.GetAllNodes(), [root])
+
+        child1 = l.SimpleTreeNode(4, root)
+        child2 = l.SimpleTreeNode(17, root)
+        other_node = l.SimpleTreeNode(53, None)
+        tree.AddChild(root, child1)
+        tree.AddChild(root, child2)
+        tree.DeleteNode(child1)
+        tree.DeleteNode(other_node)
+        self.assertEqual(tree.GetAllNodes(), [root, child2])
 
     def test_find_childs(self):
         tree = self.create_tree()
