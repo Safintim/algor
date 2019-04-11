@@ -1,6 +1,6 @@
 class SimpleTreeNode:
 
-    def __init__(self, parent, value=None):
+    def __init__(self, value, parent):
         self.Parent = parent
         self.Children = []
         self.NodeValue = value
@@ -37,11 +37,7 @@ class SimpleTree:
         return self
 
     def FindNodesByValue(self, value):
-        result = []
-        for node in self.GetAllNodes():
-            if node.NodeValue == value:
-                result.append(node)
-        return result
+        return [node for node in self.GetAllNodes() if node.NodeValue == value]
 
     def MoveNode(self, OriginalNode, NewParent):
         if OriginalNode != self.Root:
@@ -49,14 +45,13 @@ class SimpleTree:
             self.AddChild(NewParent, OriginalNode)
 
     def Count(self):
-        return len([i for i in self.traverse(self.Root)])
+        return len([i for i in self.GetAllNodes()])
 
     def LeafCount(self):
         count_leaf = 0
         for node in self.GetAllNodes():
             if not node.Children:
                 count_leaf += 1
-
         return count_leaf
 
     def set_level(self):

@@ -18,21 +18,21 @@ class TreeTest(unittest.TestCase):
         root = l.SimpleTreeNode(None, 9)
         tree = l.SimpleTree(root)
 
-        child1 = l.SimpleTreeNode(root, 4)
-        child2 = l.SimpleTreeNode(root, 17)
+        child1 = l.SimpleTreeNode(4, root)
+        child2 = l.SimpleTreeNode(17, root)
 
-        child3 = l.SimpleTreeNode(child1, 3)
-        child4 = l.SimpleTreeNode(child1, 6)
-        child5 = l.SimpleTreeNode(child1, 90)
-        child6 = l.SimpleTreeNode(child2, 22)
+        child3 = l.SimpleTreeNode(3, child1)
+        child4 = l.SimpleTreeNode(6, child1)
+        child5 = l.SimpleTreeNode(90, child1)
+        child6 = l.SimpleTreeNode(22, child2)
 
-        child7 = l.SimpleTreeNode(child6, 20)
-        child8 = l.SimpleTreeNode(child5, 51)
-        child11 = l.SimpleTreeNode(child4, 105)
+        child7 = l.SimpleTreeNode(20, child6)
+        child8 = l.SimpleTreeNode(51, child5)
+        child11 = l.SimpleTreeNode(105, child4)
 
-        child9 = l.SimpleTreeNode(child8, 1)
-        child10 = l.SimpleTreeNode(child8, 2)
-        child12 = l.SimpleTreeNode(child10, 90)
+        child9 = l.SimpleTreeNode(1, child8)
+        child10 = l.SimpleTreeNode(2, child8)
+        child12 = l.SimpleTreeNode(90, child10)
 
         tree.AddChild(root, child1)
         tree.AddChild(root, child2)
@@ -52,7 +52,7 @@ class TreeTest(unittest.TestCase):
         tree = self.create_tree()
         result1 = [3, 6, 90]
         result2 = [1, 2]
-        temp = tree.root.Children[0]
+        temp = tree.Root.Children[0]
         self.assertListEqual(list(i.NodeValue for i in temp.Children[2].Children[0].Children), result2)
         self.assertListEqual(list(i.NodeValue for i in temp.Children), result1)
 
@@ -71,12 +71,19 @@ class TreeTest(unittest.TestCase):
 
     def test_find_childs(self):
         tree = self.create_tree()
+        t = tree.Root.Children[0].Children[2].Children[0].Children[0]
+        print(t.NodeValue)
+        self.assertListEqual(tree.FindNodesByValue(4), [tree.Root.Children[0]])
+        self.assertListEqual(tree.FindNodesByValue(1), [t])
+        self.assertListEqual([i.NodeValue for i in tree.FindNodesByValue(90)], [90, 90])
 
-        self.assertListEqual(list(i.NodeValue for i in tree.FindNodesByValue(1)), [1])
-        self.assertListEqual(list(i.NodeValue for i in tree.FindNodesByValue(90)), [90, 90])
+        root = l.SimpleTreeNode(9, None)
+        tree = l.SimpleTree(root)
+        self.assertListEqual(tree.FindNodesByValue(9), [root])
+        self.assertListEqual([i.NodeValue for i in tree.FindNodesByValue(9)], [9])
 
     def test_size(self):
-        root = l.SimpleTreeNode(None, 9)
+        root = l.SimpleTreeNode(9, None)
         tree = l.SimpleTree(root)
         self.assertEqual(len(tree.GetAllNodes()), 1)
         self.assertEqual(tree.Count(), 1)
