@@ -12,9 +12,9 @@ class SimpleTree:
     def __init__(self, root):
         self.Root = root
 
-    def AddChild(self, parent, node):
-        parent.Children.append(node)
-        node.parent = parent
+    def AddChild(self, ParentNode, NewChild):
+        ParentNode.Children.append(NewChild)
+        NewChild.Parent = ParentNode
         # node.level = parent.level + 1
 
     def traverse(self, node):
