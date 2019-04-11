@@ -25,13 +25,9 @@ class SimpleTree:
     def GetAllNodes(self):
         return [i for i in self.traverse(self.Root)]
 
-    def __iter__(self):
-        return self
-
     def DeleteNode(self, nodetodelete):
-        if nodetodelete != self.Root:
-            if nodetodelete in self.GetAllNodes():
-                nodetodelete.Parent.Children.remove(nodetodelete)
+        if nodetodelete != self.Root and nodetodelete in self.GetAllNodes():
+            nodetodelete.Parent.Children.remove(nodetodelete)
 
     def FindNodesByValue(self, value):
         return [node for node in self.GetAllNodes() if node.NodeValue == value]

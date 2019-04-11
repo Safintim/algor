@@ -94,7 +94,7 @@ class TreeTest(unittest.TestCase):
     def test_find_childs(self):
         tree = self.create_tree()
         t = tree.Root.Children[0].Children[2].Children[0].Children[0]
-        print(t.NodeValue)
+        # print(t.NodeValue)
         self.assertListEqual(tree.FindNodesByValue(4), [tree.Root.Children[0]])
         self.assertListEqual(tree.FindNodesByValue(1), [t])
         self.assertListEqual([i.NodeValue for i in tree.FindNodesByValue(90)], [90, 90])
