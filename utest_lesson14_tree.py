@@ -78,8 +78,9 @@ class TreeTest(unittest.TestCase):
     def test_size(self):
         root = l.SimpleTreeNode(None, 9)
         tree = l.SimpleTree(root)
+        print(len(tree.GetAllNodes()))
         self.assertEqual(len(tree.GetAllNodes()), 1)
-        self.assertEqual(tree.Count(), 0)
+        self.assertEqual(tree.Count(), 1)
         self.assertEqual(tree.LeafCount(), 1)
         tree = self.create_tree()
         self.assertEqual(len(tree.GetAllNodes()), 13)
