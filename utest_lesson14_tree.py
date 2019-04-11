@@ -73,7 +73,9 @@ class TreeTest(unittest.TestCase):
         tree = l.SimpleTree(root)
         tree.DeleteNode(root)
         self.assertEqual(tree.GetAllNodes(), [root])
-        child1 = l.SimpleTreeNode(4, root)
+
+        child1 = l.SimpleTreeNode(4, None)
+        tree.AddChild(root, child1)
         tree.DeleteNode(child1)
         self.assertEqual(tree.GetAllNodes(), [root])
 
