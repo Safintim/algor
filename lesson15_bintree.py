@@ -57,6 +57,7 @@ class BST:
                 bst_find.Node.LeftChild = BSTNode(key, val, bst_find.Node)
             else:
                 bst_find.Node.RightChild = BSTNode(key, val, bst_find.Node)
+            return True
         return False
 
     def go_right(self, FromNode):
