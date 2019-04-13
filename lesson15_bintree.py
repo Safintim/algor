@@ -1,112 +1,110 @@
-from collections import namedtuple
+class BSTNode:
+    def __init__(self, key, val, parent):
+        self.NodeKey = key
+        self.NodeValue = val
+        self.Parent = parent
+        self.LeftChild = None
+        self.RightChild = None
 
 
-class TreeNode2:
-
-    def __init__(self, parent, key):
-        self.parent = parent
-        self.left_child = None
-        self.right_child = None
-        self.key = key
-
-
-class Tree2:
-
+class BSTFind:
     def __init__(self):
-        self.root = None
-        self.current = self.root
-        self.result_find = namedtuple('result_find', ['node', 'is_key', 'direct'])
+        self.Node = None
+        self.NodeHasKey = False
+        self.ToLeft = False
 
-    def preoder(self, root):
-        yield root
-        if root.left_child:
-            yield from self.preoder(root.left_child)
-        if root.right_child:
-            yield from self.preoder(root.right_child)
 
-    def __iter__(self):
-        return self
+class BST:
 
-    def find(self, key):
-        # по сути это проверка только, когда дерево пусто
-        if self.current is None:
-            return self.result_find(self.current, False, None)
-            # return [self.current, False, None]
-        # если нашлась нода с таким же ключом
-        elif self.current.key == key:
-            return self.result_find(self.current, True, None)
-            # return [self.current, True, None]
-        elif key < self.current.key:
-            '''если справа или слева пусто, то нужно запомнить родителя, чтобы после добавить к нему ноду'''
-            if self.current.left_child is None:
-                return self.result_find(self.current, False, 'left')
-                # return [self.current, False, 'left']
-            self.current = self.current.left_child
-            return self.find(key)
-        else:
-            # key > self.current.key:
-            if self.current.right_child is None:
-                return self.result_find(self.current, False, 'right')
-                # return [self.current, False, 'right']
-            self.current = self.current.right_child
-            return self.find(key)
+    def __init__(self, node):
+        self.Root = node
 
-    def add_node(self, n):
-        f = self.find(n.key)
-        # с индексами работать не особо удобно
-        # node = f[0]
-        # is_key = f[1]
-        # direct = f[2]
+    def preoder(self, node):
+        yield node
+        if node.LeftChild:
+            yield from self.preoder(node.LeftChild)
+        if node.RightChild:
+            yield from self.preoder(node.RightChild)
 
-        if f.node is None:
-            self.root = n
-        elif f.is_key:
-            print('Такой ключ уже есть')
-        else:
-            if f.direct == 'right':
-                f.node.right_child = n
-                n.parent = f.node
+    def GetAllNodes(self):
+        return [i for i in self.preoder(self.Root)]
+
+    def FindNodeByKey(self, key):
+        current_node = self.Root
+        bst_find = BSTFind()
+        while current_node:
+            if key == current_node.NodeKey:
+                bst_find.Node = current_node
+                bst_find.NodeHasKey = True
+                break
+            elif key < current_node.NodeKey:
+                if current_node.LeftChild is None:
+                    bst_find.Node = current_node
+                    bst_find.ToLeft = True
+                current_node = current_node.LeftChild
             else:
-                f.node.left_child = n
-                n.parent = f.node
-        self.current = self.root
+                if current_node.RightChild is None:
+                    bst_find.Node = current_node
+                current_node = current_node.RightChild
 
-    def max(self, node):
-        f = self.find(node.key)
-        self.current = self.root
-        if f.is_key:
-            temp = f.node.right_child
-            while True:
-                if temp.right_child is None:
-                    return temp
-                temp = temp.right_child
-        else:
-            print('Такой ноды нет')
+        return bst_find
 
-    def min(self, node):
-        f = self.find(node.key)
-        self.current = self.root
-        if f.is_key:
-            temp = f.node.left_child
-            while True:
-                if temp.left_child is None:
-                    return temp
-                temp = temp.left_child
-        else:
-            print('Такой ноды нет')
+    def AddKeyValue(self, key, val):
+        bst_find = self.FindNodeByKey(key)
 
-    def remove_node(self, node):
-        f = self.find(node.key)
-        self.current = self.root
-        if f.is_key:
-            # минимальный "справа"
-            min_node = self.min(f.node.right_child)
-            # родителю минимального приемника левому ребру None
-            min_node.parent.left_child = None
-            # установить новому узлу "лево и право"
-            min_node.left_child = f.node.left_child
-            min_node.right_child = f.node.right_child
-            # родителю удаляемого узла задать нового приемника
-            f.node.parent.right_child = min_node
+        if not bst_find.NodeHasKey:
+            if bst_find.ToLeft:
+                bst_find.Node.LeftChild = BSTNode(key, val, bst_find.Node)
+            else:
+                bst_find.Node.RightChild = BSTNode(key, val, bst_find.Node)
+        return False
+
+    def go_right(self, FromNode):
+        while FromNode.RightChild:
+            FromNode = FromNode.RightChild
+
+        return FromNode
+
+    def go_left(self, FromNode):
+        while FromNode.LeftChild:
+            FromNode = FromNode.LeftChild
+
+        return FromNode
+
+    def FinMinMax(self, FromNode, FindMax):
+        if FindMax:
+            desired_node = self.go_right(FromNode)
         else:
-            print('Такой ноды нет')
+            desired_node = self.go_left(FromNode)
+        return desired_node
+
+    def change_parent(self, node, new_node):
+        if node.Parent.LeftChild == node:
+            node.Parent.LeftChild = new_node
+        else:
+            node.Parent.RightChild = new_node
+
+    def DeleteNodeByKey(self, key):
+        bst_find = self.FindNodeByKey(key)
+        if bst_find.NodeHasKey:
+            delete_node = bst_find.Node
+
+            if delete_node.RightChild is None:
+                self.change_parent(delete_node, None)
+                return True
+
+            desired_node = self.go_left(delete_node.RightChild)
+
+            desired_node.Parent.LeftChild = None
+            desired_node.Parent = delete_node.Parent
+            self.change_parent(delete_node, desired_node)
+            desired_node.LeftChild = delete_node.LeftChild
+
+            if delete_node.RightChild != desired_node:
+                desired_node.RightChild = delete_node.RightChild
+
+            return True
+        return False
+
+    def Count(self):
+        return len(self.GetAllNodes())
