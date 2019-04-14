@@ -52,13 +52,13 @@ class BST:
         result = []
         queue = [self.Root]
         while len(queue) > 0:
-            x = queue.pop()
-            result.append(x)
+            node = queue.pop()
+            result.append(node)
 
-            if x.LeftChild is not None:
-                queue.insert(0, x.LeftChild)
-            if x.RightChild is not None:
-                queue.insert(0, x.RightChild)
+            if node.LeftChild is not None:
+                queue.insert(0, node.LeftChild)
+            if node.RightChild is not None:
+                queue.insert(0, node.RightChild)
 
         return tuple(result)
 
