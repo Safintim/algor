@@ -19,15 +19,48 @@ class BST:
     def __init__(self, node):
         self.Root = node
 
-    def preoder(self, node):
+    def pre_order(self, node):
         yield node
         if node.LeftChild:
-            yield from self.preoder(node.LeftChild)
+            yield from self.pre_order(node.LeftChild)
         if node.RightChild:
-            yield from self.preoder(node.RightChild)
+            yield from self.pre_order(node.RightChild)
 
-    def GetAllNodes(self):
-        return [i for i in self.preoder(self.Root)]
+    def in_order(self, node):
+        if node.LeftChild:
+            yield from self.in_order(node.LeftChild)
+        yield node
+        if node.RightChild:
+            yield from self.in_order(node.RightChild)
+
+    def post_order(self, node):
+        if node.LeftChild:
+            yield from self.post_order(node.LeftChild)
+        if node.RightChild:
+            yield from self.post_order(node.RightChild)
+        yield node
+
+    def DeepAllNodes(self, mode):
+        if mode == 0:
+            return tuple(self.in_order(self.Root))
+        elif mode == 1:
+            return tuple(self.pre_order(self.Root))
+        else:
+            return tuple(self.post_order(self.Root))
+
+    def WideAllNodes(self):
+        result = []
+        queue = [self.Root]
+        while len(queue) > 0:
+            x = queue.pop()
+            result.append(x)
+
+            if x.LeftChild is not None:
+                queue.insert(0, x.LeftChild)
+            if x.RightChild is not None:
+                queue.insert(0, x.RightChild)
+
+        return tuple(result)
 
     def FindNodeByKey(self, key):
         current_node = self.Root
@@ -106,6 +139,9 @@ class BST:
 
             return True
         return False
+
+    def GetAllNodes(self):
+        return [i for i in self.pre_order(self.Root)]
 
     def Count(self):
         return len(self.GetAllNodes())
