@@ -44,9 +44,9 @@ class BST:
         if mode == 0:
             return tuple(self.in_order(self.Root))
         elif mode == 1:
-            return tuple(self.pre_order(self.Root))
-        else:
             return tuple(self.post_order(self.Root))
+        else:
+            return tuple(self.pre_order(self.Root))
 
     def WideAllNodes(self):
         result = []
