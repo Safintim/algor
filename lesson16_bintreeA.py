@@ -1,7 +1,7 @@
 class aBST:
 
     def __init__(self, depth):
-        tree_size = sum(2**i for i in range(depth+1))
+        tree_size = 2**(depth+1) - 1
         self.Tree = [None] * tree_size
 
     def FindKeyIndex(self, key):
@@ -32,7 +32,6 @@ class aBST:
 
         if index is None:
             return -1
-        elif index <= 0:
+        if index <= 0:
             self.Tree[abs(index)] = key
-
         return abs(index)
