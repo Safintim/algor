@@ -8,8 +8,10 @@ class MyTestCase(unittest.TestCase):
         tree = l.aBST(3)
 
         for i in test_list:
-            print(tree.AddKey(i))
+            index = tree.AddKey(i)
+            self.assertEqual(tree.AddKey(i), index)
         self.assertEqual(tree.AddKey(8), 0)
+        self.assertEqual(tree.AddKey(6), 4)
         self.assertEqual(tree.AddKey(2), 3)
         self.assertEqual(tree.AddKey(11), 12)
         self.assertEqual(tree.AddKey(13), 13)
@@ -18,6 +20,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(tree.AddKey(100), -1)
         self.assertEqual(tree.AddKey(10), 5)
         self.assertEqual(tree.AddKey(12), 2)
+        self.assertEqual(tree.AddKey(15), 14)
 
 
 if __name__ == '__main__':
