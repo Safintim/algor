@@ -87,4 +87,4 @@ class aBST:
         elif index <= 0:
             self.Tree[abs(index)] = key
 
-        return index
+        return abs(index)
