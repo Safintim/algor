@@ -55,15 +55,14 @@ def GenerateBBSTArray(a):
     result[0] = a[len(a) // 2]
 
     halves(result, a, 0)
-    halves(result, a, 0)
 
     return result
 
 
-# t = GenerateBBSTArray(a)
-# print(t)
-# tree = aBST(3)
-# for i in t:
-#     tree.AddKey(i)
-#
-# print(tree.Tree)
+t = GenerateBBSTArray(a)
+print(t)
+tree = aBST(3)
+for i in t:
+    tree.AddKey(i)
+
+print(tree.Tree)
