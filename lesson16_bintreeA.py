@@ -37,15 +37,33 @@ class aBST:
         return abs(index)
 
 
-def halves(a):
+a = [7, 6, 4, 9, 5, 14, 15, 2, 11, 8, 13, 1, 3, 12, 10]
+
+
+def halves(result, a, i):
     if not a:
         return None
-    mid = len(a) // 2
-    yield a[mid]
-    yield from GenerateBBSTArray(a[:len(a) // 2])
-    yield from GenerateBBSTArray(a[len(a) // 2 + 1:])
+
+    result[i] = a[len(a) // 2]
+    halves(result, a[:len(a) // 2], 2*i+1)
+    halves(result, a[len(a) // 2 + 1:], 2*i+2)
 
 
 def GenerateBBSTArray(a):
     a.sort()
-    return [i for i in halves(a)]
+    result = [None] * len(a)
+    result[0] = a[len(a) // 2]
+
+    halves(result, a, 0)
+    halves(result, a, 0)
+
+    return result
+
+
+# t = GenerateBBSTArray(a)
+# print(t)
+# tree = aBST(3)
+# for i in t:
+#     tree.AddKey(i)
+#
+# print(tree.Tree)
