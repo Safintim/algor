@@ -111,6 +111,7 @@ class TreeTest(unittest.TestCase):
 
         print([i.NodeKey for i in bst.WideAllNodes()])
 
+        print([i.NodeKey for i in bst.DeepAllNodes(2)])
 
 if __name__ == '__main__':
     unittest.main()
