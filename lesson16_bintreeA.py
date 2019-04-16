@@ -49,8 +49,5 @@ def halves(result, a, i):
 def GenerateBBSTArray(a):
     a.sort()
     result = [None] * len(a)
-    result[0] = a[len(a) // 2]
-
     halves(result, a, 0)
-
     return result
