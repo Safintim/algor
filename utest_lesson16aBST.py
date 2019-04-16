@@ -22,6 +22,15 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(tree.AddKey(12), 2)
         self.assertEqual(tree.AddKey(15), 14)
 
+    def test_GenerateBBSTArray(self):
+        a = [7, 6, 4, 9, 5, 14, 15, 2, 11, 8, 13, 1, 3, 12, 10]
+        t = l.GenerateBBSTArray(a)
+        print(t)
+        tree = l.aBST(3)
+        for i in t:
+            tree.AddKey(i)
+
+        print(tree.Tree)
 
 if __name__ == '__main__':
     unittest.main()

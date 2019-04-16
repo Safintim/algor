@@ -37,9 +37,6 @@ class aBST:
         return abs(index)
 
 
-a = [7, 6, 4, 9, 5, 14, 15, 2, 11, 8, 13, 1, 3, 12, 10]
-
-
 def halves(result, a, i):
     if not a:
         return None
@@ -57,12 +54,3 @@ def GenerateBBSTArray(a):
     halves(result, a, 0)
 
     return result
-
-
-t = GenerateBBSTArray(a)
-print(t)
-tree = aBST(3)
-for i in t:
-    tree.AddKey(i)
-
-print(tree.Tree)
