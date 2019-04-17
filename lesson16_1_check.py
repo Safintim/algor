@@ -29,20 +29,16 @@ class BalancedBST:
         self.Root = None
         self.BSTArray = []
 
-    def CreateFromArray(self, a):
-        self.BSTArray = GenerateBBSTArray(a)
-
-    def GenerateTree(self):
-        bstarray = self.BSTArray[:]
-
+    def create_nodes_from_list(self, bstarray):
         for i, key in enumerate(bstarray):
             if i == 0:
-                new_node = BSTNode(self.BSTArray[0], None)
+                new_node = BSTNode(bstarray[0], None)
                 self.Root = new_node
             else:
                 new_node = BSTNode(bstarray[i], bstarray[(i - 1) // 2])
             bstarray[i] = new_node
 
+    def add_child_and_set_level(self, bstarray):
         i = 0
         while i * 2 + 1 < len(bstarray):
             node = bstarray[i]
@@ -53,3 +49,12 @@ class BalancedBST:
             else:
                 node.Level = 1
             i += 1
+
+    def CreateFromArray(self, a):
+        self.BSTArray = GenerateBBSTArray(a)
+
+    def GenerateTree(self):
+        bstarray = self.BSTArray[:]
+
+        self.create_nodes_from_list(bstarray)
+        self.add_child_and_set_level(bstarray)
