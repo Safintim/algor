@@ -1,11 +1,7 @@
 def halves(result, a, i):
     if not a:
         return None
-
-    current_node = BSTNode(a[len(a) // 2], result[(i - 1) // 2])
-    if i != 0:
-        current_node.Level = result[(i - 1) // 2].Level + 1
-    result[i] = current_node
+    result[i] = a[len(a) // 2]
     halves(result, a[:len(a) // 2], 2 * i+1)
     halves(result, a[len(a) // 2 + 1:], 2 * i+2)
 
@@ -24,7 +20,7 @@ class BSTNode:
         self.Parent = parent
         self.LeftChild = None
         self.RightChild = None
-        self.Level = 1
+        self.Level = 0
 
 
 class BalancedBST:
@@ -37,11 +33,23 @@ class BalancedBST:
         self.BSTArray = GenerateBBSTArray(a)
 
     def GenerateTree(self):
+        bstarray = self.BSTArray[:]
+
+        for i, key in enumerate(bstarray):
+            if i == 0:
+                new_node = BSTNode(self.BSTArray[0], None)
+                self.Root = new_node
+            else:
+                new_node = BSTNode(bstarray[i], bstarray[(i - 1) // 2])
+            bstarray[i] = new_node
+
         i = 0
-        self.Root = self.BSTArray[0]
-        while i * 2 + 1 < len(self.BSTArray):
-
-            self.BSTArray[i].LeftChild = self.BSTArray[i * 2 + 1]
-            self.BSTArray[i].RightChild = self.BSTArray[i * 2 + 2]
-
+        while i * 2 + 1 < len(bstarray):
+            node = bstarray[i]
+            node.LeftChild = bstarray[i * 2 + 1]
+            node.RightChild = bstarray[i * 2 + 2]
+            if i != 0:
+                node.Level = bstarray[(i - 1) // 2].Level + 1
+            else:
+                node.Level = 1
             i += 1
