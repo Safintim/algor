@@ -39,16 +39,17 @@ class BalancedBST:
             bstarray[i] = new_node
 
     def add_child_and_set_level(self, bstarray):
-        i = 0
-        while i * 2 + 1 < len(bstarray):
-            node = bstarray[i]
-            node.LeftChild = bstarray[i * 2 + 1]
-            node.RightChild = bstarray[i * 2 + 2]
-            if i != 0:
+        for i, node in enumerate(bstarray):
+            if i * 2 + 1 < len(bstarray):
+                node.LeftChild = bstarray[i * 2 + 1]
+                node.RightChild = bstarray[i * 2 + 2]
+                if i == 0:
+                    node.Level = 1
+                    continue
                 node.Level = bstarray[(i - 1) // 2].Level + 1
+                i += 1
             else:
-                node.Level = 1
-            i += 1
+                node.Level = bstarray[(i - 1) // 2].Level + 1
 
     def CreateFromArray(self, a):
         self.BSTArray = GenerateBBSTArray(a)
