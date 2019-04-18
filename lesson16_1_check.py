@@ -102,8 +102,6 @@ class BalancedBST:
             max_right_level = max(i.Level for i in self.in_order(root_node.RightChild))
         else:
             max_right_level = 1
-
-
         return abs(max_left_level - max_right_level) <= 1
 
     def IsBalanced(self, root_node):
