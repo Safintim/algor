@@ -107,6 +107,4 @@ class BalancedBST:
         return abs(last_left - last_right) <= 1
 
     def IsBalanced(self, root_node):
-        a = self.is_keys_correct_order(root_node)
-        b = self.is_equality_length(root_node)
-        return a and b
+        return self.is_keys_correct_order(root_node) and self.is_equality_length(root_node)
