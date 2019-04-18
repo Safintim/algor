@@ -82,7 +82,14 @@ class MyTestCase(unittest.TestCase):
         bst.GenerateTree()
         self.assertEqual(bst.IsBalanced(bst.Root), True)
         bst.Root.LeftChild.RightChild = None
-        self.assertEqual(bst.IsBalanced(bst.Root), True)
+        bst.Root.RightChild = None
+        temp1 = l.BSTNode(0, bst.Root.LeftChild.LeftChild.LeftChild)
+        temp1.Level = 5
+        temp2 = l.BSTNode(1.5, bst.Root.LeftChild.LeftChild.LeftChild)
+        temp2.Level = 5
+        bst.Root.LeftChild.LeftChild.LeftChild.LeftChild = temp1
+        bst.Root.LeftChild.LeftChild.LeftChild.RightChild = temp2
+        self.assertEqual(bst.IsBalanced(bst.Root), False)
 
 
 if __name__ == '__main__':
