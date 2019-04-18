@@ -95,9 +95,14 @@ class BalancedBST:
     def is_equality_length(self, root_node):
         nodes = tuple(node for node in self.in_order(root_node))
         index_root_node = nodes.index(root_node)
-        last_left = nodes[index_root_node - 1].Level
+        if index_root_node == 0:
+            last_left = 0
+        else:
+            last_left = nodes[index_root_node - 1].Level
         last_right = nodes[-1].Level
         return abs(last_left - last_right) <= 1
 
     def IsBalanced(self, root_node):
-        return self.is_keys_correct_order(root_node) and self.is_equality_length(root_node)
+        a = self.is_keys_correct_order(root_node)
+        b = self.is_equality_length(root_node)
+        return a and b

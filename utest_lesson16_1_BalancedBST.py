@@ -29,9 +29,27 @@ class MyTestCase(unittest.TestCase):
         bst = l.BalancedBST()
         bst.CreateFromArray(a)
         bst.GenerateTree()
-
         self.assertEqual(bst.IsBalanced(bst.Root), True)
+        bst.Root.LeftChild = None
+        self.assertEqual(bst.IsBalanced(bst.Root), False)
 
+        a = [7, 6, 4, 9, 5, 14, 15, 2, 11, 8, 13, 1, 3, 12, 10]
+        bst = l.BalancedBST()
+        bst.CreateFromArray(a)
+        bst.GenerateTree()
+
+        bst.Root.LeftChild.LeftChild = None
+        bst.Root.LeftChild.RightChild = None
+        self.assertEqual(bst.IsBalanced(bst.Root), False)
+
+        a = [7, 6, 4, 9, 5, 14, 15, 2, 11, 8, 13, 1, 3, 12, 10]
+        bst = l.BalancedBST()
+        bst.CreateFromArray(a)
+        bst.GenerateTree()
+
+        bst.Root.LeftChild.LeftChild.LeftChild = None
+        bst.Root.LeftChild.LeftChild.RightChild = None
+        self.assertEqual(bst.IsBalanced(bst.Root), True)
 
 if __name__ == '__main__':
     unittest.main()
