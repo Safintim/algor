@@ -58,3 +58,45 @@ class BalancedBST:
 
         self.create_nodes_from_list(bstarray)
         self.add_child_and_set_level(bstarray)
+
+    def in_order(self, root_node):
+        if root_node.LeftChild:
+            yield from self.in_order(root_node.LeftChild)
+        yield root_node
+        if root_node.RightChild:
+            yield from self.in_order(root_node.RightChild)
+
+    def WideAllNodes(self, root_node):
+        result = []
+        queue = [root_node]
+        while len(queue) > 0:
+            node = queue.pop()
+            result.append(node)
+
+            if node.LeftChild is not None:
+                queue.insert(0, node.LeftChild)
+            if node.RightChild is not None:
+                queue.insert(0, node.RightChild)
+
+        return tuple(result)
+
+    def is_keys_correct_order(self, root_node):
+        for node in self.WideAllNodes(root_node):
+            if node.LeftChild:
+                if node.LeftChild.NodeKey > node.NodeKey:
+                    return False
+
+            if node.RightChild:
+                if node.RightChild.NodeKey < node.NodeKey:
+                    return False
+        return True
+
+    def is_equality_length(self, root_node):
+        nodes = tuple(node for node in self.in_order(root_node))
+        index_root_node = nodes.index(root_node)
+        last_left = nodes[index_root_node - 1].Level
+        last_right = nodes[-1].Level
+        return abs(last_left - last_right) <= 1
+
+    def IsBalanced(self, root_node):
+        return self.is_keys_correct_order(root_node) and self.is_equality_length(root_node)
