@@ -99,7 +99,11 @@ class BalancedBST:
             last_left = 0
         else:
             last_left = nodes[index_root_node - 1].Level
-        last_right = nodes[-1].Level
+
+        if index_root_node == len(nodes) - 1:
+            last_right = 0
+        else:
+            last_right = nodes[-1].Level
         return abs(last_left - last_right) <= 1
 
     def IsBalanced(self, root_node):
