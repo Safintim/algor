@@ -1,5 +1,5 @@
 import unittest
-import lesson_17_heap as l
+import lesson17_heap as l
 
 
 class TreeTest(unittest.TestCase):
@@ -13,27 +13,43 @@ class TreeTest(unittest.TestCase):
         test_list3 = [6, 11, 2, 1, 3, 8, 7, 9, 4, 5]
 
         h1 = l.Heap()
-        for i in test_list1:
-            h1.add(i)
+        h1.MakeHeap(test_list1)
+        self.assertEqual(h1.HeapArray, result1)
         h2 = l.Heap()
-        for i in test_list2:
-            h2.add(i)
-
+        h2.MakeHeap(test_list2)
+        self.assertEqual(h2.HeapArray, result2)
         h3 = l.Heap()
-        for i in test_list3:
-            h3.add(i)
+        h3.MakeHeap(test_list3)
+        self.assertEqual(h3.HeapArray, result3)
+        h3.GetMax()
+        h3.GetMax()
+        self.assertTrue(h3.Add(100))
+        self.assertTrue(h3.Add(101))
+        self.assertFalse(h3.Add(103))
 
-        self.assertListEqual(h1.heap, result1)
-        self.assertListEqual(h2.heap, result2)
-        self.assertListEqual(h3.heap, result3)
-
-    def test_remove_max(self):
+    def test_get_max(self):
         h = l.Heap()
-        h.heap = [11, 9, 4, 7, 8, 3, 1, 2, 5, 6]
-        h.remove_max()
-        h.remove_max()
-        h.remove_max()
-        self.assertListEqual(h.heap, [7, 6, 4, 5, 2, 3, 1])
+        h.MakeHeap([11, 9, 4, 7, 8, 3, 1, 2, 5, 6])
+        self.assertEqual(h.GetMax(), 11)
+        self.assertListEqual(h.HeapArray, [9, 8, 4, 7, 6, 3, 1, 2, 5])
+        self.assertEqual(h.GetMax(), 9)
+        self.assertListEqual(h.HeapArray, [8, 7, 4, 5, 6, 3, 1, 2])
+        self.assertEqual(h.GetMax(), 8)
+        self.assertListEqual(h.HeapArray, [7, 6, 4, 5, 2, 3, 1])
+        self.assertEqual(h.GetMax(), 7)
+        self.assertListEqual(h.HeapArray, [6, 5, 4, 1, 2, 3])
+        self.assertEqual(h.GetMax(), 6)
+        self.assertListEqual(h.HeapArray, [5, 3, 4, 1, 2])
+        self.assertEqual(h.GetMax(), 5)
+        self.assertListEqual(h.HeapArray, [4, 3, 2, 1])
+        self.assertEqual(h.GetMax(), 4)
+        self.assertListEqual(h.HeapArray, [3, 1, 2])
+        self.assertEqual(h.GetMax(), 3)
+        self.assertListEqual(h.HeapArray, [2, 1])
+        self.assertEqual(h.GetMax(), 2)
+        self.assertListEqual(h.HeapArray, [1])
+        self.assertEqual(h.GetMax(), 1)
+        self.assertListEqual(h.HeapArray, [])
 
 
 if __name__ == '__main__':
