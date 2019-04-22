@@ -133,7 +133,6 @@ class SimpleGraph:
             [i.append(0) for i in self.m_adjacency]
             self.max_vertex += 1
             self.m_adjacency.append([0] * self.max_vertex)
-        return True
 
     def RemoveVertex(self, v):
         if self.isVertex(v):
