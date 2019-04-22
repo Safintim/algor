@@ -6,7 +6,7 @@ class GraphTest(unittest.TestCase):
 
     def test_add_vertex(self):
         g = l.SimpleGraph(4)
-        vertexes = [l.Vertex(i) for i in range(4)]
+        vertexes = [i for i in range(4)]
         for v in vertexes:
             g.AddVertex(v)
         self.assertEqual(len(g.m_adjacency), 4)
@@ -19,7 +19,7 @@ class GraphTest(unittest.TestCase):
 
     def test_add_edge(self):
         g = l.SimpleGraph(5)
-        vertexes = [l.Vertex(i) for i in range(5)]
+        vertexes = [i for i in range(5)]
 
         for i in vertexes:
             g.AddVertex(i)
@@ -33,7 +33,7 @@ class GraphTest(unittest.TestCase):
 
     def test_remove_vertex(self):
         g = l.SimpleGraph(5)
-        vertexes = [l.Vertex(i) for i in range(5)]
+        vertexes = [i for i in range(5)]
 
         for v in vertexes:
             g.AddVertex(v)
@@ -67,7 +67,7 @@ class GraphTest(unittest.TestCase):
 
     def test_is_edge(self):
         g = l.SimpleGraph(5)
-        vertexes = [l.Vertex(i) for i in range(5)]
+        vertexes = [i for i in range(5)]
 
         for i in vertexes:
             g.AddVertex(i)
@@ -83,7 +83,7 @@ class GraphTest(unittest.TestCase):
         self.assertFalse(g.IsEdge(vertexes[0], vertexes[4]))
         self.assertTrue(g.IsEdge(vertexes[3], vertexes[2]))
         self.assertFalse(g.IsEdge(vertexes[2], vertexes[1]))
-        new_vert = l.Vertex(10)
+        new_vert = 10
         self.assertFalse(g.IsEdge(vertexes[2], new_vert))
 
 

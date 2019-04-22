@@ -122,8 +122,11 @@ class SimpleGraph:
         self.m_adjacency = [[0] * self.max_vertex for _ in range(self.max_vertex)]
         self.vertex = []
 
+    def get_vertexes(self):
+        return [v.Value for v in self.vertex]
+
     def AddVertex(self, v):
-        self.vertex.append(v)
+        self.vertex.append(Vertex(v))
         if len(self.vertex) > self.max_vertex:
             [i.append(0) for i in self.m_adjacency]
             self.max_vertex += 1
@@ -131,8 +134,9 @@ class SimpleGraph:
         return True
 
     def RemoveVertex(self, v):
-        if v in self.vertex:
-            index_remove_vertex = self.vertex.index(v)
+        vertex = self.get_vertexes()
+        if v in vertex:
+            index_remove_vertex = vertex.index(v)
             [i.pop(index_remove_vertex) for i in self.m_adjacency]
             self.m_adjacency.pop(index_remove_vertex)
             self.vertex.pop(index_remove_vertex)
@@ -141,26 +145,29 @@ class SimpleGraph:
         return False
 
     def IsEdge(self, v1, v2):
-        if v1 in self.vertex and v2 in self.vertex:
-            index_v1 = self.vertex.index(v1)
-            index_v2 = self.vertex.index(v2)
+        vertex = self.get_vertexes()
+        if v1 in vertex and v2 in vertex:
+            index_v1 = vertex.index(v1)
+            index_v2 = vertex.index(v2)
             if self.m_adjacency[index_v1][index_v2] == 1:
                 return True
         return False
 
     def AddEdge(self, v1, v2):
-        if v1 in self.vertex and v2 in self.vertex:
-            index_v1 = self.vertex.index(v1)
-            index_v2 = self.vertex.index(v2)
+        vertex = self.get_vertexes()
+        if v1 in vertex and v2 in vertex:
+            index_v1 = vertex.index(v1)
+            index_v2 = vertex.index(v2)
             self.m_adjacency[index_v1][index_v2] = 1
             self.m_adjacency[index_v2][index_v1] = 1
             return True
         return False
 
     def RemoveEdge(self, v1, v2):
-        if v1 in self.vertex and v2 in self.vertex:
-            index_v1 = self.vertex.index(v1)
-            index_v2 = self.vertex.index(v2)
+        vertex = self.get_vertexes()
+        if v1 in vertex and v2 in vertex:
+            index_v1 = vertex.index(v1)
+            index_v2 = vertex.index(v2)
             self.m_adjacency[index_v1][index_v2] = 0
             self.m_adjacency[index_v2][index_v1] = 0
             return True
