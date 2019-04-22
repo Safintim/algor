@@ -24,10 +24,10 @@ class GraphTest(unittest.TestCase):
         for i in vertexes:
             g.AddVertex(i)
 
-        g.AddEdge(vertexes[0], vertexes[1])
+        g.AddEdge(0, 1)
         self.assertListEqual(g.m_adjacency[0], [0, 1, 0, 0, 0])
         self.assertListEqual(g.m_adjacency[1], [1, 0, 0, 0, 0])
-        g.AddEdge(vertexes[4], vertexes[1])
+        g.AddEdge(4, 1)
         self.assertListEqual(g.m_adjacency[1], [1, 0, 0, 0, 1])
         self.assertListEqual(g.m_adjacency[4], [0, 1, 0, 0, 0])
 
@@ -40,7 +40,7 @@ class GraphTest(unittest.TestCase):
 
         g.AddEdge(vertexes[0], vertexes[1])
         g.AddEdge(vertexes[4], vertexes[1])
-        g.RemoveVertex(vertexes[1])
+        g.RemoveVertex(1)
 
         self.assertListEqual(g.m_adjacency[0], [0, 0, 0, 0])
         self.assertListEqual(g.m_adjacency[1], [0, 0, 0, 0])
@@ -61,7 +61,7 @@ class GraphTest(unittest.TestCase):
             [1, 1, 1, 1, 1],
             [0, 1, 0, 1, 0],
         ]
-        g.RemoveEdge(vertexes[0], vertexes[1])
+        g.RemoveEdge(0, 1)
         self.assertListEqual(g.m_adjacency[0], [0, 0, 1, 1, 0])
         self.assertListEqual(g.m_adjacency[1], [0, 0, 0, 1, 1])
 
@@ -79,12 +79,12 @@ class GraphTest(unittest.TestCase):
             [1, 1, 1, 1, 1],
             [0, 1, 0, 1, 0],
         ]
-        self.assertTrue(g.IsEdge(vertexes[0], vertexes[1]))
-        self.assertFalse(g.IsEdge(vertexes[0], vertexes[4]))
-        self.assertTrue(g.IsEdge(vertexes[3], vertexes[2]))
-        self.assertFalse(g.IsEdge(vertexes[2], vertexes[1]))
+        self.assertTrue(g.IsEdge(0, 1))
+        self.assertFalse(g.IsEdge(0, 4))
+        self.assertTrue(g.IsEdge(3, 2))
+        self.assertFalse(g.IsEdge(2, 1))
         new_vert = 10
-        self.assertFalse(g.IsEdge(vertexes[2], new_vert))
+        self.assertFalse(g.IsEdge(2, new_vert))
 
 
     def test_dfs(self):
