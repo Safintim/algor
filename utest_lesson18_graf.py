@@ -88,20 +88,13 @@ class GraphTest(unittest.TestCase):
 
 
     def test_dfs(self):
-
-        A = l.Vertex('A')
-        B = l.Vertex('B')
-        C = l.Vertex('C')
-        D = l.Vertex('D')
-        E = l.Vertex('E')
-
         g = l.SimpleGraph(5)
 
-        g.add_vertex(A)
-        g.add_vertex(B)
-        g.add_vertex(C)
-        g.add_vertex(D)
-        g.add_vertex(E)
+        g.AddVertex('A')
+        g.AddVertex('B')
+        g.AddVertex('C')
+        g.AddVertex('D')
+        g.AddVertex('E')
 
         g.m_adjacency = [
             [0, 1, 1, 1, 0],  # A
@@ -110,10 +103,12 @@ class GraphTest(unittest.TestCase):
             [1, 1, 1, 1, 1],  # D
             [0, 1, 0, 1, 0],  # E
         ]
-        self.assertEqual(g.dfs(A, B), 'A->B')
-        self.assertEqual(g.dfs(D, D), 'D->D')
-        self.assertEqual(g.dfs(C, E), 'C->A->B->E')
-        # self.assertEqual(g.dfs(C, E), None)  # для этой проверки нужно занулить все ребра от Е и к E
+
+        self.assertEqual([i.Value for i in g.DepthFirstSearch(0, 1)], ['A', 'B'])
+        self.assertEqual([i.Value for i in g.DepthFirstSearch(3, 3)], ['D', 'D'])
+        self.assertEqual([i.Value for i in g.DepthFirstSearch(2, 4)], ['C', 'A', 'B', 'E'])
+        # self.assertEqual(g.DepthFirstSearch(2, 4), [])
+
 
     def test_bfs(self):
 

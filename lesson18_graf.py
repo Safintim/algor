@@ -2,47 +2,7 @@
 # from lesson6_queue import Queue
 
 #
-#     def dfs(self, current, end_path):
-#         # 0 - исходное состояние
-#         stack = Stack()
-#         for v in self.vertex:
-#             v.hit = False
 #
-#         ep_i = self.vertex.index(end_path)  # индекс конечного пути
-#         flag = False
-#
-#         while True:
-#
-#             # если непосещенных больше нет, то пропустить след операции
-#             if not flag:
-#                 # 2-3 - фиксируем как посещенную и добавл в стек
-#                 current.hit = True
-#                 stack.push(current)
-#
-#             c_i = self.vertex.index(current)  # индекс текущей вершины
-#
-#             # 4 - среди смежных ищем целевую вершину
-#             if self.m_adjacency[c_i][ep_i] == 1:
-#                 stack.push(end_path)
-#                 return '->'.join(str(i.name) for i in stack.stack[::-1])
-#
-#             # если нет, то выбираем такую смежную, которая еще не была посещена
-#             for i, value in enumerate(self.m_adjacency[c_i]):
-#                 if value == 1 and not self.vertex[i].hit:
-#                     current = self.vertex[i]
-#                     flag = False
-#                     break  # нужно перейти к 2-3
-#                 elif value == 1:
-#                     flag = True
-#
-#             # 5 - если непосещенных больше нет
-#             if flag:
-#                 stack.pop()  # удаляем верхний элемент стека
-#                 if stack.size() == 0:
-#                     print('Путь не найден')
-#                     return None
-#                 else:
-#                     current = stack.stack[0]  # текущий становится верхний элемент стека
 #
 #     def print_path(self, end):
 #         # если использовать массив предков
@@ -109,10 +69,33 @@
 #
 
 
+class Stack:
+
+    def __init__(self):
+        self.stack = []
+
+    def pop(self):
+        if self.size() > 0:
+            return self.stack.pop(0)
+        return None
+
+    def push(self, value):
+        self.stack.insert(0, value)
+
+    def peek(self):
+        if self.size() > 0:
+            return self.stack[0]
+        return None
+
+    def size(self):
+        return len(self.stack)
+
+
 class Vertex:
 
     def __init__(self, val):
         self.Value = val
+        self.Hit = False
 
 
 class SimpleGraph:
@@ -162,3 +145,81 @@ class SimpleGraph:
             self.m_adjacency[v2][v1] = 0
             return True
         return False
+
+        # def dfs(self, current, end_path):
+
+    #         # 0 - исходное состояние
+    #         stack = Stack()
+    #         for v in self.vertex:
+    #             v.hit = False
+    #
+    #         ep_i = self.vertex.index(end_path)  # индекс конечного пути
+    #         flag = False
+    #
+    #         while True:
+    #
+    #             # если непосещенных больше нет, то пропустить след операции
+    #             if not flag:
+    #                 # 2-3 - фиксируем как посещенную и добавл в стек
+    #                 current.hit = True
+    #                 stack.push(current)
+    #
+    #             c_i = self.vertex.index(current)  # индекс текущей вершины
+    #
+    #             # 4 - среди смежных ищем целевую вершину
+    #             if self.m_adjacency[c_i][ep_i] == 1:
+    #                 stack.push(end_path)
+    #                 return '->'.join(str(i.name) for i in stack.stack[::-1])
+    #
+    #             # если нет, то выбираем такую смежную, которая еще не была посещена
+    #             for i, value in enumerate(self.m_adjacency[c_i]):
+    #                 if value == 1 and not self.vertex[i].hit:
+    #                     current = self.vertex[i]
+    #                     flag = False
+    #                     break  # нужно перейти к 2-3
+    #                 elif value == 1:
+    #                     flag = True
+    #
+    #             # 5 - если непосещенных больше нет
+    #             if flag:
+    #                 stack.pop()  # удаляем верхний элемент стека
+    #                 if stack.size() == 0:
+    #                     print('Путь не найден')
+    #                     return None
+    #                 else:
+    #                     current = stack.stack[0]  # текущий становится верхний элемент стека
+
+    def find_adjacent_vertex(self, v):
+        for i, value in enumerate(self.m_adjacency[v]):
+            if value == 1 and not self.vertex[i].Hit:
+                return self.vertex[i]
+        return False
+
+    def DepthFirstSearch(self, VFrom, VTo):
+        stack = Stack()
+        for v in self.vertex:
+            v.Hit = False
+
+        current = self.vertex[VFrom]
+
+        while True:
+
+            if not current:
+                stack.pop()
+                if stack.size() == 0:
+                    return stack.stack
+                else:
+                    current = stack.stack[0]
+                    current.Hit = True
+            else:
+                current.Hit = True
+                stack.push(current)
+
+            VFrom = self.vertex.index(current)
+            if self.m_adjacency[VFrom][VTo] == 1:
+                stack.push(self.vertex[VTo])
+                break
+            else:
+                current = self.find_adjacent_vertex(VFrom)
+
+        return stack.stack[::-1]
