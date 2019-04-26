@@ -144,12 +144,15 @@ class SimpleGraph:
         current = self.vertex[VFrom]
         current.Hit = True
         queue.enqueue(current)
-        while queue.size():
+        while True:
             index_current = self.vertex.index(current)
             adjacent_vertex = self.find_adjacent_vertex(index_current)
 
             if not adjacent_vertex:
-                current = queue.dequeue()
+                if queue.size():
+                    current = queue.dequeue()
+                else:
+                    break
             else:
                 adjacent_vertex.Parent = self.vertex[index_current]
                 adjacent_vertex.Hit = True

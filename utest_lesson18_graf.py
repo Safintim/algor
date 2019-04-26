@@ -126,6 +126,10 @@ class GraphTest(unittest.TestCase):
             [0, 1, 0, 1, 0],  # E
         ]
 
+        g.AddVertex('G')
+        g.AddEdge(4, 5)
+
+        self.assertEqual([i.Value for i in g.BreadthFirstSearch(3, 5)], ['D', 'E', 'G'])
         self.assertEqual([i.Value for i in g.BreadthFirstSearch(2, 4)], ['C', 'D', 'E'])
         self.assertEqual([i.Value for i in g.BreadthFirstSearch(4, 2)], ['E', 'D', 'C'])
         self.assertEqual([i.Value for i in g.BreadthFirstSearch(3, 3)], ['D'])
