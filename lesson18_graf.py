@@ -4,69 +4,28 @@
 #
 #
 #
-#     def print_path(self, end):
-#         # если использовать массив предков
-#         # temp = ''
-#         # for i in range(len(p)):
-#         #     if end == start:
-#         #         temp += self.vertex[end].name
-#         #         return temp[::-1]
-#         #     temp += self.vertex[end].name + '-'
-#         #     end = p[end]
-#         if end.parent is None:
-#             return end.name
-#         else:
-#             return self.print_path(end.parent) + end.name
-#
-#     def bfs(self, current, end_path):
-#         # 0 - исходное состояние
-#         queue = Queue()
-#         for v in self.vertex:
-#             v.hit = False
-#             v.parent = None
-#
-#         # parents = [0] * self.max_vertex  # массив предков. p[i] = c_i -> c_i предок i
-#         start_i = self.vertex.index(current)  # индекс начало пути
-#         ep_i = self.vertex.index(end_path)  # индекс конца пути
-#
-#         # parents[start_i] = start_i
-#         flag = False
-#
-#         # 1 - фиксируем текущую как посещенную
-#         current.hit = True
-#
-#         while True:
-#             c_i = self.vertex.index(current)  # индекс текущей вершины
-#
-#             # 2 - из всех смежных вершин выбираем любую непосещенную
-#             for i, value in enumerate(self.m_adjacency[c_i]):
-#                 if value == 1 and not self.vertex[i].hit:
-#                     self.vertex[i].parent = self.vertex[c_i]
-#                     # parents[i] = c_i  # добавляем предка
-#                     flag = False
-#                     self.vertex[i].hit = True
-#                     queue.enqueue(self.vertex[i])
-#                     break
-#                 elif value == 1:
-#                     flag = True
-#
-#             # 2 - если нет непосещенных вершин
-#             if flag:
-#                 # если массив пуст, то значит изучили весь граф и пора печатать путь
-#                 if queue.size() == 0:
-#                     # return self.print_path(parents, start_i, ep_i)
-#                     return self.print_path(end_path)
-#                 else:
-#                     current = queue.dequeue()
-#
-#
-# class Vertex:
-#
-#     def __init__(self, name=None):
-#         self.name = name
-#         self.hit = False
-#         self.parent = None
-#
+    # def print_path(self, end):
+    #     if end.parent is None:
+    #         return end.name
+    #     else:
+    #         return self.print_path(end.parent) + end.name
+
+
+class Queue:
+
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        return self.items.insert(0, item)
+
+    def dequeue(self):
+        if self.size() > 0:
+            return self.items.pop()
+        return None
+
+    def size(self):
+        return len(self.items)
 
 
 class Stack:
@@ -96,6 +55,7 @@ class Vertex:
     def __init__(self, val):
         self.Value = val
         self.Hit = False
+        self.Parent = None
 
 
 class SimpleGraph:
@@ -158,7 +118,16 @@ class SimpleGraph:
             v.Hit = False
 
         current = self.vertex[VFrom]
+        current.Hit = True
+        stack.push(current)
         while True:
+
+            VFrom = self.vertex.index(current)
+            if self.m_adjacency[VFrom][VTo] == 1:
+                stack.push(self.vertex[VTo])
+                break
+            else:
+                current = self.find_adjacent_vertex(VFrom)
 
             if not current:
                 stack.pop()
@@ -171,11 +140,32 @@ class SimpleGraph:
                 current.Hit = True
                 stack.push(current)
 
-            VFrom = self.vertex.index(current)
-            if self.m_adjacency[VFrom][VTo] == 1:
-                stack.push(self.vertex[VTo])
-                break
-            else:
-                current = self.find_adjacent_vertex(VFrom)
-
         return stack.stack[::-1]
+
+    def get_path_bfs(self, vertex):
+        yield vertex
+        if vertex.Parent is None:
+            return vertex
+        yield from self.get_path_bfs(vertex.Parent)
+
+    def BreadthFirstSearch(self, VFrom, VTo):
+        queue = Queue()
+        for v in self.vertex:
+            v.Hit = False
+            v.Parent = None
+
+        current = self.vertex[VFrom]
+        current.Hit = True
+        queue.enqueue(current)
+        while queue.size():
+            index_current = self.vertex.index(current)
+            adjacent_vertex = self.find_adjacent_vertex(index_current)
+
+            if not adjacent_vertex:
+                current = queue.dequeue()
+            else:
+                adjacent_vertex.Parent = self.vertex[index_current]
+                adjacent_vertex.Hit = True
+                queue.enqueue(adjacent_vertex)
+
+        return [i for i in self.get_path_bfs(self.vertex[VTo])][::-1]
