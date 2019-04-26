@@ -1,16 +1,3 @@
-# from lesson5_stack import Stack
-# from lesson6_queue import Queue
-
-#
-#
-#
-    # def print_path(self, end):
-    #     if end.parent is None:
-    #         return end.name
-    #     else:
-    #         return self.print_path(end.parent) + end.name
-
-
 class Queue:
 
     def __init__(self):
