@@ -135,6 +135,33 @@ class GraphTest(unittest.TestCase):
         self.assertEqual([i.Value for i in g.BreadthFirstSearch(3, 3)], ['D'])
         self.assertEqual([i.Value for i in g.BreadthFirstSearch(1, 2)], ['B', 'A', 'C'])
 
+    def test_WeakVertices(self):
+        g = l.SimpleGraph(5)
+
+        g.AddVertex('A')
+        g.AddVertex('B')
+        g.AddVertex('C')
+        g.AddVertex('D')
+        g.AddVertex('E')
+        g.AddVertex('G')
+        g.AddVertex('Z')
+        g.AddVertex('R')
+        g.AddVertex('K')
+
+        g.m_adjacency = [
+        #    A  B  C  D  E  G  Z  R  K
+            [0, 1, 1, 1, 0, 0, 0, 0, 0],  # A
+            [1, 0, 1, 0, 1, 0, 0, 0, 0],  # B
+            [1, 1, 0, 1, 0, 1, 0, 0, 0],  # C
+            [1, 0, 1, 0, 0, 0, 0, 0, 0],  # D
+            [0, 1, 0, 0, 0, 1, 0, 0, 0],  # E
+            [0, 0, 1, 0, 1, 0, 1, 1, 0],  # G
+            [0, 0, 0, 0, 0, 1, 0, 1, 0],  # Z
+            [0, 1, 0, 1, 0, 1, 1, 0, 1],  # R
+            [0, 0, 0, 0, 0, 0, 0, 1, 0],  # K
+        ]
+        print([i.Value for i in g.WeakVertices()])
+
 
 if __name__ == '__main__':
     unittest.main()
