@@ -56,21 +56,6 @@ class SimpleTree:
         return
 
     def EvenTrees(self):
-        result = []
-        number_children = []
-        for child in self.Root.Children:
-            number_children.append(len([node for node in self.traverse(child)]))
-
-        number_edges = 0
-        for i, number in enumerate(number_children):
-            if number % 2 == 0 and number_edges < len(number_children)-1:
-                number_edges += 1
-                result.append(self.Root)
-                result.append(self.Root.Children[i])
-
-        return result
-
-    def EvenTrees(self):
         broken_edges = []
 
         number_broken_edges = 0

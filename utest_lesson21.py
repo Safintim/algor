@@ -1,8 +1,15 @@
 import unittest
-import lesson21_sort_insert as l
+import random
+import copy
+import lesson21_bubble_selection as l
 
 
 class InsertSortTest(unittest.TestCase):
+    @staticmethod
+    def create_test_arrays(n=3):
+        for i in range(n):
+            yield [random.randint(0, 50) for _ in range(10)]
+
 
     def test_sort_insert(self):
         n1 = [4, 3, 1, 2]
@@ -27,6 +34,22 @@ class InsertSortTest(unittest.TestCase):
         self.assertListEqual(l.sort_shell(n1), result1)
         self.assertListEqual(l.sort_shell(n2), result2)
         self.assertListEqual(l.sort_shell(n3), result3)
+
+    def test_SelectionSortStep(self):
+        arrays = list(self.create_test_arrays())
+        sorted_arrays = [list(sorted(array.copy())) for array in arrays]
+
+        for index, array in enumerate(arrays):
+            l.SelectionSortStep(array)
+            self.assertListEqual(arrays[index], sorted_arrays[index])
+
+    def test_BubbleSortStep(self):
+        arrays = list(self.create_test_arrays())
+        sorted_arrays = [list(sorted(array.copy())) for array in arrays]
+
+        for index, array in enumerate(arrays):
+            self.assertTrue(l.BubbleSortStep(array))
+            self.assertListEqual(arrays[index], sorted_arrays[index])
 
 
 if __name__ == '__main__':

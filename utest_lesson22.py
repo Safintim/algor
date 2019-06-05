@@ -1,7 +1,7 @@
 import unittest
 import lesson22_sort_fast as l
 import random
-from lesson21_sort_insert import sort_shell
+from lesson21_bubble_selection import sort_shell
 
 
 class FastSortTest(unittest.TestCase):
