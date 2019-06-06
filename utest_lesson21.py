@@ -10,7 +10,6 @@ class InsertSortTest(unittest.TestCase):
         for i in range(n):
             yield [random.randint(0, 50) for _ in range(10)]
 
-
     def test_sort_insert(self):
         n1 = [4, 3, 1, 2]
         n2 = [7, 6, 5, 4, 3, 2, 1]
