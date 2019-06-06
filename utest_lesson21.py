@@ -1,6 +1,5 @@
 import unittest
 import random
-import copy
 import lesson21_bubble_selection as l
 
 
