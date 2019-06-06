@@ -1,12 +1,12 @@
 def SelectionSortStep(array, i=0):
     if i < 0:
         return array
-    for i in range(i, len(array)):
+    index_min = i
+    for i in range(i+1, len(array)):
         index_min = i
-        for j in range(i+1, len(array)):
-            if array[index_min] > array[j]:
-                index_min = j
-        array[i], array[index_min] = array[index_min], array[i]
+        if array[index_min] > array[i]:
+            index_min = i
+    array[i], array[index_min] = array[index_min], array[i]
 
 
 def BubbleSortStep(array):
