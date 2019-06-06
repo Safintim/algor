@@ -1,5 +1,6 @@
-import unittest
+import copy
 import random
+import unittest
 import lesson21_bubble_selection as l
 
 
@@ -35,11 +36,15 @@ class InsertSortTest(unittest.TestCase):
 
     def test_SelectionSortStep(self):
         arrays = list(self.create_test_arrays())
-        sorted_arrays = [list(sorted(array.copy())) for array in arrays]
+        copy_arrays = copy.deepcopy(arrays)
 
         for index, array in enumerate(arrays):
-            l.SelectionSortStep(array)
-            self.assertListEqual(arrays[index], sorted_arrays[index])
+            for step in range(len(array)):
+                l.SelectionSortStep(array, step)
+                self.assertEqual(array[step], min(copy_arrays[index][step:]))
+                copy_arrays[index] = array.copy()
+
+
 
     def test_BubbleSortStep(self):
         arrays = list(self.create_test_arrays())
