@@ -1,4 +1,6 @@
 def SelectionSortStep(array, i=0):
+    if i < 0:
+        return array
     for i in range(i, len(array)):
         index_min = i
         for j in range(i+1, len(array)):
