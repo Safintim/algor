@@ -44,15 +44,14 @@ class InsertSortTest(unittest.TestCase):
                 self.assertEqual(array[step], min(copy_arrays[index][step:]))
                 copy_arrays[index] = array.copy()
 
-
-
     def test_BubbleSortStep(self):
         arrays = list(self.create_test_arrays())
-        sorted_arrays = [list(sorted(array.copy())) for array in arrays]
-
+        copy_arrays = copy.deepcopy(arrays)
         for index, array in enumerate(arrays):
-            self.assertTrue(l.BubbleSortStep(array))
-            self.assertListEqual(arrays[index], sorted_arrays[index])
+            self.assertFalse(l.BubbleSortStep(array))
+            self.assertEqual(array[-1], max(copy_arrays[index]))
+
+        self.assertTrue(l.BubbleSortStep(list(sorted(arrays[0]))))
 
 
 if __name__ == '__main__':

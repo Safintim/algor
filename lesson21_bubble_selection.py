@@ -9,16 +9,13 @@ def SelectionSortStep(array, i=0):
 
 
 def BubbleSortStep(array):
+    is_sorted = True
+    for i in range(len(array)-1):
+        if array[i] > array[i+1]:
+            array[i], array[i+1] = array[i+1], array[i]
+            is_sorted = False
+    return is_sorted
 
-    is_not_sorted = True
-    while is_not_sorted:
-        is_not_sorted = False
-        for i in range(len(array)-1):
-            if array[i] > array[i+1]:
-                array[i], array[i+1] = array[i+1], array[i]
-                is_not_sorted = True
-
-    return True
 
 
 def sort_insert(n, step):
