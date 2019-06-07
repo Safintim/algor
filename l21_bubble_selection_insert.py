@@ -20,6 +20,8 @@ def BubbleSortStep(array):
 def InsertionSortStep(array, step, i):
     if step < 1 and i < 0:
         return array
+    elif step + i > len(array) - step:
+        return array
 
     current = array[i+step]
     index = i+step
