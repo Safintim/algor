@@ -1,7 +1,7 @@
 import copy
 import random
 import unittest
-import lesson21_bubble_selection as l
+import l21_bubble_selection_insert as l
 
 
 class InsertSortTest(unittest.TestCase):
@@ -52,6 +52,17 @@ class InsertSortTest(unittest.TestCase):
             self.assertEqual(array[-1], max(copy_arrays[index]))
 
         self.assertTrue(l.BubbleSortStep(list(sorted(arrays[0]))))
+
+    def test_InsertionSortStep(self):
+        test1 = [1, 6, 5, 4, 3, 2, 7]
+        test2 = [6, 1, 5, 4, 3, 2, 7]
+        test3 = [1, 2, 4, 3, 7]
+        l.InsertionSortStep(test1, 3, 1)
+        l.InsertionSortStep(test2, 1, 0)
+        l.InsertionSortStep(test3, 1, 2)
+        self.assertListEqual(test1, [1, 3, 5, 4, 6, 2, 7])
+        self.assertListEqual(test2, [1, 6, 5, 4, 3, 2, 7])
+        self.assertListEqual(test3, [1, 2, 3, 4, 7])
 
 
 if __name__ == '__main__':

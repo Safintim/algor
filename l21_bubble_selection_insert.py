@@ -17,6 +17,18 @@ def BubbleSortStep(array):
     return is_sorted
 
 
+def InsertionSortStep(array, step, i):
+    if step < 1 and i < 0:
+        return array
+
+    current = array[i+step]
+    index = i+step
+
+    while index > 0 and array[index - step] > current:
+        array[index] = array[index - step]
+        index -= step
+    array[index] = current
+
 
 def sort_insert(n, step):
     for i in range(step, len(n)):
