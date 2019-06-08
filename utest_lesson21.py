@@ -17,6 +17,7 @@ class InsertSortTest(unittest.TestCase):
         result1 = [1, 2, 3, 4]
         result2 = [1, 2, 3, 4, 5, 6, 7]
         result3 = [1, 3, 2, 4, 6, 5, 7]
+        l.sort_insert(n2, 1)
         # print(l.sort_insert(n2, 1))
         self.assertListEqual(l.sort_insert(n1, 1), result1)
         self.assertListEqual(l.sort_insert(n2, 1), result2)
@@ -29,7 +30,7 @@ class InsertSortTest(unittest.TestCase):
         result1 = [1, 2, 3, 4]
         result2 = [1, 2, 3, 4, 5, 6, 7]
         result3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-        # print(l.sort_insert(n2, 1))
+        print(l.sort_insert(n2, 1))
         self.assertListEqual(l.sort_shell(n1), result1)
         self.assertListEqual(l.sort_shell(n2), result2)
         self.assertListEqual(l.sort_shell(n3), result3)
@@ -57,12 +58,17 @@ class InsertSortTest(unittest.TestCase):
         test1 = [1, 6, 5, 4, 3, 2, 7]
         test2 = [6, 1, 5, 4, 3, 2, 7]
         test3 = [1, 2, 4, 3, 7]
+        test4 = [7, 6, 5, 4, 3, 2, 1]
         l.InsertionSortStep(test1, 3, 1)
         l.InsertionSortStep(test2, 1, 0)
         l.InsertionSortStep(test3, 1, 2)
-        self.assertListEqual(test1, [1, 3, 5, 4, 6, 2, 7])
-        self.assertListEqual(test2, [1, 6, 5, 4, 3, 2, 7])
-        self.assertListEqual(test3, [1, 2, 3, 4, 7])
+        l.InsertionSortStep(test4, 3, 0)
+        print(test1)
+        print(test4)
+        # self.assertListEqual(test1, [1, 3, 5, 4, 6, 2, 7])
+        # self.assertListEqual(test2, [1, 6, 5, 4, 3, 2, 7])
+        # self.assertListEqual(test3, [1, 2, 3, 4, 7])
+        # self.assertListEqual(test4, [1, 6, 5, 4, 3, 2, 7])
 
 
 if __name__ == '__main__':
