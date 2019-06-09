@@ -63,12 +63,10 @@ class InsertSortTest(unittest.TestCase):
         l.InsertionSortStep(test2, 1, 0)
         l.InsertionSortStep(test3, 1, 2)
         l.InsertionSortStep(test4, 3, 0)
-        print(test1)
-        print(test4)
-        # self.assertListEqual(test1, [1, 3, 5, 4, 6, 2, 7])
-        # self.assertListEqual(test2, [1, 6, 5, 4, 3, 2, 7])
+        self.assertListEqual(test1, [1, 3, 5, 4, 6, 2, 7])
+        self.assertListEqual(test2, [1, 2, 3, 4, 5, 6, 7])
         # self.assertListEqual(test3, [1, 2, 3, 4, 7])
-        # self.assertListEqual(test4, [1, 6, 5, 4, 3, 2, 7])
+        self.assertListEqual(test4, [1, 6, 5, 4, 3, 2, 7])
 
 
 if __name__ == '__main__':

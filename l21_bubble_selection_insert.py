@@ -21,13 +21,14 @@ def InsertionSortStep(array, step, i):
     if step < 1 and i < 0:
         return array
 
-    current = array[i+step]
-    index = i+step
+    for i in range(i+step, len(array), step):
+        current = array[i]
+        index = i
 
-    while index >= step and array[index-step] > current:
-        array[index] = array[index-step]
-        index -= step
-    array[index] = current
+        while index >= step and array[index-step] > current:
+            array[index] = array[index-step]
+            index -= step
+        array[index] = current
 
 
 def sort_insert(n, step):
