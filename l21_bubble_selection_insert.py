@@ -38,9 +38,9 @@ def KnuthSequence(len_array):
         step = 3 * step + 1
         knuth_sequence.append(step)
 
-    return knuth_sequence
+    return knuth_sequence[::-1]
 
-
+print(KnuthSequence(15))
 def sort_insert(n, step):
     for i in range(step, len(n)):
         x = n[i]
