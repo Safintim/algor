@@ -31,6 +31,16 @@ def InsertionSortStep(array, step, i):
         array[index] = current
 
 
+def KnuthSequence(len_array):
+    step = 1
+    knuth_sequence = [step]
+    while 3 * step + 1 < len_array:
+        step = 3 * step + 1
+        knuth_sequence.append(step)
+
+    return knuth_sequence
+
+
 def sort_insert(n, step):
     for i in range(step, len(n)):
         x = n[i]
