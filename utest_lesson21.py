@@ -30,7 +30,6 @@ class InsertSortTest(unittest.TestCase):
         result1 = [1, 2, 3, 4]
         result2 = [1, 2, 3, 4, 5, 6, 7]
         result3 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-        print(l.sort_insert(n2, 1))
         self.assertListEqual(l.sort_shell(n1), result1)
         self.assertListEqual(l.sort_shell(n2), result2)
         self.assertListEqual(l.sort_shell(n3), result3)
@@ -67,6 +66,14 @@ class InsertSortTest(unittest.TestCase):
         self.assertListEqual(test2, [1, 2, 3, 4, 5, 6, 7])
         # self.assertListEqual(test3, [1, 2, 3, 4, 7])
         self.assertListEqual(test4, [1, 6, 5, 4, 3, 2, 7])
+    
+    def test_SortShell(self):
+        arrays = list(self.create_test_arrays())
+        sorted_arrays = [list(sorted(array)) for array in arrays]
+
+        for index, array in enumerate(arrays):
+            l.ShellSort(array)
+            self.assertListEqual(array, sorted_arrays[index])
 
 
 if __name__ == '__main__':

@@ -40,7 +40,15 @@ def KnuthSequence(len_array):
 
     return knuth_sequence[::-1]
 
-print(KnuthSequence(15))
+
+def ShellSort(array):
+
+    steps = KnuthSequence(len(array))
+
+    for step in steps:
+        InsertionSortStep(array, step, 0)
+
+
 def sort_insert(n, step):
     for i in range(step, len(n)):
         x = n[i]
