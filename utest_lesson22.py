@@ -24,6 +24,10 @@ class FastSortTest(unittest.TestCase):
         test = [random.randint(0, pow(10, 5)) for i in range(5 * pow(10, 5))]
         l.sort_fast(test, 0, len(test)-1)
 
+    def test_ArrayChunk(self):
+        array = [7, 5, 6, 4, 3, 1, 2]
+        self.assertEqual(l.ArrayChunk(array), 3)
+        self.assertListEqual(array, [2, 1, 3, 4, 6, 5, 7])
 
 
 if __name__ == '__main__':

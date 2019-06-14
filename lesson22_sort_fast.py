@@ -1,3 +1,23 @@
+def ArrayChunk(array):
+    mid = array[len(array) // 2]
+    left = 0
+    right = len(array)
+
+    while left <= right:
+        while array[left] < mid:
+            left += 1
+
+        while array[right] > mid:
+            right -= 1
+
+        if left <= right:
+            array[left], array[right] = array[right], array[left]
+            left += 1
+            right -= 1
+
+    return len(array) // 2
+
+
 def sort_fast(m, left, right):
     if left >= right:
         return
