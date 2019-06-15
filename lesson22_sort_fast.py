@@ -1,7 +1,7 @@
 def ArrayChunk(array):
     mid = array[len(array) // 2]
     left = 0
-    right = len(array)
+    right = len(array) - 1
 
     while left <= right:
         while array[left] < mid:

@@ -28,6 +28,7 @@ class FastSortTest(unittest.TestCase):
         array = [7, 5, 6, 4, 3, 1, 2]
         self.assertEqual(l.ArrayChunk(array), 3)
         self.assertListEqual(array, [2, 1, 3, 4, 6, 5, 7])
+        l.ArrayChunk([1])
 
 
 if __name__ == '__main__':
