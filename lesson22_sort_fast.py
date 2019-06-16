@@ -1,7 +1,9 @@
-def ArrayChunk(array):
-    mid = array[len(array) // 2]
-    left = 0
-    right = len(array) - 1
+def ArrayChunk(array, left, right):
+    idx_mid = right
+
+    mid = array[idx_mid]
+    left = left
+    right = right
 
     while left <= right:
         while array[left] < mid:
@@ -15,7 +17,15 @@ def ArrayChunk(array):
             left += 1
             right -= 1
 
-    return len(array) // 2
+    return idx_mid
+
+
+def QuickSort(array, left, right):
+    if left >= right:
+        return
+    mid = ArrayChunk(array, left, right)
+    QuickSort(array, left, mid - 1)
+    QuickSort(array, mid + 1, right)
 
 
 def sort_fast(m, left, right):

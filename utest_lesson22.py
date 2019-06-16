@@ -30,6 +30,12 @@ class FastSortTest(unittest.TestCase):
         self.assertListEqual(array, [2, 1, 3, 4, 6, 5, 7])
         l.ArrayChunk([1])
 
+    def test_QuickSort(self):
+        array = [7, 5, 6, 4, 3, 1, 2]
+        expected = list(sorted(array.copy()))
+        l.QuickSort(array, 0, len(array)-1)
+        self.assertListEqual(array, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
