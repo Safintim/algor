@@ -1,5 +1,5 @@
 def ArrayChunk(array, left, right):
-    idx_mid = right
+    idx_mid = (left + right) // 2
 
     mid = array[idx_mid]
     left = left
