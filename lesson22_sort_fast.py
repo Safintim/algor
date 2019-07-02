@@ -28,6 +28,12 @@ def QuickSort(array, left, right):
     QuickSort(array, mid + 1, right)
 
 
+def QuickSortTailOptimization(array, left, right):
+    if left >= right:
+        return
+    ...
+
+
 def sort_fast(m, left, right):
     if left >= right:
         return
