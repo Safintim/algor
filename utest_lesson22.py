@@ -36,6 +36,12 @@ class FastSortTest(unittest.TestCase):
         l.QuickSort(array, 0, len(array)-1)
         self.assertListEqual(array, expected)
 
+    def test_QuickSortTailOptimization(self):
+        array = [7, 5, 6, 4, 3, 1, 2]
+        expected = list(sorted(array.copy()))
+        l.QuickSortTailOptimization(array, 0, len(array)-1)
+        self.assertListEqual(array, expected)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,9 +29,15 @@ def QuickSort(array, left, right):
 
 
 def QuickSortTailOptimization(array, left, right):
-    if left >= right:
-        return
-    ...
+    while left < right:
+        mid = ArrayChunk(array, left, right)
+
+        if mid - left < right - mid:
+            QuickSortTailOptimization(array, left, mid - 1)
+            left = mid + 1
+        else:
+            QuickSortTailOptimization(array, mid + 1, right)
+            right = mid - 1
 
 
 def sort_fast(m, left, right):
